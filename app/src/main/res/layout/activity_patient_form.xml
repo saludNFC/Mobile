@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="app.example.veuge.com.saludnfc.PatientFormActivity">
+
+    <ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/ScrollView01"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scrollbars="vertical">
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:orientation="vertical"
+            android:layout_height="fill_parent">
+
+            <!--Put form controls here-->
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Editar informacion de paciente"
+                android:id="@+id/textView"
+                android:layout_below="@+id/ScrollView01"
+                android:layout_centerHorizontal="true" />
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="4">
+
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/ci_field"
+                    android:layout_below="@+id/ScrollView01"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_weight="3"/>
+
+                <Spinner
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/spinner"
+                    android:layout_weight="1"
+                    android:spinnerMode="dropdown" />
+
+            </LinearLayout>
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:text="nombre"
+                android:ems="10"
+                android:id="@+id/editText"
+                android:layout_below="@+id/ScrollView01"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:text="apellido"
+                android:ems="10"
+                android:id="@+id/editText2"
+                android:layout_below="@+id/editText"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/editText4"
+                android:layout_below="@+id/ScrollView01"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:text="sexo" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="date"
+                android:ems="10"
+                android:id="@+id/editText5"
+                android:layout_below="@+id/ScrollView01"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:text="fecha_nac" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/editText6"
+                android:layout_below="@+id/ScrollView01"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:text="lugar_nac" />
+
+            <EditText
+                android:layout_width="318dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/editText7"
+                android:layout_below="@+id/editText6"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:text="grado_instruccion" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/editText8"
+                android:text="estado_civil" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/editText9"
+                android:layout_below="@+id/ScrollView01"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:text="ocupacion" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/editText10"
+                android:layout_below="@+id/editText9"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:text="grupo_sanguineo" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

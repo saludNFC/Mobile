@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">SaludNFC</string>
+
+    <!-- Departamentos ABBR -->
+    <string name="bn_abbr">BN</string>
+    <string name="ch_abbr">CH</string>
+    <string name="cb_abbr">CB</string>
+    <string name="lp_abbr">LP</string>
+    <string name="or_abbr">OR</string>
+    <string name="pa_abbr">PA</string>
+    <string name="pt_abbr">PT</string>
+    <string name="sc_abbr">SC</string>
+    <string name="tj_abbr">TJ</string>
 </resources>

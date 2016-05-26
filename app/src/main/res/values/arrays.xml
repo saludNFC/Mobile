@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="ci_emision_options">
+        <item>@string/bn_abbr</item>
+        <item>@string/ch_abbr</item>
+        <item>@string/cb_abbr</item>
+        <item>@string/lp_abbr</item>
+        <item>@string/or_abbr</item>
+        <item>@string/pa_abbr</item>
+        <item>@string/pt_abbr</item>
+        <item>@string/sc_abbr</item>
+        <item>@string/tj_abbr</item>
+    </string-array>
+</resources>
