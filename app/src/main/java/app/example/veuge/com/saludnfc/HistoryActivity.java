@@ -1,18 +1,12 @@
 package app.example.veuge.com.saludnfc;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -27,35 +21,41 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class PatientsActivity extends AppCompatActivity {
+public class HistoryActivity extends AppCompatActivity {
 
-    private ArrayAdapter<String> mPatientAdapter;
+    private ArrayAdapter<String> mHistoryAdapter;
     private HashMap[] resultStrs;
-    public final static String EXTRA_TEXT = "app.example.veuge.com.saludnfc.TEXT";
+    public final static String EXTRA_TEXT = "com.mycompany.myfirstapp.TEXT";
+    private String codHC;
+    private final String LOG_TAG = HistoryActivity.class.getSimpleName();
 
     @Override
     public void onStart() {
         super.onStart();
-        updatePatients();
+        updateHistories();
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_patients);
+        setContentView(R.layout.activity_history);
 
-        mPatientAdapter = new ArrayAdapter<String>(
+        Intent intent = getIntent();
+        codHC = intent.getStringExtra("historia");
+        Log.i(LOG_TAG, "ALERT" + codHC);
+
+        mHistoryAdapter = new ArrayAdapter<String>(
                 this, // The current context (this activity)
-                R.layout.list_item_patient, // The name of the layout ID.
-                R.id.list_item_patient_textview, // The ID of the textview to populate.
+                R.layout.list_item_history, // The name of the layout ID.
+                R.id.list_item_history_textview, // The ID of the textview to populate.
                 new ArrayList<String>()
         );
 
         // Get a reference to the ListView, and attach this adapter to it.
-        ListView listView = (ListView) findViewById(R.id.listview_patients);
-        listView.setAdapter(mPatientAdapter);
+        ListView listView = (ListView) findViewById(R.id.listview_histories);
+        listView.setAdapter(mHistoryAdapter);
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        /*listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
@@ -64,73 +64,84 @@ public class PatientsActivity extends AppCompatActivity {
                         .putExtra(EXTRA_TEXT, patientHistory);
                 startActivity(intent);
             }
-        });
-    }
-
-    /**
-     * Displays patient form to create new patient
-     */
-    public void patientFormCreate(View view){
-        Intent intent = new Intent(PatientsActivity.this, PatientFormCreateActivity.class);
-        startActivity(intent);
+        });*/
     }
 
     /**
      * Function to update the patients list!
      */
-    private void updatePatients() {
-        FetchPatientsTask patientsTask = new FetchPatientsTask();
-        patientsTask.execute();
+    private void updateHistories() {
+        FetchHistoriesTask patientsTask = new FetchHistoriesTask();
+        patientsTask.execute(codHC);
     }
 
-    public class FetchPatientsTask extends AsyncTask<Void, Void, HashMap[]> {
+    public class FetchHistoriesTask extends AsyncTask<String, Void, HashMap[]> {
 
-        private final String LOG_TAG = FetchPatientsTask.class.getSimpleName();
+        private final String LOG_TAG = FetchHistoriesTask.class.getSimpleName();
 
         /**
          * Take the String representing the complete patients list in JSON Format and
          * pull out the data we need to construct the Strings needed for the wireframes.
          */
-        private HashMap[] getPatientDataFromJson(String patientJsonStr, int numPatient) throws JSONException {
+        private HashMap[] getHistoryDataFromJson(String historyJsonStr) throws JSONException {
 
             // These are the names of the JSON objects that need to be extracted.
             final String OWM_DATA = "data";
-            final String OWM_HC = "historia_clinica";
-            final String OWM_CI = "ci";
-            final String OWM_NOMBRE = "nombre";
-            final String OWM_APELLIDO = "apellido";
-            final String OWM_FECHA_NAC = "fecha_nacimiento";
+            final String OWM_TYPE = "tipo_antecedente";
+            final String OWM_GRADE = "grado_parentesco";
+            final String OWM_ILLNESS = "enfermedad";
+            final String OWM_PERSONAL_TYPE = "tipo_personal";
+            final String OWM_DESC = "descripcion";
+            final String OWM_MED = "medicamento";
+            final String OWM_VIA = "via_administracion";
+            final String OWM_DATE_INI = "fecha_inicio";
+            final String OWM_DATE = "date";
 
             /**
              * Creates a JSONObject from the string obtained
              */
-            JSONObject patientsJson = new JSONObject(patientJsonStr);
+            JSONObject historiesJson = new JSONObject(historyJsonStr);
 
             /**
              * Creates a JSONObject from the previous JSONObject but parsing from the data subtree
              * in the JSON returned.
              */
-            JSONArray dataArray = patientsJson.getJSONArray(OWM_DATA);
+            JSONArray dataArray = historiesJson.getJSONArray(OWM_DATA);
 
             /**
              * Array of hashmaps of length numPatient
              */
-            resultStrs = new HashMap[numPatient];
+            resultStrs = new HashMap[dataArray.length()];
 
             for(int i = 0; i < dataArray.length(); i++) {
 
                 // Get the JSON object representing i-th item in the data segment
-                JSONObject patientDetails = dataArray.getJSONObject(i);
+                JSONObject historyDetails = dataArray.getJSONObject(i);
 
                 /**
                  * Key - Value Map with patient details
                  */
                 HashMap patient = new HashMap();
-                patient.put(1, patientDetails.getString(OWM_HC));
-                patient.put(2, patientDetails.getString(OWM_CI));
-                patient.put(3, patientDetails.getString(OWM_NOMBRE));
-                patient.put(4, patientDetails.getString(OWM_APELLIDO));
-                patient.put(5, patientDetails.getString(OWM_FECHA_NAC));
+                patient.put(1, historyDetails.getString(OWM_TYPE));
+                switch (historyDetails.get(OWM_TYPE).toString()){
+                    case "Familiar":
+                        patient.put(2, historyDetails.getString(OWM_GRADE));
+                        patient.put(3, historyDetails.getString(OWM_ILLNESS));
+                        break;
+
+                    case "Personal":
+                        patient.put(2, historyDetails.getString(OWM_PERSONAL_TYPE));
+                        patient.put(3, historyDetails.getString(OWM_DESC));
+                        break;
+                    case "Medicamentos":
+                        patient.put(2, historyDetails.getString(OWM_MED));
+                        patient.put(3, historyDetails.getString(OWM_VIA));
+
+                        JSONObject date = historyDetails.getJSONObject(OWM_DATE_INI);
+                        patient.put(4, date.getString(OWM_DATE));
+
+                        break;
+                }
 
                 // Add the patient hashmap to hashmap array
                 resultStrs[i] = patient;
@@ -141,7 +152,7 @@ public class PatientsActivity extends AppCompatActivity {
 
         }
         @Override
-        protected HashMap[] doInBackground(Void... params) {
+        protected HashMap[] doInBackground(String... params) {
 
             // These two need to be declared outside the try/catch
             // so that they can be closed in the finally block.
@@ -149,13 +160,11 @@ public class PatientsActivity extends AppCompatActivity {
             BufferedReader reader = null;
 
             // Will contain the raw JSON response as a string.
-            String patientJsonStr = null;
-
-            int numPatient = 50;
+            String historyJsonStr = null;
 
             try {
                 // Construct the URL for the saludNFC API
-                URL url = new URL("http://192.168.1.159:8000/api/paciente");
+                URL url = new URL("http://192.168.1.159:8000/api/paciente/" + params[0] + "/antecedentes");
 
                 Log.v(LOG_TAG, "Built URI " + url.toString());
 
@@ -187,7 +196,7 @@ public class PatientsActivity extends AppCompatActivity {
                     // Stream was empty.  No point in parsing.
                     return null;
                 }
-                patientJsonStr = buffer.toString();
+                historyJsonStr = buffer.toString();
 
             }
             catch (IOException e) {
@@ -211,7 +220,7 @@ public class PatientsActivity extends AppCompatActivity {
             }
 
             try {
-                return getPatientDataFromJson(patientJsonStr, numPatient);
+                return getHistoryDataFromJson(historyJsonStr);
             }
             catch (JSONException e) {
                 Log.e(LOG_TAG, e.getMessage(), e);
@@ -223,9 +232,9 @@ public class PatientsActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(HashMap[] result) {
             if (result != null) {
-                mPatientAdapter.clear();
+                mHistoryAdapter.clear();
                 for(int i = 0; i < result.length; i++) {
-                    mPatientAdapter.add(result[i].get(4).toString() + ", " + result[i].get(3).toString());
+                    mHistoryAdapter.add(result[i].get(1).toString() + ", " + result[i].get(2).toString() + ", " + result[i].get(3).toString());
                 }
             }
         }

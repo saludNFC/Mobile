@@ -11,4 +11,32 @@
         <item>@string/sc_abbr</item>
         <item>@string/tj_abbr</item>
     </string-array>
+
+    <string-array name="gender_options">
+        <item>@string/male</item>
+        <item>@string/female</item>
+    </string-array>
+
+    <string-array name="birthplace_options">
+        <item>@string/bn</item>
+        <item>@string/ch</item>
+        <item>@string/cb</item>
+        <item>@string/lp</item>
+        <item>@string/or</item>
+        <item>@string/pa</item>
+        <item>@string/pt</item>
+        <item>@string/sc</item>
+        <item>@string/tj</item>
+    </string-array>
+
+    <string-array name="bloodtype_options">
+        <item>@string/a_pos</item>
+        <item>@string/a_neg</item>
+        <item>@string/b_pos</item>
+        <item>@string/b_neg</item>
+        <item>@string/o_pos</item>
+        <item>@string/o_neg</item>
+        <item>@string/ab_pos</item>
+        <item>@string/ab_neg</item>
+    </string-array>
 </resources>

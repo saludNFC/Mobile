@@ -8,7 +8,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -37,7 +36,7 @@ public class PatientActivity extends AppCompatActivity {
     }
 
     public void patientForm(View view){
-        Intent intent = new Intent(PatientActivity.this, PatientFormActivity.class);
+        Intent intent = new Intent(PatientActivity.this, PatientFormUpdateActivity.class);
 
         intent.putExtra("historia", codHC);
         intent.putExtra("ci", patient.get(1).toString());
@@ -52,6 +51,13 @@ public class PatientActivity extends AppCompatActivity {
         intent.putExtra("ocupacion", patient.get(10).toString());
         intent.putExtra("grupo_sanguineo", patient.get(11).toString());
 
+        startActivity(intent);
+    }
+
+    public void patientHistories(View view){
+        Intent intent = new Intent(PatientActivity.this, HistoryActivity.class);
+
+        intent.putExtra("historia", codHC);
         startActivity(intent);
     }
 
@@ -101,7 +107,10 @@ public class PatientActivity extends AppCompatActivity {
             patient.put(3, patientDetails.getString(OWM_NOMBRE));
             patient.put(4, patientDetails.getString(OWM_APELLIDO));
             patient.put(5, patientDetails.getString(OWM_SEXO));
-            patient.put(7, patientDetails.getString(OWM_FECHA_NAC));
+
+            JSONObject date = patientDetails.getJSONObject(OWM_FECHA_NAC);
+            patient.put(6, date.getString(OWM_DATE));
+
             patient.put(8, patientDetails.getString(OWM_LUGAR_NAC));
             patient.put(9, patientDetails.getString(OWM_GRADO_INST));
             patient.put(10, patientDetails.getString(OWM_ESTADO));
@@ -198,9 +207,18 @@ public class PatientActivity extends AppCompatActivity {
             if (result != null) {
                 name.setText(result.get(3).toString() + " " + result.get(4).toString());
 
-                misce += codHC + ", " + result.get(5).toString() + ", " + result.get(1).toString() + " " + result.get(2).toString();
+                misce += result.get(5).toString() + ", " + result.get(6).toString();
                 misc.setText(misce);
             }
+
+            TextView history = (TextView) findViewById(R.id.patient_history);
+            history.setText(codHC);
+
+            TextView ci = (TextView) findViewById(R.id.patient_ci);
+            ci.setText(result.get(1).toString() + " " + result.get(2).toString());
+
+            TextView blood = (TextView) findViewById(R.id.patient_bloodtype);
+            blood.setText(result.get(12).toString());
         }
     }
 }

@@ -9,7 +9,7 @@ import android.widget.Spinner;
 
 import java.lang.reflect.Array;
 
-public class PatientFormActivity extends AppCompatActivity {
+public class PatientFormUpdateActivity extends AppCompatActivity {
     String [] em;
 
     public static String codHC, ci, emision, nombre, apellido, sexo, fecha_nac,
@@ -19,13 +19,13 @@ public class PatientFormActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_patient_form);
 
-        Spinner sp = (Spinner) findViewById(R.id.spinner);
+        Spinner sp = (Spinner) findViewById(R.id.ciemision_field);
         // Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.ci_emision_options, android.R.layout.simple_spinner_item);
+        //ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.ci_emision_options, android.R.layout.simple_spinner_item);
         // Specify the layout to use when the list of choices appears
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        //adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
-        sp.setAdapter(adapter);
+        //sp.setAdapter(adapter);
 
 
         Intent intent = getIntent();
@@ -52,7 +52,7 @@ public class PatientFormActivity extends AppCompatActivity {
         em = getResources().getStringArray(R.array.ci_emision_options);
         int index = -1;
         for(int i = 0; i < em.length; i++){
-            if(em[i] == emision){
+            if(em[i].equals(emision)){
                 index = i;
                 break;
             }

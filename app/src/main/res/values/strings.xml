@@ -1,6 +1,20 @@
 <resources>
     <string name="app_name">SaludNFC</string>
 
+    <!-- PATIENTS -->
+    <!-- FIELDS -->
+    <string name="ci_field">Cédula de identidad</string>
+    <string name="ciemision_field">Emisión de cédula de identidad</string>
+    <string name="name_field">Nombres</string>
+    <string name="lastname_field">Apellidos</string>
+    <string name="gender_field">Sexo</string>
+    <string name="birthday_field">Fecha de nacimiento</string>
+    <string name="birthplace_field">Lugar de nacimiento</string>
+    <string name="instruction_field">Grado de instrucción</string>
+    <string name="civilstatus_field">Estado civil</string>
+    <string name="ocupation_field">Ocupación</string>
+    <string name="bloodtype_field">Tipo de sangre</string>
+
     <!-- Departamentos ABBR -->
     <string name="bn_abbr">BN</string>
     <string name="ch_abbr">CH</string>
@@ -11,4 +25,29 @@
     <string name="pt_abbr">PT</string>
     <string name="sc_abbr">SC</string>
     <string name="tj_abbr">TJ</string>
+
+    <!-- Departamentos -->
+    <string name="bn">Beni</string>
+    <string name="ch">Chuquisaca</string>
+    <string name="cb">Cochabamba</string>
+    <string name="lp">La Paz</string>
+    <string name="or">Oruro</string>
+    <string name="pa">Pando</string>
+    <string name="pt">Potosi</string>
+    <string name="sc">Santa Cruz</string>
+    <string name="tj">Tarija</string>
+
+    <!-- Sexo -->
+    <string name="male">Masculino</string>
+    <string name="female">Femenino</string>
+
+    <!-- Tipo de sangre -->
+    <string name="a_pos">A+</string>
+    <string name="a_neg">A-</string>
+    <string name="b_pos">B+</string>
+    <string name="b_neg">B-</string>
+    <string name="o_pos">O+</string>
+    <string name="o_neg">O-</string>
+    <string name="ab_pos">AB+</string>
+    <string name="ab_neg">AB-</string>
 </resources>
