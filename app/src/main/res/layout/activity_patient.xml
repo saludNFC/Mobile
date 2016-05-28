@@ -74,7 +74,8 @@
             android:layout_height="wrap_content"
             android:text="Controles"
             android:id="@+id/patient_controls"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:onClick="patientControls"/>
 
         <Button
             android:layout_width="wrap_content"

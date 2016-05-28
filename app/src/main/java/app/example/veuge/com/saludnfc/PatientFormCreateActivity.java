@@ -8,6 +8,15 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -15,10 +24,13 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PatientFormCreateActivity extends AppCompatActivity {
 
@@ -91,66 +103,43 @@ public class PatientFormCreateActivity extends AppCompatActivity {
         @Override
         protected Void doInBackground(String... params) {
 
-            // These two need to be declared outside the try/catch
-            // so that they can be closed in the finally block.
-            HttpURLConnection urlConnection = null;
-            BufferedReader reader = null;
+            HttpClient httpClient = new DefaultHttpClient();
+            HttpPost httpPost = new HttpPost("http://192.168.1.164:8000/api/paciente");
 
+            List<NameValuePair> nameValuePair = new ArrayList<NameValuePair>(2);
+            nameValuePair.add(new BasicNameValuePair("ci", "6869126"));
+            nameValuePair.add(new BasicNameValuePair("emision", "LP"));
+            nameValuePair.add(new BasicNameValuePair("nombre", "Veronica Eugenia"));
+            nameValuePair.add(new BasicNameValuePair("apellido", "Clavijo Altamirano"));
+            nameValuePair.add(new BasicNameValuePair("fecha_nac", "16-05-1992"));
+            nameValuePair.add(new BasicNameValuePair("lugar_nac", "La Paz"));
+            nameValuePair.add(new BasicNameValuePair("grupo_sanguineo", "O RH+"));
+
+            //Encoding POST data
             try {
-                // Construct the URL for the saludNFC API
-                URL url = new URL("http://192.168.1.159:8000/api/paciente");
+                httpPost.setEntity(new UrlEncodedFormEntity(nameValuePair));
 
-                // Create the request to OpenWeatherMap, and open the connection
-                urlConnection = (HttpURLConnection) url.openConnection();
-                urlConnection.setDoOutput(true);
-                urlConnection.setInstanceFollowRedirects(false);
-
-                // Sets the POST method for the request!
-                urlConnection.setRequestMethod("POST");
-                urlConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-                //urlConnection.setRequestProperty("charset", "utf-8");
-                urlConnection.setRequestProperty("Authorization", "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsImlzcyI6Imh0dHA6XC9cLzE5Mi4xNjguMS4xNTk6ODAwMFwvYXBpXC9hdXRoIiwiaWF0IjoxNDY0MzEyMzI0LCJleHAiOjE0NjQzMTU5MjQsIm5iZiI6MTQ2NDMxMjMyNCwianRpIjoiYzNmYThjZmZmMTVlMjU1Mjc0MDhhOTY3MTIzY2VmYzcifQ.zWCYaDAjXVoSIMDijFlm6fqw65vXkTkZgvReY4umvpw");
-                urlConnection.setUseCaches(false);
-                urlConnection.setRequestProperty("User-Agent","Mozilla/5.0 ( compatible ) ");
-                urlConnection.setRequestProperty("Accept","*/*");
-
-                try( DataOutputStream wr = new DataOutputStream( urlConnection.getOutputStream())) {
-                    Log.i(LOG_TAG, "######" + params[0]);
-                    wr.writeChars(params[0]);
-                    String status = urlConnection.getResponseCode() + " ";
-                    String response = urlConnection.getResponseMessage();
-
-                    BufferedReader br = new BufferedReader(new InputStreamReader((urlConnection.getErrorStream())));
-                    String output = "";
-                    while ((br.readLine()) != null) {
-                        output += br.readLine();
-                        Log.i(LOG_TAG, "ERROR MESS: " + output);
-                    }
-
-                    Log.i(LOG_TAG, "&&&&&&&&&&& " + status + " " + response);
-                }
-                catch (IOException e){
-                    Log.e(LOG_TAG, "XDXD", e);
-                }
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
             }
-            catch (IOException e) {
-                Log.e(LOG_TAG, "Error ", e);
-                // If the code didn't successfully get the weather data, there's no point in attemping
-                // to parse it.
-                return null;
+
+            //Encoding POST data
+            try {
+                httpPost.setEntity(new UrlEncodedFormEntity(nameValuePair));
+
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
             }
-            finally {
-                if (urlConnection != null) {
-                    urlConnection.disconnect();
-                }
-                if (reader != null) {
-                    try {
-                        reader.close();
-                    }
-                    catch (final IOException e) {
-                        Log.e(LOG_TAG, "Error closing stream", e);
-                    }
-                }
+            try {
+                HttpResponse response = httpClient.execute(httpPost);
+                // write response to log
+                Log.d("Http Post Response:", response.toString());
+            } catch (ClientProtocolException e) {
+                // Log exception
+                e.printStackTrace();
+            } catch (IOException e) {
+                // Log exception
+                e.printStackTrace();
             }
             return null;
         }

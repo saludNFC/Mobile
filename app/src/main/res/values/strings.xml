@@ -42,12 +42,12 @@
     <string name="female">Femenino</string>
 
     <!-- Tipo de sangre -->
-    <string name="a_pos">A+</string>
-    <string name="a_neg">A-</string>
-    <string name="b_pos">B+</string>
-    <string name="b_neg">B-</string>
-    <string name="o_pos">O+</string>
-    <string name="o_neg">O-</string>
-    <string name="ab_pos">AB+</string>
-    <string name="ab_neg">AB-</string>
+    <string name="a_pos">A</string>
+    <string name="a_neg">A</string>
+    <string name="b_pos">B</string>
+    <string name="b_neg">B</string>
+    <string name="o_pos">O</string>
+    <string name="o_neg">O</string>
+    <string name="ab_pos">AB</string>
+    <string name="ab_neg">AB</string>
 </resources>

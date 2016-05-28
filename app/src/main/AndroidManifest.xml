@@ -20,7 +20,8 @@
         <activity android:name=".PatientActivity" />
         <activity android:name=".PatientFormUpdateActivity" />
         <activity android:name=".PatientFormCreateActivity" />
-        <activity android:name=".HistoryActivity"></activity>
+        <activity android:name=".HistoryActivity" />
+        <activity android:name=".ControlActivity"></activity>
     </application>
 
 </manifest>

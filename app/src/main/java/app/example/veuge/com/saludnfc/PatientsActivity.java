@@ -1,19 +1,21 @@
 package app.example.veuge.com.saludnfc;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -22,15 +24,13 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class PatientsActivity extends AppCompatActivity {
 
     private ArrayAdapter<String> mPatientAdapter;
-    private HashMap[] resultStrs;
+    private HashMap[] patients;
     public final static String EXTRA_TEXT = "app.example.veuge.com.saludnfc.TEXT";
 
     @Override
@@ -59,7 +59,7 @@ public class PatientsActivity extends AppCompatActivity {
 
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                String patientHistory = resultStrs[position].get(1).toString();
+                String patientHistory = patients[position].get(1).toString();
                 Intent intent = new Intent(PatientsActivity.this, PatientActivity.class)
                         .putExtra(EXTRA_TEXT, patientHistory);
                 startActivity(intent);
@@ -91,7 +91,29 @@ public class PatientsActivity extends AppCompatActivity {
          * Take the String representing the complete patients list in JSON Format and
          * pull out the data we need to construct the Strings needed for the wireframes.
          */
-        private HashMap[] getPatientDataFromJson(String patientJsonStr, int numPatient) throws JSONException {
+        private String convertStreamToString(InputStream is) {
+
+            BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+            StringBuilder sb = new StringBuilder();
+
+            String line = null;
+            try {
+                while ((line = reader.readLine()) != null) {
+                    sb.append(line + "\n");
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    is.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            return sb.toString();
+        }
+
+        private HashMap[] getPatientDataFromJson(String patientJsonStr) throws JSONException {
 
             // These are the names of the JSON objects that need to be extracted.
             final String OWM_DATA = "data";
@@ -115,9 +137,9 @@ public class PatientsActivity extends AppCompatActivity {
             /**
              * Array of hashmaps of length numPatient
              */
-            resultStrs = new HashMap[numPatient];
+            patients = new HashMap[dataArray.length()];
 
-            for(int i = 0; i < dataArray.length(); i++) {
+            for (int i = 0; i < dataArray.length(); i++) {
 
                 // Get the JSON object representing i-th item in the data segment
                 JSONObject patientDetails = dataArray.getJSONObject(i);
@@ -133,87 +155,46 @@ public class PatientsActivity extends AppCompatActivity {
                 patient.put(5, patientDetails.getString(OWM_FECHA_NAC));
 
                 // Add the patient hashmap to hashmap array
-                resultStrs[i] = patient;
+                patients[i] = patient;
             }
 
             // return hashmap array
-            return resultStrs;
+            return patients;
 
         }
+
         @Override
         protected HashMap[] doInBackground(Void... params) {
-
-            // These two need to be declared outside the try/catch
-            // so that they can be closed in the finally block.
-            HttpURLConnection urlConnection = null;
-            BufferedReader reader = null;
-
-            // Will contain the raw JSON response as a string.
-            String patientJsonStr = null;
-
-            int numPatient = 50;
+            HttpClient client = new DefaultHttpClient();
+            HttpResponse httpResponse;
+            HttpGet request = new HttpGet("http://192.168.1.164:8000/api/paciente");
+            String response = "";
 
             try {
-                // Construct the URL for the saludNFC API
-                URL url = new URL("http://192.168.1.159:8000/api/paciente");
+                httpResponse = client.execute(request);
+                int responseCode = httpResponse.getStatusLine().getStatusCode();
+                String message = httpResponse.getStatusLine().getReasonPhrase();
 
-                Log.v(LOG_TAG, "Built URI " + url.toString());
+                HttpEntity entity = httpResponse.getEntity();
 
-                // Create the request to OpenWeatherMap, and open the connection
-                urlConnection = (HttpURLConnection) url.openConnection();
+                if (entity != null) {
+                    InputStream instream = entity.getContent();
+                    response = convertStreamToString(instream);
 
-                // Sets the GET method for the request!
-                urlConnection.setRequestMethod("GET");
-                urlConnection.connect();
-
-                // Read the input stream into a String
-                InputStream inputStream = urlConnection.getInputStream();
-                StringBuffer buffer = new StringBuffer();
-                if (inputStream == null) {
-                    // Nothing to do.
-                    return null;
+                    // Closing the input stream will trigger connection release
+                    instream.close();
                 }
-                reader = new BufferedReader(new InputStreamReader(inputStream));
-
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    // Since it's JSON, adding a newline isn't necessary (it won't affect parsing)
-                    // But it does make debugging a *lot* easier if you print out the completed
-                    // buffer for debugging.
-                    buffer.append(line + "\n");
-                }
-
-                if (buffer.length() == 0) {
-                    // Stream was empty.  No point in parsing.
-                    return null;
-                }
-                patientJsonStr = buffer.toString();
-
-            }
-            catch (IOException e) {
-                Log.e(LOG_TAG, "Error ", e);
-                // If the code didn't successfully get the weather data, there's no point in attemping
-                // to parse it.
-                return null;
-            }
-            finally {
-                if (urlConnection != null) {
-                    urlConnection.disconnect();
-                }
-                if (reader != null) {
-                    try {
-                        reader.close();
-                    }
-                    catch (final IOException e) {
-                        Log.e(LOG_TAG, "Error closing stream", e);
-                    }
-                }
+            } catch (ClientProtocolException e) {
+                client.getConnectionManager().shutdown();
+                e.printStackTrace();
+            } catch (IOException e) {
+                client.getConnectionManager().shutdown();
+                e.printStackTrace();
             }
 
             try {
-                return getPatientDataFromJson(patientJsonStr, numPatient);
-            }
-            catch (JSONException e) {
+                return getPatientDataFromJson(response);
+            } catch (JSONException e) {
                 Log.e(LOG_TAG, e.getMessage(), e);
                 e.printStackTrace();
             }
@@ -224,7 +205,7 @@ public class PatientsActivity extends AppCompatActivity {
         protected void onPostExecute(HashMap[] result) {
             if (result != null) {
                 mPatientAdapter.clear();
-                for(int i = 0; i < result.length; i++) {
+                for (int i = 0; i < result.length; i++) {
                     mPatientAdapter.add(result[i].get(4).toString() + ", " + result[i].get(3).toString());
                 }
             }
