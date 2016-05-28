@@ -75,6 +75,13 @@ public class PatientActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void patientConsultations(View view){
+        Intent intent = new Intent(PatientActivity.this, ConsultationActivity.class);
+
+        intent.putExtra("historia", codHC);
+        startActivity(intent);
+    }
+
     public class FetchPatientTask extends AsyncTask<String, Void, HashMap> {
 
         private final String LOG_TAG = FetchPatientTask.class.getSimpleName();

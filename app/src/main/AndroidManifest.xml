@@ -21,7 +21,8 @@
         <activity android:name=".PatientFormUpdateActivity" />
         <activity android:name=".PatientFormCreateActivity" />
         <activity android:name=".HistoryActivity" />
-        <activity android:name=".ControlActivity"></activity>
+        <activity android:name=".ControlActivity" />
+        <activity android:name=".ConsultationActivity"></activity>
     </application>
 
 </manifest>

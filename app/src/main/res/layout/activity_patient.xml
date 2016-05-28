@@ -82,7 +82,8 @@
             android:layout_height="wrap_content"
             android:text="Consultas"
             android:id="@+id/patient_consultations"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:onClick="patientConsultations"/>
     </LinearLayout>
 
 </LinearLayout>
