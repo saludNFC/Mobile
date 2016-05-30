@@ -10,11 +10,11 @@ import java.util.Iterator;
 /**
  * Created by veuge on 28-05-16.
  */
-public class HashMapTranformation {
+public class HashMapTransformation {
 
     public HashMap[] result;
 
-    public HashMapTranformation(HashMap[] res) {
+    public HashMapTransformation(HashMap[] res) {
         this.result = res;
     }
 
@@ -180,5 +180,31 @@ public class HashMapTranformation {
             controls[i] = control;
         }
         return controls;
+    }
+
+    public HashMap[] buildConsultationHashmap(JSONArray consultationArray) throws JSONException{
+        final String OWM_ID = "identificador_consulta";
+        final String OWM_ANAMNESIS = "anamnesis";
+        final String OWM_PHYSICAL_EXAM = "examen_físico";
+        final String OWM_DIAGNOSIS = "diagnostico";
+        final String OWM_TREATMENT = "tratamiento";
+        final String OWM_JUSTIFICATION = "justificacion";
+
+        HashMap[] consultations = new HashMap[consultationArray.length()];
+        for(int i = 0; i < consultationArray.length(); i++){
+            HashMap consultation = new HashMap();
+
+            JSONObject consultationObject = consultationArray.getJSONObject(i);
+
+            consultation.put(1, consultationObject.getString(OWM_ID));
+            consultation.put(2, consultationObject.getString(OWM_ANAMNESIS));
+            consultation.put(3, consultationObject.getString(OWM_PHYSICAL_EXAM));
+            consultation.put(4, consultationObject.getString(OWM_DIAGNOSIS));
+            consultation.put(5, consultationObject.getString(OWM_TREATMENT));
+            consultation.put(6, consultationObject.getString(OWM_JUSTIFICATION));
+
+            consultations[i] = consultation;
+        }
+        return consultations;
     }
 }

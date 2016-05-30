@@ -1,7 +1,6 @@
 package app.example.veuge.com.saludnfc;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,20 +9,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -83,7 +70,7 @@ public class ControlsActivity extends AppCompatActivity {
         String url = ((Variables) this.getApplication()).getUrl();
         String path = "api/paciente/" + codHC + "/controles";
         String resp;
-        HashMapTranformation hmt = new HashMapTranformation(controls);
+        HashMapTransformation hmt = new HashMapTransformation(controls);
 
         try {
             GetAsyncTask gat = new GetAsyncTask(url, path);

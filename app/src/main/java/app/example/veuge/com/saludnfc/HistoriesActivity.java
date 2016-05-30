@@ -64,7 +64,7 @@ public class HistoriesActivity extends AppCompatActivity {
         String url = ((Variables) this.getApplication()).getUrl();
         String path = "api/paciente/" + codHC + "/antecedentes";
         String resp;
-        HashMapTranformation hmt = new HashMapTranformation(histories);
+        HashMapTransformation hmt = new HashMapTransformation(histories);
 
         try {
             GetAsyncTask gat = new GetAsyncTask(url, path);

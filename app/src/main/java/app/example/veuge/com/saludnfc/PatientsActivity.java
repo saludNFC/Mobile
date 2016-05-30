@@ -67,7 +67,7 @@ public class PatientsActivity extends AppCompatActivity{
         String url = ((Variables) this.getApplication()).getUrl();
         String path = "api/paciente";
         String resp;
-        HashMapTranformation hmt = new HashMapTranformation(patients);
+        HashMapTransformation hmt = new HashMapTransformation(patients);
 
         try {
             GetAsyncTask gat = new GetAsyncTask(url, path);

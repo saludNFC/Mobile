@@ -37,7 +37,7 @@ public class ControlActivity extends AppCompatActivity {
         Log.i(LOG_TAG, "URL => " + url + path);
 
         String resp;
-        HashMapTranformation hmt = new HashMapTranformation(control);
+        HashMapTransformation hmt = new HashMapTransformation(control);
 
         try{
             GetAsyncTask gat = new GetAsyncTask(url, path);

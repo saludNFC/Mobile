@@ -2,13 +2,9 @@ package app.example.veuge.com.saludnfc;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.json.JSONArray;
@@ -40,7 +36,7 @@ public class HistoryActivity extends AppCompatActivity {
         String path = "api/paciente/" + codHC + "/antecedentes/" + antecedente;
 
         String resp;
-        HashMapTranformation hmt = new HashMapTranformation(history);
+        HashMapTransformation hmt = new HashMapTransformation(history);
 
         try{
             GetAsyncTask gat = new GetAsyncTask(url, path);

@@ -37,7 +37,7 @@ public class PatientActivity extends AppCompatActivity {
         String path = "api/paciente/" + codHC;
 
         String resp;
-        HashMapTranformation hmt = new HashMapTranformation(patient);
+        HashMapTransformation hmt = new HashMapTransformation(patient);
 
         try{
             GetAsyncTask gat = new GetAsyncTask(url, path);
@@ -64,22 +64,10 @@ public class PatientActivity extends AppCompatActivity {
         }
     }
 
-    public void patientForm(View view){
-        Intent intent = new Intent(PatientActivity.this, PatientFormUpdateActivity.class);
 
+    public void patientFormCreate(View view){
+        Intent intent = new Intent(PatientActivity.this, PatientFormCreateActivity.class);
         intent.putExtra("historia", codHC);
-        intent.putExtra("ci", patient[0].get(1).toString());
-        intent.putExtra("emision", patient[0].get(2).toString());
-        intent.putExtra("nombre", patient[0].get(3).toString());
-        intent.putExtra("apellido", patient[0].get(4).toString());
-        intent.putExtra("sexo", patient[0].get(5).toString());
-//        intent.putExtra("fecha_nacimiento", patient[0].get(6).toString());
-        intent.putExtra("lugar_nacimiento", patient[0].get(7).toString());
-        intent.putExtra("grado_instruccion", patient[0].get(8).toString());
-        intent.putExtra("estado_civil", patient[0].get(9).toString());
-        intent.putExtra("ocupacion", patient[0].get(10).toString());
-        intent.putExtra("grupo_sanguineo", patient[0].get(11).toString());
-
         startActivity(intent);
     }
 
@@ -98,7 +86,7 @@ public class PatientActivity extends AppCompatActivity {
     }
 
     public void patientConsultations(View view){
-        Intent intent = new Intent(PatientActivity.this, ConsultationActivity.class);
+        Intent intent = new Intent(PatientActivity.this, ConsultationsActivity.class);
 
         intent.putExtra("historia", codHC);
         startActivity(intent);
