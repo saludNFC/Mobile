@@ -40,6 +40,7 @@ public class HashMapTransformation {
 
     public HashMap[] buildPatientHashmap(JSONArray patientDetails) throws JSONException{
 
+        final String OWM_ID = "identificador_paciente";
         final String OWM_HC = "historia_clinica";
         final String OWM_CI = "ci";
         final String OWM_EMISION = "emision";
@@ -59,6 +60,7 @@ public class HashMapTransformation {
             HashMap patient = new HashMap();
             JSONObject patientObject = patientDetails.getJSONObject(i);
 
+            patient.put(0, patientObject.getString(OWM_ID));
             patient.put(1, patientObject.getString(OWM_HC));
             patient.put(2, patientObject.getString(OWM_CI));
             patient.put(3, patientObject.getString(OWM_EMISION));
@@ -78,6 +80,7 @@ public class HashMapTransformation {
     }
 
     public HashMap[] buildHistoryHashmap(JSONArray historyDetails) throws JSONException{
+        final String OWM_PATIENT = "identificador_paciente";
         final String OWM_ID = "identificador_antecedente";
         final String OWM_TYPE = "tipo_antecedente";
         final String OWM_GRADE = "grado_parentesco";
@@ -93,6 +96,7 @@ public class HashMapTransformation {
             HashMap history = new HashMap();
             JSONObject historyObject = historyDetails.getJSONObject(i);
 
+            history.put(0, historyObject.getString(OWM_PATIENT));
             history.put(1, historyObject.getString(OWM_ID));
             history.put(2, historyObject.getString(OWM_TYPE));
 

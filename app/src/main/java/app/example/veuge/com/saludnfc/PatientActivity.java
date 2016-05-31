@@ -12,8 +12,9 @@ import java.util.HashMap;
 
 public class PatientActivity extends AppCompatActivity {
 
-    public static String codHC;
     public HashMap[] patient; // array of length 1
+    public static String patientID;
+    public static String codHC;
 
     TextView name, misc, history, ci, blood;
 
@@ -31,7 +32,8 @@ public class PatientActivity extends AppCompatActivity {
         blood = (TextView) findViewById(R.id.patient_bloodtype);
 
         Intent intent = getIntent();
-        codHC = intent.getStringExtra(PatientsActivity.EXTRA_TEXT);
+        patientID = intent.getStringExtra("patientID");
+        codHC = intent.getStringExtra("patientHistory");
 
         String url = ((Variables) this.getApplication()).getUrl();
         String path = "api/paciente/" + codHC;
@@ -74,21 +76,24 @@ public class PatientActivity extends AppCompatActivity {
     public void patientHistories(View view){
         Intent intent = new Intent(PatientActivity.this, HistoriesActivity.class);
 
-        intent.putExtra("historia", codHC);
+        intent.putExtra("patientID", patientID);
+        intent.putExtra("patientHistory", codHC);
         startActivity(intent);
     }
 
     public void patientControls(View view){
         Intent intent = new Intent(PatientActivity.this, ControlsActivity.class);
 
-        intent.putExtra("historia", codHC);
+        intent.putExtra("patientID", patientID);
+        intent.putExtra("patientHistory", codHC);
         startActivity(intent);
     }
 
     public void patientConsultations(View view){
         Intent intent = new Intent(PatientActivity.this, ConsultationsActivity.class);
 
-        intent.putExtra("historia", codHC);
+        intent.putExtra("patientID", patientID);
+        intent.putExtra("patientHistory", codHC);
         startActivity(intent);
     }
 }

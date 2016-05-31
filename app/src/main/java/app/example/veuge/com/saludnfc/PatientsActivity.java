@@ -15,8 +15,6 @@ public class PatientsActivity extends AppCompatActivity{
 
     private ArrayAdapter<String> mPatientAdapter;
     private HashMap[] patients;
-    public final static String EXTRA_TEXT = "app.example.veuge.com.saludnfc.TEXT";
-    private final String LOG_TAG = PatientsActivity.class.getSimpleName();
 
     @Override
     public void onStart() {
@@ -45,8 +43,11 @@ public class PatientsActivity extends AppCompatActivity{
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 String patientHistory = patients[position].get(1).toString();
-                Intent intent = new Intent(PatientsActivity.this, PatientActivity.class)
-                        .putExtra(EXTRA_TEXT, patientHistory);
+                String patientID = patients[position].get(0).toString();
+                Intent intent = new Intent(PatientsActivity.this, PatientActivity.class);
+
+                intent.putExtra("patientID", patientID);
+                intent.putExtra("patientHistory", patientHistory);
                 startActivity(intent);
             }
         });

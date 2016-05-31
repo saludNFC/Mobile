@@ -39,4 +39,26 @@
         <item>@string/ab_pos</item>
         <item>@string/ab_neg</item>
     </string-array>
+
+    <string-array name="history_options">
+        <item>@string/nul</item>
+        <item>@string/fam</item>
+        <item>@string/per</item>
+        <item>@string/med</item>
+    </string-array>
+
+    <string-array name="personal_field_options">
+        <item>@string/aler</item>
+        <item>@string/enfe</item>
+        <item>@string/ciru</item>
+    </string-array>
+
+    <string-array name="via_field_options">
+        <item>@string/oral</item>
+        <item>@string/subl</item>
+        <item>@string/pare</item>
+        <item>@string/rect</item>
+        <item>@string/topi</item>
+        <item>@string/perc</item>
+    </string-array>
 </resources>

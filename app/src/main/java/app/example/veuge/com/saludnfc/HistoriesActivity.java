@@ -17,7 +17,8 @@ public class HistoriesActivity extends AppCompatActivity {
     private HashMap[] histories;
     public final static String EXTRA_TEXT = "app.example.veuge.com.saludnfc.TEXT";
 
-    private String codHC;
+    private static String patientID;
+    private static String codHC;
     private final String LOG_TAG = HistoriesActivity.class.getSimpleName();
 
     @Override
@@ -32,7 +33,8 @@ public class HistoriesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_histories);
 
         Intent intent = getIntent();
-        codHC = intent.getStringExtra("historia");
+        patientID = intent.getStringExtra("patientID");
+        codHC = intent.getStringExtra("patientHistory");
 
         mHistoryAdapter = new ArrayAdapter<String>(
                 this, // The current context (this activity)
@@ -86,5 +88,12 @@ public class HistoriesActivity extends AppCompatActivity {
                         + histories[i].get(3).toString() + ", " + histories[i].get(4).toString());
             }
         }
+    }
+
+    public void historyFormCreate(View view){
+        Intent intent = new Intent(HistoriesActivity.this, HistoryFormCreateActivity.class);
+        intent.putExtra("patientID", patientID);
+        intent.putExtra("patientHistory", codHC);
+        startActivity(intent);
     }
 }
