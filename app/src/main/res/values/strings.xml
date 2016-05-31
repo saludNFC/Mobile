@@ -54,6 +54,11 @@
     <!-- HISTORIES -->
     <!-- Fields -->
     <string name="history_type_field">Tipo de antecedente</string>
+    <string name="nul">--- Escoja un tipo de antecedente ---</string>
+    <string name="fam">Familiar</string>
+    <string name="per">Personal</string>
+    <string name="med">Medicamentos</string>
+
     <string name="grade_field">Grado de parentesco</string>
     <string name="illness_field">Enfermedad</string>
 
@@ -64,16 +69,10 @@
     <string name="via_field">Vía de administración</string>
     <string name="dateini_field">Fecha de inicio</string>
 
-    <!-- Tipo de antecedente-->
-    <string name="nul">--- Escoja un tipo de antecedente ---</string>
-    <string name="fam">Familiar</string>
-    <string name="per">Personal</string>
-    <string name="med">Medicamentos</string>
-
     <!-- Tipo personal -->
     <string name="aler">Alergia</string>
     <string name="enfe">Enfermedad</string>
-    <string name="ciru">Cirugía</string>
+    <string name="ciru">Cirugia</string>
 
     <!-- Tipo de vía de administración -->
     <string name="oral">Oral</string>
@@ -82,4 +81,48 @@
     <string name="rect">Rectal</string>
     <string name="topi">Topica</string>
     <string name="perc">Percutanea</string>
+
+    <!-- CONTROLS -->
+    <!-- Fields-->
+    <string name="control_type_field">Tipo de Control</string>
+    <string name="vaccine_field">Vacuna</string>
+    <string name="viav_field">Via de administración</string>
+    <string name="dosis_field">Numero de dosis</string>
+
+    <string name="weight_field">Peso (Kg)</string>
+    <string name="height_field">Altura (cm)</string>
+
+    <string name="temperature_field">Temperatura (°C)</string>
+    <string name="heartrate_field">Frecuencia cardíaca</string>
+    <string name="sistole_field">Sistole</string>
+    <string name="diastole_field">Diastole</string>
+    <string name="separator">/</string>
+
+    <string name="lastmenst_field">Fecha última menstruación</string>
+    <string name="lastmamo_field">Fecha última mamografía</string>
+    <string name="sexact_field">Vida sexual</string>
+    <string name="lastpapa_field">Fecha último papanicolau</string>
+
+    <string name="geritype_field">Tipo de Valoración Geriatrica</string>
+    <string name="notes_field">Descripcion</string>
+
+    <string name="nad">--- Escoja un tipo de control ---</string>
+    <string name="vac">Vacunacion</string>
+    <string name="cre">Crecimiento</string>
+    <string name="tri">Triaje</string>
+    <string name="gin">Ginecologico</string>
+    <string name="ger">Geriatrico</string>
+
+    <string name="der">Intra-dermica</string>
+    <string name="mus">Intra-muscular</string>
+    <string name="ora">Oral</string>
+    <string name="sub">Subcutanea</string>
+
+    <string name="act">Activa</string>
+    <string name="ina">Inactiva</string>
+
+    <string name="vmed">Valoracion Medica</string>
+    <string name="vfun">Valoracion Funcional</string>
+    <string name="vcog">Valoracion Cognitiva</string>
+    <string name="vsoc">Valoracion Social</string>
 </resources>

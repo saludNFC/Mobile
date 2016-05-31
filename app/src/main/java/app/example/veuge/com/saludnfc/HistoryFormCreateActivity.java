@@ -10,11 +10,9 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONArray;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -83,16 +81,11 @@ public class HistoryFormCreateActivity extends AppCompatActivity {
     private void addListenerOnSpinnerItemSelection() {
         CustomListener cl = new CustomListener(familiarForm, personalForm, medForm);
         historyType.setOnItemSelectedListener(cl);
-//        String selected = cl.getSelected();
-//        Toast.makeText(this,
-//                "SELECTED ITEM: " + selected,
-//                Toast.LENGTH_SHORT).show();
     }
 
     public void historySave(View view){
         String url = ((Variables) this.getApplication()).getUrl();
         String path = "api/paciente/" + codHC + "/antecedentes";
-        Log.i(LOG_TAG, "URL => " + url + path);
         List<NameValuePair> newHistory = new ArrayList<NameValuePair>(2);
 
         if(familiarForm.getVisibility() == View.VISIBLE) {
@@ -102,8 +95,6 @@ public class HistoryFormCreateActivity extends AppCompatActivity {
 
             newHistory.add(new BasicNameValuePair("grade", gradeValue));
             newHistory.add(new BasicNameValuePair("illness", illnessValue));
-
-            Log.i(LOG_TAG, "HISTORY TYPE => " + historyTypeValue);
         }
         if(personalForm.getVisibility() == View.VISIBLE){
             historyTypeValue = "Personal";

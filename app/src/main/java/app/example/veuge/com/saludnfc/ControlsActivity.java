@@ -19,8 +19,8 @@ public class ControlsActivity extends AppCompatActivity {
     private ArrayAdapter<String> mControlAdapter;
     private HashMap[] controls;
 
+    private static String patientID;
     private String codHC;
-    private final String LOG_TAG = ControlsActivity.class.getSimpleName();
 
     @Override
     public void onStart() {
@@ -34,8 +34,8 @@ public class ControlsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_controls);
 
         Intent intent = getIntent();
-        codHC = intent.getStringExtra("historia");
-        Log.i(LOG_TAG, "ALERT" + codHC);
+        patientID = intent.getStringExtra("patientID");
+        codHC = intent.getStringExtra("patientHistory");
 
         mControlAdapter = new ArrayAdapter<String>(
                 this, // The current context (this activity)
@@ -92,5 +92,12 @@ public class ControlsActivity extends AppCompatActivity {
                         + ", " + controls[i].get(3).toString());
             }
         }
+    }
+
+    public void controlFormCreate(View view){
+        Intent intent = new Intent(ControlsActivity.this, ControlFormCreateActivity.class);
+        intent.putExtra("patientID", patientID);
+        intent.putExtra("patientHistory", codHC);
+        startActivity(intent);
     }
 }

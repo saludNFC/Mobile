@@ -61,4 +61,32 @@
         <item>@string/topi</item>
         <item>@string/perc</item>
     </string-array>
+    
+    <string-array name="control_options">
+        <item>@string/nad</item>
+        <item>@string/vac</item>
+        <item>@string/cre</item>
+        <item>@string/tri</item>
+        <item>@string/gin</item>
+        <item>@string/ger</item>
+    </string-array>
+
+    <string-array name="viav_field_options">
+        <item>@string/der</item>
+        <item>@string/mus</item>
+        <item>@string/ora</item>
+        <item>@string/sub</item>
+    </string-array>
+
+    <string-array name="sex_field_options">
+        <item>@string/act</item>
+        <item>@string/ina</item>
+    </string-array>
+
+    <string-array name="geritype_options">
+        <item>@string/vmed</item>
+        <item>@string/vfun</item>
+        <item>@string/vcog</item>
+        <item>@string/vsoc</item>
+    </string-array>
 </resources>
