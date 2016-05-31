@@ -62,7 +62,7 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="number"
+            android:inputType="numberDecimal"
             android:hint="@string/weight_field"
             android:id="@+id/weight_field" />
 
@@ -82,7 +82,7 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="number"
+            android:inputType="numberDecimal"
             android:hint="@string/temperature_field"
             android:id="@+id/temperature_field" />
 

@@ -125,4 +125,13 @@
     <string name="vfun">Valoracion Funcional</string>
     <string name="vcog">Valoracion Cognitiva</string>
     <string name="vsoc">Valoracion Social</string>
+
+    <!-- CONSULTATION -->
+    <string name="consultation_title">Consultas Médicas</string>
+    <!-- Fields-->
+    <string name="anamnesis">Anamnesis</string>
+    <string name="physical">Examen físico</string>
+    <string name="diagnosis">Diagnóstico</string>
+    <string name="treatment">Tratamiento</string>
+    <string name="justification">Justificación</string>
 </resources>

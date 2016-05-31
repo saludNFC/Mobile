@@ -18,9 +18,8 @@ public class ConsultationsActivity extends AppCompatActivity {
 
     private ArrayAdapter<String> mConsultationAdapter;
     private HashMap[] consultations;
-    public final static String EXTRA_TEXT = "app.example.veuge.com.saludnfc.TEXT";
 
-    private String codHC;
+    private String codHC, patientID;
     private final String LOG_TAG = ConsultationsActivity.class.getSimpleName();
 
     @Override
@@ -35,7 +34,8 @@ public class ConsultationsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_consultations);
 
         Intent intent = getIntent();
-        codHC = intent.getStringExtra("historia");
+        codHC = intent.getStringExtra("patientHistory");
+        patientID = intent.getStringExtra("patientID");
         Log.i(LOG_TAG, "ALERT" + codHC);
 
         mConsultationAdapter = new ArrayAdapter<String>(
@@ -90,6 +90,14 @@ public class ConsultationsActivity extends AppCompatActivity {
                         + trimString(consultations[i].get(3).toString()) + ", " + trimString(consultations[i].get(4).toString()));
             }
         }
+    }
+
+    public void consultationFormCreate(View view){
+        Intent intent = new Intent(ConsultationsActivity.this, ConsultationFormCreateActivity.class);
+        intent.putExtra("patientID", patientID);
+        intent.putExtra("patientHistory", codHC);
+
+        startActivity(intent);
     }
 
     private String trimString(String longString){

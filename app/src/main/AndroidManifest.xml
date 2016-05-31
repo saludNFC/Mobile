@@ -27,7 +27,8 @@
         <activity android:name=".ControlActivity" />
         <activity android:name=".ConsultationActivity" />
         <activity android:name=".HistoryFormCreateActivity" />
-        <activity android:name=".ControlFormCreateActivity"></activity>
+        <activity android:name=".ControlFormCreateActivity" />
+        <activity android:name=".ConsultationFormCreateActivity"></activity>
     </application>
 
 </manifest>
