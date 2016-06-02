@@ -28,10 +28,12 @@ import java.util.List;
 public class PostAsyncTask extends AsyncTask<List<NameValuePair>, Void, String> {
     public String url;
     public String path;
+    public String token;
 
-    public PostAsyncTask(String urlParam, String pathParam){
+    public PostAsyncTask(String urlParam, String pathParam, String tokenParam){
         this.url = urlParam;
         this.path = pathParam;
+        this.token = tokenParam;
     }
 
     public HttpClient httpClient;
@@ -49,6 +51,9 @@ public class PostAsyncTask extends AsyncTask<List<NameValuePair>, Void, String> 
     protected String doInBackground(List... params){
         httpClient = new DefaultHttpClient();
         httpPost = new HttpPost(this.url + this.path);
+        if(token != ""){
+            httpPost.setHeader("Authorization", "Bearer " + token);
+        }
         response = "";
 
         try {

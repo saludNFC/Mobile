@@ -13,8 +13,7 @@ import java.util.HashMap;
 public class PatientActivity extends AppCompatActivity {
 
     public HashMap[] patient; // array of length 1
-    public static String patientID;
-    public static String codHC;
+    public static String patientID, codHC, token;
 
     TextView name, misc, history, ci, blood;
 
@@ -34,6 +33,7 @@ public class PatientActivity extends AppCompatActivity {
         Intent intent = getIntent();
         patientID = intent.getStringExtra("patientID");
         codHC = intent.getStringExtra("patientHistory");
+        token = intent.getStringExtra("token");
 
         String url = ((Variables) this.getApplication()).getUrl();
         String path = "api/paciente/" + codHC;
@@ -42,7 +42,7 @@ public class PatientActivity extends AppCompatActivity {
         HashMapTransformation hmt = new HashMapTransformation(patient);
 
         try{
-            GetAsyncTask gat = new GetAsyncTask(url, path);
+            GetAsyncTask gat = new GetAsyncTask(url, path, token);
             gat.execute();
             resp = gat.get();
             JSONArray patientArray = hmt.getJsonFromString(resp);
@@ -70,6 +70,7 @@ public class PatientActivity extends AppCompatActivity {
     public void patientFormCreate(View view){
         Intent intent = new Intent(PatientActivity.this, PatientFormCreateActivity.class);
         intent.putExtra("historia", codHC);
+        intent.putExtra("token", token);
         startActivity(intent);
     }
 
@@ -78,6 +79,7 @@ public class PatientActivity extends AppCompatActivity {
 
         intent.putExtra("patientID", patientID);
         intent.putExtra("patientHistory", codHC);
+        intent.putExtra("token", token);
         startActivity(intent);
     }
 
@@ -86,6 +88,7 @@ public class PatientActivity extends AppCompatActivity {
 
         intent.putExtra("patientID", patientID);
         intent.putExtra("patientHistory", codHC);
+        intent.putExtra("token", token);
         startActivity(intent);
     }
 
@@ -94,6 +97,7 @@ public class PatientActivity extends AppCompatActivity {
 
         intent.putExtra("patientID", patientID);
         intent.putExtra("patientHistory", codHC);
+        intent.putExtra("token", token);
         startActivity(intent);
     }
 }

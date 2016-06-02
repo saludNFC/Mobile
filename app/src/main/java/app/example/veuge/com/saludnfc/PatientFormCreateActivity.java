@@ -1,6 +1,6 @@
 package app.example.veuge.com.saludnfc;
 
-import android.os.AsyncTask;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,28 +9,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
-
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,14 +24,17 @@ public class PatientFormCreateActivity extends AppCompatActivity {
     private Spinner emision, gender, birthplace, bloodtype;
     private Button saveButton;
 
-    private String params = "";
+    private String token;
 
-    private final String LOG_TAG = PatientFormCreateActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_patient_form);
+
+        Intent intent = getIntent();
+        token = intent.getStringExtra("token");
+        Log.i("TOKEN => ", "patient form " + token);
 
         saveButton = (Button) findViewById(R.id.patient_save);
         saveButton.setText("Crear Paciente");
@@ -98,13 +82,14 @@ public class PatientFormCreateActivity extends AppCompatActivity {
         nameValuePair.add(new BasicNameValuePair("grupo_sanguineo", bloodtype_value));
 
         try{
-            PostAsyncTask pat = new PostAsyncTask(url, path);
+            PostAsyncTask pat = new PostAsyncTask(url, path, token);
             pat.execute(nameValuePair);
             String response = pat.get();
             HashMapTransformation hmt = new HashMapTransformation(null);
 
             // This contains form validation json array :O
             JSONArray responseArray = hmt.getJsonFromString(response);
+            Log.i("SERVER RESPONSE => ", "patient post " + responseArray);
         }
         catch (Exception ex){
             ex.printStackTrace();

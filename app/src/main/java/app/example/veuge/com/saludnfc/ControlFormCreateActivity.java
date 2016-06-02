@@ -39,8 +39,7 @@ public class ControlFormCreateActivity extends AppCompatActivity {
     String controlTypeValue, vaccineValue, viaValue, dosisValue, weightValue, heightValue, temperatureValue, heartrateValue,
             sistoleValue, diastoleValue, lastmenstValue, lastmamoValue, sexactValue, lastpapaValue, geriTypeValue, notesValue;
 
-    public static String patientID;
-    public static String codHC;
+    public static String patientID, codHC, token;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +49,7 @@ public class ControlFormCreateActivity extends AppCompatActivity {
         Intent intent = getIntent();
         patientID = intent.getStringExtra("patientID");
         codHC = intent.getStringExtra("patientHistory");
+        token = intent.getStringExtra("token");
 
         title = (TextView) findViewById(R.id.title);
         title.setText("Crear control");
@@ -155,10 +155,10 @@ public class ControlFormCreateActivity extends AppCompatActivity {
         newControl.add(new BasicNameValuePair("control_type", controlTypeValue));
 
         try{
-            PostAsyncTask pat = new PostAsyncTask(url, path);
+            PostAsyncTask pat = new PostAsyncTask(url, path, token);
             pat.execute(newControl);
             String response = pat.get();
-            Log.i(LOG_TAG, "Server response: " +response);
+            Log.i(LOG_TAG, "Server response: control post " +response);
             HashMapTransformation hmt = new HashMapTransformation(null);
 
             // This contains form validation json array :O

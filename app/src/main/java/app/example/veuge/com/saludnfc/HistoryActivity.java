@@ -13,7 +13,7 @@ import java.util.HashMap;
 
 public class HistoryActivity extends AppCompatActivity {
 
-    public static String codHC, antecedente;
+    public static String codHC, antecedente, token;
     private final String LOG_TAG = HistoryActivity.class.getSimpleName();
     public HashMap[] history;
     public TextView historyTitle;
@@ -31,6 +31,7 @@ public class HistoryActivity extends AppCompatActivity {
         Intent intent = getIntent();
         codHC = intent.getStringExtra("historia_clinica");
         antecedente = intent.getStringExtra("antecedente");
+        token = intent.getStringExtra("token");
 
         String url = ((Variables) this.getApplication()).getUrl();
         String path = "api/paciente/" + codHC + "/antecedentes/" + antecedente;
@@ -39,7 +40,7 @@ public class HistoryActivity extends AppCompatActivity {
         HashMapTransformation hmt = new HashMapTransformation(history);
 
         try{
-            GetAsyncTask gat = new GetAsyncTask(url, path);
+            GetAsyncTask gat = new GetAsyncTask(url, path, token);
             gat.execute();
             resp = gat.get();
             JSONArray historyArray = hmt.getJsonFromString(resp);

@@ -1,5 +1,7 @@
 package app.example.veuge.com.saludnfc;
 
+import android.util.Log;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -210,5 +212,24 @@ public class HashMapTransformation {
             consultations[i] = consultation;
         }
         return consultations;
+    }
+
+    public HashMap buildLoginHashmap (JSONArray loginArray) throws JSONException{
+        final String OWM_TOKEN = "token";
+        final String OWM_MESSAGE = "message";
+        final String OWM_STATUS_CODE = "status_code";
+
+        HashMap login = new HashMap();
+        JSONObject loginObject = loginArray.getJSONObject(0);
+
+        try{
+            login.put(1, loginObject.getString(OWM_TOKEN));
+        }
+        catch (Exception e){
+            login.put(1, loginObject.getString(OWM_MESSAGE));
+            login.put(2, loginObject.getString(OWM_STATUS_CODE));
+        }
+
+        return login;
     }
 }

@@ -15,6 +15,7 @@ public class PatientsActivity extends AppCompatActivity{
 
     private ArrayAdapter<String> mPatientAdapter;
     private HashMap[] patients;
+    private static String token;
 
     @Override
     public void onStart() {
@@ -26,6 +27,9 @@ public class PatientsActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_patients);
+
+        Intent intent = getIntent();
+        token = intent.getStringExtra("token");
 
         mPatientAdapter = new ArrayAdapter<String>(
                 this, // The current context (this activity)
@@ -48,6 +52,7 @@ public class PatientsActivity extends AppCompatActivity{
 
                 intent.putExtra("patientID", patientID);
                 intent.putExtra("patientHistory", patientHistory);
+                intent.putExtra("token", token);
                 startActivity(intent);
             }
         });
@@ -58,6 +63,8 @@ public class PatientsActivity extends AppCompatActivity{
      */
     public void patientFormCreate(View view){
         Intent intent = new Intent(PatientsActivity.this, PatientFormCreateActivity.class);
+
+        intent.putExtra("token", token);
         startActivity(intent);
     }
 
@@ -71,7 +78,7 @@ public class PatientsActivity extends AppCompatActivity{
         HashMapTransformation hmt = new HashMapTransformation(patients);
 
         try {
-            GetAsyncTask gat = new GetAsyncTask(url, path);
+            GetAsyncTask gat = new GetAsyncTask(url, path, token);
             gat.execute();
             resp = gat.get();
 

@@ -18,7 +18,7 @@ import java.util.List;
 public class ConsultationFormCreateActivity extends AppCompatActivity {
 
     private final String LOG_TAG = ConsultationFormCreateActivity.class.getSimpleName();
-    public static String patientID, codHC;
+    public static String patientID, codHC, token;
     TextView title;
     Button saveBtn;
 
@@ -34,6 +34,7 @@ public class ConsultationFormCreateActivity extends AppCompatActivity {
         Intent intent = getIntent();
         patientID = intent.getStringExtra("patientID");
         codHC = intent.getStringExtra("patientHistory");
+        token = intent.getStringExtra("token");
 
         title = (TextView) findViewById(R.id.title);
         title.setText("Crear consulta médica");
@@ -68,10 +69,10 @@ public class ConsultationFormCreateActivity extends AppCompatActivity {
         newConsultation.add(new BasicNameValuePair("justification", justificationValue));
 
         try{
-            PostAsyncTask pat = new PostAsyncTask(url, path);
+            PostAsyncTask pat = new PostAsyncTask(url, path, token);
             pat.execute(newConsultation);
             String response = pat.get();
-            Log.i(LOG_TAG, "Server response: " +response);
+            Log.i(LOG_TAG, "Server response: consultation post " +response);
             HashMapTransformation hmt = new HashMapTransformation(null);
 
             // This contains form validation json array :O

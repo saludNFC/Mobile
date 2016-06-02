@@ -19,8 +19,7 @@ public class ConsultationsActivity extends AppCompatActivity {
     private ArrayAdapter<String> mConsultationAdapter;
     private HashMap[] consultations;
 
-    private String codHC, patientID;
-    private final String LOG_TAG = ConsultationsActivity.class.getSimpleName();
+    private String codHC, patientID, token;
 
     @Override
     public void onStart() {
@@ -36,7 +35,7 @@ public class ConsultationsActivity extends AppCompatActivity {
         Intent intent = getIntent();
         codHC = intent.getStringExtra("patientHistory");
         patientID = intent.getStringExtra("patientID");
-        Log.i(LOG_TAG, "ALERT" + codHC);
+        token = intent.getStringExtra("token");
 
         mConsultationAdapter = new ArrayAdapter<String>(
                 this, // The current context (this activity)
@@ -58,6 +57,7 @@ public class ConsultationsActivity extends AppCompatActivity {
 
                 intent.putExtra("historia_clinica", codHC);
                 intent.putExtra("consultaID", consultationID);
+                intent.putExtra("token", token);
 
                 startActivity(intent);
             }
@@ -71,7 +71,7 @@ public class ConsultationsActivity extends AppCompatActivity {
         HashMapTransformation hmt = new HashMapTransformation(consultations);
 
         try {
-            GetAsyncTask gat = new GetAsyncTask(url, path);
+            GetAsyncTask gat = new GetAsyncTask(url, path, token);
             gat.execute();
             resp = gat.get();
 
@@ -96,6 +96,7 @@ public class ConsultationsActivity extends AppCompatActivity {
         Intent intent = new Intent(ConsultationsActivity.this, ConsultationFormCreateActivity.class);
         intent.putExtra("patientID", patientID);
         intent.putExtra("patientHistory", codHC);
+        intent.putExtra("token", token);
 
         startActivity(intent);
     }

@@ -17,8 +17,7 @@ public class HistoriesActivity extends AppCompatActivity {
     private HashMap[] histories;
     public final static String EXTRA_TEXT = "app.example.veuge.com.saludnfc.TEXT";
 
-    private static String patientID;
-    private static String codHC;
+    private static String patientID, codHC, token;
     private final String LOG_TAG = HistoriesActivity.class.getSimpleName();
 
     @Override
@@ -35,6 +34,7 @@ public class HistoriesActivity extends AppCompatActivity {
         Intent intent = getIntent();
         patientID = intent.getStringExtra("patientID");
         codHC = intent.getStringExtra("patientHistory");
+        token = intent.getStringExtra("token");
 
         mHistoryAdapter = new ArrayAdapter<String>(
                 this, // The current context (this activity)
@@ -69,7 +69,7 @@ public class HistoriesActivity extends AppCompatActivity {
         HashMapTransformation hmt = new HashMapTransformation(histories);
 
         try {
-            GetAsyncTask gat = new GetAsyncTask(url, path);
+            GetAsyncTask gat = new GetAsyncTask(url, path, token);
             gat.execute();
             resp = gat.get();
 
@@ -94,6 +94,7 @@ public class HistoriesActivity extends AppCompatActivity {
         Intent intent = new Intent(HistoriesActivity.this, HistoryFormCreateActivity.class);
         intent.putExtra("patientID", patientID);
         intent.putExtra("patientHistory", codHC);
+        intent.putExtra("token", token);
         startActivity(intent);
     }
 }

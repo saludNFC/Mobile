@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONArray;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,8 +38,7 @@ public class HistoryFormCreateActivity extends AppCompatActivity {
      */
     String historyTypeValue, gradeValue, illnessValue, personalTypeValue, descriptionValue, medValue, dateiniValue, viaTypeValue;
 
-    public static String patientID;
-    public static String codHC;
+    public static String patientID, codHC, token;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +48,8 @@ public class HistoryFormCreateActivity extends AppCompatActivity {
         Intent intent = getIntent();
         patientID = intent.getStringExtra("patientID");
         codHC = intent.getStringExtra("patientHistory");
+        token = intent.getStringExtra("token");
+        Log.i(LOG_TAG, "TOKEN => history form " + token);
 
         title = (TextView) findViewById(R.id.title);
         title.setText("Crear antecedente");
@@ -117,10 +119,10 @@ public class HistoryFormCreateActivity extends AppCompatActivity {
         newHistory.add(new BasicNameValuePair("history_type", historyTypeValue));
 
         try{
-            PostAsyncTask pat = new PostAsyncTask(url, path);
+            PostAsyncTask pat = new PostAsyncTask(url, path, token);
             pat.execute(newHistory);
             String response = pat.get();
-            Log.i(LOG_TAG, "Server response: " +response);
+            Log.i(LOG_TAG, "Server response: history post " +response);
             HashMapTransformation hmt = new HashMapTransformation(null);
 
             // This contains form validation json array :O

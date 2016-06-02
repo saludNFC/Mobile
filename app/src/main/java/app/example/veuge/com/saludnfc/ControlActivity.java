@@ -14,7 +14,7 @@ import java.util.HashMap;
 
 public class ControlActivity extends AppCompatActivity {
 
-    public static String codHC, controlID;
+    public static String codHC, controlID, token;
     private final String LOG_TAG = HistoryActivity.class.getSimpleName();
     public HashMap[] control;
     public TextView controlTitle;
@@ -31,6 +31,7 @@ public class ControlActivity extends AppCompatActivity {
         Intent intent = getIntent();
         codHC = intent.getStringExtra("historia_clinica");
         controlID = intent.getStringExtra("control");
+        token = intent.getStringExtra("token");
 
         String url = ((Variables) this.getApplication()).getUrl();
         String path = "api/paciente/" + codHC + "/controles/" + controlID;
@@ -40,7 +41,7 @@ public class ControlActivity extends AppCompatActivity {
         HashMapTransformation hmt = new HashMapTransformation(control);
 
         try{
-            GetAsyncTask gat = new GetAsyncTask(url, path);
+            GetAsyncTask gat = new GetAsyncTask(url, path, token);
             gat.execute();
             resp = gat.get();
             JSONArray controlArray = hmt.getJsonFromString(resp);

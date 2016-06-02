@@ -34,10 +34,12 @@ public class GetAsyncTask extends AsyncTask<Void, Void, String> {
                         // api/paciente/xxx-123456/controles/1
                         // api/paciente/xxx-123456/consultas
                         // api/paciente/xxx-123456/consultas/2
+    public String token;
 
-    public GetAsyncTask(String urlParam, String pathParam){
+    public GetAsyncTask(String urlParam, String pathParam, String tokenParam){
         this.url = urlParam;
         this.path = pathParam;
+        this.token = tokenParam;
     }
 
     public HttpClient httpClient;
@@ -55,6 +57,7 @@ public class GetAsyncTask extends AsyncTask<Void, Void, String> {
     protected String doInBackground(Void... params) {
         httpClient = new DefaultHttpClient();
         httpGet = new HttpGet(url + path);
+        httpGet.setHeader("Authorization", "Bearer " + token);
         response = "";
 
         try{

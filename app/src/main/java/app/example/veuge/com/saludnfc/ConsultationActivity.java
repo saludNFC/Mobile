@@ -13,8 +13,7 @@ import java.util.HashMap;
 
 public class ConsultationActivity extends AppCompatActivity {
 
-    public static String codHC, codConsulta;
-    private final String LOG_TAG = ConsultationActivity.class.getSimpleName();
+    public static String codHC, codConsulta, token;
     public HashMap[] consultation;
     public TextView consultationTitle;
     public ViewGroup consultationMain;
@@ -31,6 +30,7 @@ public class ConsultationActivity extends AppCompatActivity {
         Intent intent = getIntent();
         codHC = intent.getStringExtra("historia_clinica");
         codConsulta = intent.getStringExtra("consultaID");
+        token = intent.getStringExtra("token");
 
         String url = ((Variables) this.getApplication()).getUrl();
         String path = "api/paciente/" + codHC + "/consultas/" + codConsulta;
@@ -39,7 +39,7 @@ public class ConsultationActivity extends AppCompatActivity {
         HashMapTransformation hmt = new HashMapTransformation(consultation);
 
         try{
-            GetAsyncTask gat = new GetAsyncTask(url, path);
+            GetAsyncTask gat = new GetAsyncTask(url, path, token);
             gat.execute();
             resp = gat.get();
             JSONArray consultationArray = hmt.getJsonFromString(resp);
