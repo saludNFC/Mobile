@@ -1,10 +1,16 @@
 package app.example.veuge.com.saludnfc;
 
 import android.content.Intent;
+import android.nfc.NdefMessage;
+import android.nfc.NdefRecord;
+import android.nfc.NfcAdapter;
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 
@@ -13,7 +19,7 @@ import java.util.HashMap;
 public class PatientActivity extends AppCompatActivity {
 
     public HashMap[] patient; // array of length 1
-    public static String patientID, codHC, token;
+    public static String patientID, codHC, token, payload;
 
     TextView name, misc, history, ci, blood;
 
@@ -31,9 +37,30 @@ public class PatientActivity extends AppCompatActivity {
         blood = (TextView) findViewById(R.id.patient_bloodtype);
 
         Intent intent = getIntent();
-        patientID = intent.getStringExtra("patientID");
-        codHC = intent.getStringExtra("patientHistory");
-        token = intent.getStringExtra("token");
+        String x = intent.getAction();
+        Toast.makeText(this, "Action: " + x, Toast.LENGTH_LONG).show();
+
+        if(intent.getAction() == null){
+            patientID = intent.getStringExtra("patientID");
+            codHC = intent.getStringExtra("patientHistory");
+            token = intent.getStringExtra("token");
+        }
+        else {
+            if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(getIntent().getAction())) {
+                NdefMessage[] messages = getNdefMessages(getIntent());
+                for (int i = 0; i < messages.length; i++) {
+                    for (int j = 0; j < messages[0].getRecords().length; j++) {
+                        NdefRecord record = messages[i].getRecords()[j];
+                        payload = new String(record.getPayload());
+
+                        String delimiter = ":";
+                        String[] temp = payload.split(delimiter);
+                        codHC = temp[0];
+                        patientID = temp[1];
+                    }
+                }
+            }
+        }
 
         String url = ((Variables) this.getApplication()).getUrl();
         String path = "api/paciente/" + codHC;
@@ -65,7 +92,6 @@ public class PatientActivity extends AppCompatActivity {
             blood.setText(patient[0].get(12).toString());
         }
     }
-
 
     public void patientFormCreate(View view){
         Intent intent = new Intent(PatientActivity.this, PatientFormCreateActivity.class);
@@ -99,5 +125,47 @@ public class PatientActivity extends AppCompatActivity {
         intent.putExtra("patientHistory", codHC);
         intent.putExtra("token", token);
         startActivity(intent);
+    }
+
+    public void patientRecord(View view){
+        Intent intent = new Intent(PatientActivity.this, NfcWriterActivity.class);
+
+        intent.putExtra("patientID", patientID);
+        intent.putExtra("patientHistory", codHC);
+        intent.putExtra("patientName", patient[0].get(4).toString() + " " + patient[0].get(5).toString());
+        intent.putExtra("token", token);
+
+        startActivity(intent);
+    }
+
+    NdefMessage[] getNdefMessages(Intent intent) {
+        // Parse the intent
+        NdefMessage[] msgs = null;
+        if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(intent.getAction())) {
+            Parcelable[] rawMsgs = intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES);
+            if (rawMsgs != null) {
+                msgs = new NdefMessage[rawMsgs.length];
+                for (int i = 0; i < rawMsgs.length; i++) {
+                    msgs[i] = (NdefMessage) rawMsgs[i];
+                }
+            }
+            else {
+                // Unknown tag type
+                byte[] empty = new byte[] {};
+                NdefRecord record = new NdefRecord(NdefRecord.TNF_UNKNOWN, empty, empty, empty);
+                NdefMessage msg = new NdefMessage(new NdefRecord[] {
+                        record
+                });
+                msgs = new NdefMessage[] {
+                        msg
+                };
+            }
+        }
+        else {
+            Log.d("NFC Transportation", "Unknown intent.");
+            finish();
+        }
+
+        return msgs;
     }
 }

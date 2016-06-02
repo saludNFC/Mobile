@@ -3,6 +3,11 @@
     package="app.example.veuge.com.saludnfc">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.NFC" />
+
+    <uses-feature
+        android:name="android.hardware.nfc"
+        android:required="false" />
 
     <!-- To auto-complete the email text field in the login form with the user's emails -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
@@ -16,20 +21,23 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity
-            android:name=".LoginActivity">
+        <activity android:name=".LoginActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".PatientsActivity">
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
+        <activity android:name=".PatientsActivity" />
+        <activity android:name=".PatientActivity">
+            <intent-filter>
+                <action android:name="android.nfc.action.NDEF_DISCOVERED" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:scheme="vnd.android.nfc"
+                    android:host="ext"
+                    android:pathPrefix="/saludnfc.com:mobile"/>
+            </intent-filter>
         </activity>
-        <activity android:name=".PatientActivity" />
         <activity android:name=".PatientFormCreateActivity" />
         <activity android:name=".HistoriesActivity" />
         <activity android:name=".ControlsActivity" />
@@ -40,6 +48,16 @@
         <activity android:name=".HistoryFormCreateActivity" />
         <activity android:name=".ControlFormCreateActivity" />
         <activity android:name=".ConsultationFormCreateActivity" />
+        <activity android:name=".NfcWriterActivity" />
+        <!--<activity android:name=".NfcReaderActivity">
+            <intent-filter>
+                <action android:name="android.nfc.action.NDEF_DISCOVERED" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:scheme="vnd.android.nfc"
+                    android:host="ext"
+                    android:pathPrefix="/saludnfc.com:mobile"/>
+            </intent-filter>
+        </activity>-->
     </application>
 
 </manifest>

@@ -12,6 +12,9 @@ import android.widget.Spinner;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,6 +58,7 @@ public class PatientFormCreateActivity extends AppCompatActivity {
     public void patientSave(View view) {
         String url = ((Variables) this.getApplication()).getUrl();
         String path = "api/paciente";
+        JSONArray responseArray = null;
 
         ci_value = ci.getText().toString();
         ciemision_value = emision.getSelectedItem().toString();
@@ -88,11 +92,29 @@ public class PatientFormCreateActivity extends AppCompatActivity {
             HashMapTransformation hmt = new HashMapTransformation(null);
 
             // This contains form validation json array :O
-            JSONArray responseArray = hmt.getJsonFromString(response);
+            responseArray = hmt.getJsonFromString(response);
             Log.i("SERVER RESPONSE => ", "patient post " + responseArray);
         }
         catch (Exception ex){
             ex.printStackTrace();
         }
+        for(int i = 0; i < responseArray.length(); i++){
+            try{
+                JSONObject x = responseArray.getJSONObject(i);
+                String newPatient = x.getString("message");
+                Log.i("New patient code! ", newPatient);
+
+                Intent intent = new Intent(PatientFormCreateActivity.this, PatientActivity.class);
+                intent.putExtra("token", token);
+                intent.putExtra("patientID", "");
+                intent.putExtra("patientHistory", newPatient);
+
+                startActivity(intent);
+            }
+            catch (JSONException je){
+                je.printStackTrace();
+            }
+        }
+
     }
 }
