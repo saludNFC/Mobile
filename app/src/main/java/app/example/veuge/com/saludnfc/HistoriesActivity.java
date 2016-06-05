@@ -56,6 +56,7 @@ public class HistoriesActivity extends AppCompatActivity {
 
                 intent.putExtra("historia_clinica", codHC);
                 intent.putExtra("antecedente", patientHistory);
+                intent.putExtra("token", token);
 
                 startActivity(intent);
             }

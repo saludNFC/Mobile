@@ -11,6 +11,8 @@ import org.json.JSONArray;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import app.example.veuge.com.saludnfc.models.Patient;
+
 public class PatientsActivity extends AppCompatActivity{
 
     private ArrayAdapter<String> mPatientAdapter;

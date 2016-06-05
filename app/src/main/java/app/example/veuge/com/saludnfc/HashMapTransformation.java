@@ -1,7 +1,5 @@
 package app.example.veuge.com.saludnfc;
 
-import android.util.Log;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -229,7 +227,6 @@ public class HashMapTransformation {
             login.put(1, loginObject.getString(OWM_MESSAGE));
             login.put(2, loginObject.getString(OWM_STATUS_CODE));
         }
-
         return login;
     }
 }

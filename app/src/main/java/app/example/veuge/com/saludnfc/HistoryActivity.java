@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
@@ -44,6 +45,7 @@ public class HistoryActivity extends AppCompatActivity {
             gat.execute();
             resp = gat.get();
             JSONArray historyArray = hmt.getJsonFromString(resp);
+            Log.i(LOG_TAG, "JSON ARRAY => " + historyArray);
             history = hmt.buildHistoryHashmap(historyArray);
         }
         catch (Exception ex){
