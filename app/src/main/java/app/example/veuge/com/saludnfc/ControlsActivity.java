@@ -11,12 +11,13 @@ import android.widget.ListView;
 import org.json.JSONArray;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+
+import app.example.veuge.com.saludnfc.models.Control;
 
 public class ControlsActivity extends AppCompatActivity {
 
     private ArrayAdapter<String> mControlAdapter;
-    private HashMap[] controls;
+    private Control[] controls;
 
     private static String patientID, codHC, token;
 
@@ -51,7 +52,7 @@ public class ControlsActivity extends AppCompatActivity {
 
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                String patientControl = controls[position].get(1).toString();
+                String patientControl = controls[position].id;
                 Intent intent = new Intent(ControlsActivity.this, ControlActivity.class);
 
                 intent.putExtra("historia_clinica", codHC);
@@ -70,7 +71,7 @@ public class ControlsActivity extends AppCompatActivity {
         String url = ((Variables) this.getApplication()).getUrl();
         String path = "api/paciente/" + codHC + "/controles";
         String resp;
-        HashMapTransformation hmt = new HashMapTransformation(controls);
+        ObjectTransformation hmt = new ObjectTransformation();
 
         try {
             GetAsyncTask gat = new GetAsyncTask(url, path, token);
@@ -78,7 +79,7 @@ public class ControlsActivity extends AppCompatActivity {
             resp = gat.get();
 
             JSONArray controlsArray = hmt.getJsonFromString(resp);
-            controls = hmt.buildControlHashmap(controlsArray);
+            controls = hmt.buildControlObject(controlsArray);
         }
         catch (Exception ex) {
             ex.printStackTrace();
@@ -88,8 +89,28 @@ public class ControlsActivity extends AppCompatActivity {
             mControlAdapter.clear();
 
             for (int i = 0; i < controls.length; i++) {
-                mControlAdapter.add(controls[i].get(1).toString() + ", " + controls[i].get(2).toString()
-                        + ", " + controls[i].get(3).toString());
+                if(controls[i].controlType.equals("Vacunacion")){
+                    mControlAdapter.add(controls[i].id + ", " + controls[i].controlType + ", " +
+                            controls[i].vaccine + ", " + controls[i].viaVac);
+                }
+
+                if(controls[i].controlType.equals("Crecimiento")){
+                    mControlAdapter.add(controls[i].id + ", " + controls[i].controlType + ", " +
+                            controls[i].weight + "Kg, " + controls[i].height + "cm.");
+                }
+
+                if(controls[i].controlType.equals("Triaje")){
+                    mControlAdapter.add(controls[i].id + ", " + controls[i].controlType + ", " +
+                            controls[i].temperature + "°C, " + controls[i].heartRate);
+                }
+                if(controls[i].controlType.equals("Ginecologico")){
+                    mControlAdapter.add(controls[i].id + ", " + controls[i].controlType + ", " +
+                            controls[i].lastMenst + ", " + controls[i].lastMamo);
+                }
+                if(controls[i].controlType.equals("Geriatrico")){
+                    mControlAdapter.add(controls[i].id + ", " + controls[i].controlType + ", " +
+                            controls[i].geriatric + ", " + controls[i].notes);
+                }
             }
         }
     }

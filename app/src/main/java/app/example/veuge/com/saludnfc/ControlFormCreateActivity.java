@@ -10,9 +10,12 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -158,14 +161,108 @@ public class ControlFormCreateActivity extends AppCompatActivity {
             PostAsyncTask pat = new PostAsyncTask(url, path, token);
             pat.execute(newControl);
             String response = pat.get();
-            Log.i(LOG_TAG, "Server response: control post " +response);
-            HashMapTransformation hmt = new HashMapTransformation(null);
-
-            // This contains form validation json array :O
-            //JSONArray responseArray = hmt.getJsonFromString(response);
+            evaluateResponse(response);
         }
         catch (Exception ex){
             ex.printStackTrace();
+        }
+    }
+
+    private void evaluateResponse(String response) {
+        ObjectTransformation hmt = new ObjectTransformation();
+
+        try{
+            JSONArray responseArray = hmt.getJsonFromString(response);
+            for(int i = 0; i < responseArray.length(); i ++){
+                if(responseArray.getString(i).contains("message")){
+                    savedSuccess();
+                }
+                else{
+                    savedFailed(responseArray);
+                }
+            }
+        }
+        catch (JSONException ex){
+            ex.printStackTrace();
+        }
+    }
+    private void savedSuccess() {
+        Toast.makeText(this, "Control creado correctamente", Toast.LENGTH_LONG).show();
+
+        Intent intent = new Intent(ControlFormCreateActivity.this, ControlsActivity.class);
+        intent.putExtra("token", token);
+        intent.putExtra("patientHistory", codHC);
+        startActivity(intent);
+    }
+
+    private void savedFailed(JSONArray errorResponse) throws JSONException {
+        for(int i = 0; i < errorResponse.length(); i++){
+            int length = errorResponse.getString(i).length();
+            String error = errorResponse.getString(i).substring(1, length - 1);
+            if(errorResponse.getString(i).contains("vaccine")){
+                vaccineField.setError(error);
+                vaccineField.requestFocus();
+                break;
+            }
+            if(errorResponse.getString(i).contains("dosis")){
+                dosisField.setError(error);
+                dosisField.requestFocus();
+                break;
+            }
+
+            if(errorResponse.getString(i).contains("height")){
+                heightField.setError(error);
+                heightField.requestFocus();
+                break;
+            }
+            if(errorResponse.getString(i).contains("weight")){
+                weightField.setError(error);
+                weightField.requestFocus();
+                break;
+            }
+
+            if(errorResponse.getString(i).contains("temperature")){
+                temperatureField.setError(error);
+                temperatureField.requestFocus();
+                break;
+            }
+            if(errorResponse.getString(i).contains("heart_rate")){
+                heartrateField.setError(error);
+                heartrateField.requestFocus();
+                break;
+            }
+            if(errorResponse.getString(i).contains("sistole")){
+                sistoleField.setError(error);
+                sistoleField.requestFocus();
+                break;
+            }
+            if(errorResponse.getString(i).contains("diastole")){
+                diastoleField.setError(error);
+                diastoleField.requestFocus();
+                break;
+            }
+
+            if(errorResponse.getString(i).contains("last_menst")){
+                lastmenstField.setError(error);
+                lastmenstField.requestFocus();
+                break;
+            }
+            if(errorResponse.getString(i).contains("last_mamo")){
+                lastmamoField.setError(error);
+                lastmamoField.requestFocus();
+                break;
+            }
+            if(errorResponse.getString(i).contains("last_papa")){
+                lastpapaField.setError(error);
+                lastpapaField.requestFocus();
+                break;
+            }
+
+            if(errorResponse.getString(i).contains("notes")){
+                notesField.setError(error);
+                notesField.requestFocus();
+                break;
+            }
         }
     }
 }
