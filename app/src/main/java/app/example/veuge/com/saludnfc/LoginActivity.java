@@ -212,7 +212,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         HashMapTransformation hmt = new HashMapTransformation(null);
         try {
             JSONArray x = hmt.getJsonFromString(response);
-            Log.i(LOG_TAG, "JSON Array " + x);
             HashMap login = hmt.buildLoginHashmap(x);
 
             if(login.containsKey(2)){

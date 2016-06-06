@@ -16,47 +16,91 @@
         android:id="@+id/title"
         android:layout_gravity="center_horizontal" />
 
-
-    <EditText
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textMultiLine"
-        android:hint="@string/anamnesis"
-        android:id="@+id/anamnesis_field" />
+        android:id="@+id/scrollView" >
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textMultiLine"
-        android:hint="@string/physical"
-        android:id="@+id/physical_field" />
+        <LinearLayout
+            android:id="@+id/consultation_form"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textMultiLine"
-        android:hint="@string/diagnosis"
-        android:id="@+id/diagnosis_field" />
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textMultiLine"
-        android:hint="@string/treatment"
-        android:id="@+id/treatment_field" />
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textMultiLine"
-        android:hint="@string/justification"
-        android:id="@+id/justification_field" />
+                <EditText
+                    android:id="@+id/anamnesis_field"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textMultiLine"
+                    android:hint="@string/anamnesis" />
+            </android.support.design.widget.TextInputLayout>
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:id="@+id/consultation_save"
-        android:onClick="consultationSave"/>
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textMultiLine"
+                    android:hint="@string/physical"
+                    android:id="@+id/physical_field" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textMultiLine"
+                    android:hint="@string/diagnosis"
+                    android:id="@+id/diagnosis_field" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textMultiLine"
+                    android:hint="@string/treatment"
+                    android:id="@+id/treatment_field" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textMultiLine"
+                    android:hint="@string/justification"
+                    android:id="@+id/justification_field" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:id="@+id/consultation_save"
+                android:onClick="consultationSave"/>
+
+        </LinearLayout>
+
+    </ScrollView>
 
 </LinearLayout>

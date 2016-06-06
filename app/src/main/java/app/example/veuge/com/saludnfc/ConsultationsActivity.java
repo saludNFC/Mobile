@@ -14,10 +14,13 @@ import org.json.JSONArray;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import app.example.veuge.com.saludnfc.models.Consultation;
+
 public class ConsultationsActivity extends AppCompatActivity {
 
     private ArrayAdapter<String> mConsultationAdapter;
-    private HashMap[] consultations;
+    //private HashMap[] consultations;
+    private Consultation[] consultations;
 
     private String codHC, patientID, token;
 
@@ -52,7 +55,8 @@ public class ConsultationsActivity extends AppCompatActivity {
 
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                String consultationID = consultations[position].get(1).toString();
+                //String consultationID = consultations[position].get(1).toString();
+                String consultationID = consultations[position].id;
                 Intent intent = new Intent(ConsultationsActivity.this, ConsultationActivity.class);
 
                 intent.putExtra("historia_clinica", codHC);
@@ -68,7 +72,8 @@ public class ConsultationsActivity extends AppCompatActivity {
         String url = ((Variables) this.getApplication()).getUrl();
         String path = "api/paciente/" + codHC + "/consultas";
         String resp;
-        HashMapTransformation hmt = new HashMapTransformation(consultations);
+        //HashMapTransformation hmt = new HashMapTransformation(consultations);
+        ObjectTransformation hmt = new ObjectTransformation();
 
         try {
             GetAsyncTask gat = new GetAsyncTask(url, path, token);
@@ -76,7 +81,7 @@ public class ConsultationsActivity extends AppCompatActivity {
             resp = gat.get();
 
             JSONArray consultationArray = hmt.getJsonFromString(resp);
-            consultations = hmt.buildConsultationHashmap(consultationArray);
+            consultations = hmt.buildConsultationObject(consultationArray);
         }
         catch (Exception ex) {
             ex.printStackTrace();
@@ -86,8 +91,8 @@ public class ConsultationsActivity extends AppCompatActivity {
             mConsultationAdapter.clear();
 
             for (int i = 0; i < consultations.length; i++) {
-                mConsultationAdapter.add(consultations[i].get(1).toString() + ", " + trimString(consultations[i].get(2).toString()) + ", "
-                        + trimString(consultations[i].get(3).toString()) + ", " + trimString(consultations[i].get(4).toString()));
+                mConsultationAdapter.add(trimString(consultations[i].anamnesis) + ", "
+                        + trimString(consultations[i].physicalExam) + ", " + trimString(consultations[i].diagnosis));
             }
         }
     }
