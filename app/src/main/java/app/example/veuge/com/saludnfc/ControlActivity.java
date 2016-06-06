@@ -23,7 +23,7 @@ public class ControlActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_control);
+        setContentView(R.layout.control);
 
         controlMain = (ViewGroup) findViewById((R.id.control_main));
         controlTitle = (TextView) findViewById(R.id.control_title);

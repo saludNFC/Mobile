@@ -12,10 +12,8 @@ import android.widget.Toast;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.util.TextUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +32,7 @@ public class ConsultationFormCreateActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_consultation_form);
+        setContentView(R.layout.consultation_form);
 
         Intent intent = getIntent();
         patientID = intent.getStringExtra("patientID");
@@ -99,14 +97,11 @@ public class ConsultationFormCreateActivity extends AppCompatActivity {
         try{
             JSONArray responseArray = hmt.getJsonFromString(response);
             for(int i = 0; i < responseArray.length(); i ++){
-                Log.i(LOG_TAG, "RESPONSE ARRAY AT POSITION " + responseArray.getString(i));
                 if(responseArray.getString(i).contains("message")){
                     savedSuccess();
-                    Log.i(LOG_TAG, "SUCCESS");
                 }
                 else{
                     savedFailed(responseArray);
-                    Log.i(LOG_TAG, "FAILED");
                 }
             }
         }
@@ -130,12 +125,18 @@ public class ConsultationFormCreateActivity extends AppCompatActivity {
             String error = errorResponse.getString(i).substring(1, length - 1);
             if(errorResponse.getString(i).contains("anamnesis")){
                 anamnesisField.setError(error);
+                anamnesisField.requestFocus();
+                break;
             }
             if(errorResponse.getString(i).contains("diagnosis")){
                 diagnosisField.setError(error);
+                diagnosisField.requestFocus();
+                break;
             }
             if(errorResponse.getString(i).contains("physical")){
                 physicalField.setError(error);
+                physicalField.requestFocus();
+                break;
             }
         }
     }

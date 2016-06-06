@@ -44,7 +44,7 @@ public class ControlFormCreateActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_control_form);
+        setContentView(R.layout.control_form);
 
         Intent intent = getIntent();
         patientID = intent.getStringExtra("patientID");

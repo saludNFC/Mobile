@@ -10,17 +10,17 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class HistoryFormCreateActivity extends AppCompatActivity {
-
-    private final String LOG_TAG = HistoryFormCreateActivity.class.getSimpleName();
 
     TextView title;
     Spinner historyType;
@@ -43,13 +43,12 @@ public class HistoryFormCreateActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_history_form);
+        setContentView(R.layout.history_form);
 
         Intent intent = getIntent();
         patientID = intent.getStringExtra("patientID");
         codHC = intent.getStringExtra("patientHistory");
         token = intent.getStringExtra("token");
-        Log.i(LOG_TAG, "TOKEN => history form " + token);
 
         title = (TextView) findViewById(R.id.title);
         title.setText("Crear antecedente");
@@ -122,14 +121,70 @@ public class HistoryFormCreateActivity extends AppCompatActivity {
             PostAsyncTask pat = new PostAsyncTask(url, path, token);
             pat.execute(newHistory);
             String response = pat.get();
-            Log.i(LOG_TAG, "Server response: history post " +response);
-            HashMapTransformation hmt = new HashMapTransformation(null);
-
-            // This contains form validation json array :O
-            //JSONArray responseArray = hmt.getJsonFromString(response);
+            evaluateResponse(response);
         }
         catch (Exception ex){
             ex.printStackTrace();
+        }
+    }
+
+    private void evaluateResponse(String response) {
+        ObjectTransformation hmt = new ObjectTransformation();
+
+        try{
+            JSONArray responseArray = hmt.getJsonFromString(response);
+            for(int i = 0; i < responseArray.length(); i ++){
+                if(responseArray.getString(i).contains("message")){
+                    savedSuccess();
+                }
+                else{
+                    savedFailed(responseArray);
+                }
+            }
+        }
+        catch (JSONException ex){
+            ex.printStackTrace();
+        }
+    }
+
+    private void savedSuccess() {
+        Toast.makeText(this, "Antecedente médico creado correctamente", Toast.LENGTH_LONG).show();
+
+        Intent intent = new Intent(HistoryFormCreateActivity.this, HistoriesActivity.class);
+        intent.putExtra("token", token);
+        intent.putExtra("patientHistory", codHC);
+        startActivity(intent);
+    }
+
+    private void savedFailed(JSONArray errorResponse) throws JSONException {
+        for(int i = 0; i < errorResponse.length(); i++){
+            int length = errorResponse.getString(i).length();
+            String error = errorResponse.getString(i).substring(1, length - 1);
+            if(errorResponse.getString(i).contains("grade")){
+                gradeField.setError(error);
+                gradeField.requestFocus();
+                break;
+            }
+            if(errorResponse.getString(i).contains("illness")){
+                illnessField.setError(error);
+                illnessField.requestFocus();
+                break;
+            }
+            if(errorResponse.getString(i).contains("description")){
+                descriptionField.setError(error);
+                descriptionField.requestFocus();
+                break;
+            }
+            if(errorResponse.getString(i).contains("med")){
+                medField.setError(error);
+                medField.requestFocus();
+                break;
+            }
+            if(errorResponse.getString(i).contains("date_ini")){
+                dateiniField.setError(error);
+                dateiniField.requestFocus();
+                break;
+            }
         }
     }
 }

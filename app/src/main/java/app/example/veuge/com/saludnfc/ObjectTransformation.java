@@ -6,6 +6,7 @@ import org.json.JSONObject;
 import java.util.Iterator;
 
 import app.example.veuge.com.saludnfc.models.Consultation;
+import app.example.veuge.com.saludnfc.models.History;
 
 /**
  * Created by veuge on 05-06-16.
@@ -56,5 +57,49 @@ public class ObjectTransformation {
             consultations[i] = consultation;
         }
         return consultations;
+    }
+
+    public History[] buildHistoryObject(JSONArray historyDetails) throws JSONException{
+        final String OWM_PATIENT = "identificador_paciente";
+        final String OWM_ID = "identificador_antecedente";
+        final String OWM_TYPE = "tipo_antecedente";
+        final String OWM_GRADE = "grado_parentesco";
+        final String OWM_ILLNESS = "enfermedad";
+        final String OWM_PERSONAL_TYPE = "tipo_personal";
+        final String OWM_DESC = "descripcion";
+        final String OWM_MED = "medicamento";
+        final String OWM_VIA = "via_administracion";
+        final String OWM_DATE_INI = "fecha_inicio";
+
+        String id = "", type = "", grade = "", illness = "", ptype = "", desc = "", med = "", via = "", date = "";
+
+        History[] histories = new History[historyDetails.length()];
+        for(int i = 0; i < historyDetails.length(); i++){
+
+            JSONObject historyObject = historyDetails.getJSONObject(i);
+
+            id = historyObject.getString(OWM_ID);
+            type = historyObject.getString(OWM_TYPE);
+
+            switch (historyObject.get(OWM_TYPE).toString()){
+                case "Familiar":
+                    grade = historyObject.getString(OWM_GRADE);
+                    illness = historyObject.getString(OWM_ILLNESS);
+                    break;
+
+                case "Personal":
+                    ptype = historyObject.getString(OWM_PERSONAL_TYPE);
+                    desc = historyObject.getString(OWM_DESC);
+                    break;
+                case "Medicamentos":
+                    med = historyObject.getString(OWM_MED);
+                    via = historyObject.getString(OWM_VIA);
+                    date = historyObject.getString(OWM_DATE_INI);
+                    break;
+            }
+            History history = new History(id, type, grade, illness, ptype, desc, med, via, date);
+            histories[i] = history;
+        }
+        return histories;
     }
 }

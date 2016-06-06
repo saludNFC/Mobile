@@ -9,16 +9,15 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import org.json.JSONArray;
 import java.util.ArrayList;
-import java.util.HashMap;
+
+import app.example.veuge.com.saludnfc.models.History;
 
 public class HistoriesActivity extends AppCompatActivity {
 
     private ArrayAdapter<String> mHistoryAdapter;
-    private HashMap[] histories;
-    public final static String EXTRA_TEXT = "app.example.veuge.com.saludnfc.TEXT";
+    private History[] histories;
 
     private static String patientID, codHC, token;
-    private final String LOG_TAG = HistoriesActivity.class.getSimpleName();
 
     @Override
     public void onStart() {
@@ -29,7 +28,7 @@ public class HistoriesActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_histories);
+        setContentView(R.layout.histories);
 
         Intent intent = getIntent();
         patientID = intent.getStringExtra("patientID");
@@ -51,7 +50,7 @@ public class HistoriesActivity extends AppCompatActivity {
 
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                String patientHistory = histories[position].get(1).toString();
+                String patientHistory = histories[position].id;
                 Intent intent = new Intent(HistoriesActivity.this, HistoryActivity.class);
 
                 intent.putExtra("historia_clinica", codHC);
@@ -67,7 +66,8 @@ public class HistoriesActivity extends AppCompatActivity {
         String url = ((Variables) this.getApplication()).getUrl();
         String path = "api/paciente/" + codHC + "/antecedentes";
         String resp;
-        HashMapTransformation hmt = new HashMapTransformation(histories);
+        //HashMapTransformation hmt = new HashMapTransformation(histories);
+        ObjectTransformation hmt = new ObjectTransformation();
 
         try {
             GetAsyncTask gat = new GetAsyncTask(url, path, token);
@@ -75,7 +75,7 @@ public class HistoriesActivity extends AppCompatActivity {
             resp = gat.get();
 
             JSONArray historiesArray = hmt.getJsonFromString(resp);
-            histories = hmt.buildHistoryHashmap(historiesArray);
+            histories = hmt.buildHistoryObject(historiesArray);
         }
         catch (Exception ex) {
             ex.printStackTrace();
@@ -85,8 +85,22 @@ public class HistoriesActivity extends AppCompatActivity {
             mHistoryAdapter.clear();
 
             for (int i = 0; i < histories.length; i++) {
-                mHistoryAdapter.add(histories[i].get(1).toString() + ", " + histories[i].get(2).toString() + ", "
-                        + histories[i].get(3).toString() + ", " + histories[i].get(4).toString());
+                //mHistoryAdapter.add(histories[i].id + ", " + histories[i].historyType);
+
+                if(histories[i].historyType.equals("Familiar")){
+                    mHistoryAdapter.add(histories[i].id + ", " + histories[i].historyType + ", " +
+                            histories[i].grade + ", " + histories[i].illness);
+                }
+
+                if(histories[i].historyType.equals("Personal")){
+                    mHistoryAdapter.add(histories[i].id + ", " + histories[i].historyType + ", " +
+                            histories[i].typePersonal + ", " + histories[i].description);
+                }
+
+                if(histories[i].historyType.equals("Medicamentos")){
+                    mHistoryAdapter.add(histories[i].id + ", " + histories[i].historyType + ", " +
+                            histories[i].med + ", " + histories[i].via);
+                }
             }
         }
     }

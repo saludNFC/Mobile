@@ -18,9 +18,9 @@ public class CustomListener implements AdapterView.OnItemSelectedListener {
     }
 
     public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-        Toast.makeText(parent.getContext(),
-                "OnItemSelectedListener : " + parent.getItemAtPosition(pos).toString(),
-                Toast.LENGTH_LONG).show();
+//        Toast.makeText(parent.getContext(),
+//                "OnItemSelectedListener : " + parent.getItemAtPosition(pos).toString(),
+//                Toast.LENGTH_LONG).show();
 
         this.selected = parent.getItemAtPosition(pos).toString();
 //        Toast.makeText(parent.getContext(),

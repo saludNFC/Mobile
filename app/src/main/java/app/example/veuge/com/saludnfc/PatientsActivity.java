@@ -11,8 +11,6 @@ import org.json.JSONArray;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import app.example.veuge.com.saludnfc.models.Patient;
-
 public class PatientsActivity extends AppCompatActivity{
 
     private ArrayAdapter<String> mPatientAdapter;
@@ -28,7 +26,7 @@ public class PatientsActivity extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_patients);
+        setContentView(R.layout.patients);
 
         Intent intent = getIntent();
         token = intent.getStringExtra("token");

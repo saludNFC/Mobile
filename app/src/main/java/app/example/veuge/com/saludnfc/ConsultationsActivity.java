@@ -3,7 +3,6 @@ package app.example.veuge.com.saludnfc;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -12,7 +11,6 @@ import android.widget.ListView;
 import org.json.JSONArray;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import app.example.veuge.com.saludnfc.models.Consultation;
 
@@ -33,7 +31,7 @@ public class ConsultationsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_consultations);
+        setContentView(R.layout.consultations);
 
         Intent intent = getIntent();
         codHC = intent.getStringExtra("patientHistory");

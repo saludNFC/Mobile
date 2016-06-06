@@ -33,7 +33,7 @@ public class PatientFormCreateActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_patient_form);
+        setContentView(R.layout.patient_form);
 
         Intent intent = getIntent();
         token = intent.getStringExtra("token");

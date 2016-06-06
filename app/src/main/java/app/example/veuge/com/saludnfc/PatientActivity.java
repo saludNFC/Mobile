@@ -28,7 +28,7 @@ public class PatientActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_patient);
+        setContentView(R.layout.patient);
 
         name = (TextView) findViewById(R.id.patient_name);
         misc = (TextView) findViewById(R.id.patient_misc);

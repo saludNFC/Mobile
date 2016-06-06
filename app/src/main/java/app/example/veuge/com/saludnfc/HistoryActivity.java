@@ -10,13 +10,14 @@ import android.widget.TextView;
 
 import org.json.JSONArray;
 
-import java.util.HashMap;
+import app.example.veuge.com.saludnfc.models.History;
 
 public class HistoryActivity extends AppCompatActivity {
 
     public static String codHC, antecedente, token;
     private final String LOG_TAG = HistoryActivity.class.getSimpleName();
-    public HashMap[] history;
+    //public HashMap[] history;
+    public History[] history;
     public TextView historyTitle;
     public ViewGroup historyMain;
 
@@ -24,7 +25,7 @@ public class HistoryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_history);
+        setContentView(R.layout.history);
 
         historyMain = (ViewGroup) findViewById((R.id.history_main));
         historyTitle = (TextView) findViewById(R.id.history_title);
@@ -38,7 +39,7 @@ public class HistoryActivity extends AppCompatActivity {
         String path = "api/paciente/" + codHC + "/antecedentes/" + antecedente;
 
         String resp;
-        HashMapTransformation hmt = new HashMapTransformation(history);
+        ObjectTransformation hmt = new ObjectTransformation();
 
         try{
             GetAsyncTask gat = new GetAsyncTask(url, path, token);
@@ -46,30 +47,30 @@ public class HistoryActivity extends AppCompatActivity {
             resp = gat.get();
             JSONArray historyArray = hmt.getJsonFromString(resp);
             Log.i(LOG_TAG, "JSON ARRAY => " + historyArray);
-            history = hmt.buildHistoryHashmap(historyArray);
+            history = hmt.buildHistoryObject(historyArray);
         }
         catch (Exception ex){
             ex.printStackTrace();
         }
         if(history != null){
-            historyTitle.setText("Antedecente " + history[0].get(1).toString());
+            historyTitle.setText("Antedecente " + history[0].id);
             //historyType.setText(history[0].get(2).toString());
             Context context = getApplicationContext();
 
-            ((Variables)this.getApplication()).insertViews(context, historyMain, "Tipo:", history[0].get(2).toString());
+            ((Variables)this.getApplication()).insertViews(context, historyMain, "Tipo:", history[0].historyType);
 
-            if((history[0].get(2).toString()).equals("Familiar")){
-                ((Variables)this.getApplication()).insertViews(context, historyMain, "Grado parentesco:", history[0].get(3).toString());
-                ((Variables)this.getApplication()).insertViews(context, historyMain, "Enfermedad:", history[0].get(4).toString());
+            if((history[0].historyType).equals("Familiar")){
+                ((Variables)this.getApplication()).insertViews(context, historyMain, "Grado parentesco:", history[0].grade);
+                ((Variables)this.getApplication()).insertViews(context, historyMain, "Enfermedad:", history[0].illness);
             }
-            else if((history[0].get(2).toString()).equals("Personal")){
-                ((Variables)this.getApplication()).insertViews(context, historyMain, "Tipo personal:", history[0].get(3).toString());
-                ((Variables)this.getApplication()).insertViews(context, historyMain, "Descripción:", history[0].get(4).toString());
+            else if((history[0].historyType).equals("Personal")){
+                ((Variables)this.getApplication()).insertViews(context, historyMain, "Tipo personal:", history[0].typePersonal);
+                ((Variables)this.getApplication()).insertViews(context, historyMain, "Descripción:", history[0].description);
             }
-            else if((history[0].get(2).toString()).equals("Medicamentos")){
-                ((Variables)this.getApplication()).insertViews(context, historyMain, "Medicina:", history[0].get(3).toString());
-                ((Variables)this.getApplication()).insertViews(context, historyMain, "Via administración:", history[0].get(4).toString());
-                ((Variables)this.getApplication()).insertViews(context, historyMain, "Fecha inicio:", history[0].get(5).toString());
+            else if((history[0].historyType).equals("Medicamentos")){
+                ((Variables)this.getApplication()).insertViews(context, historyMain, "Medicina:", history[0].med);
+                ((Variables)this.getApplication()).insertViews(context, historyMain, "Via administración:", history[0].via);
+                ((Variables)this.getApplication()).insertViews(context, historyMain, "Fecha inicio:", history[0].dateIni);
             }
         }
     }
