@@ -20,32 +20,20 @@ public class Patient {
     public String ocupacion;
     public String grupo_sanguineo;
 
-    public Patient(String id, String historia, String ci, String emision, String nombre, String apellido,
-                   String fecha_nac, String lugar_nac, String grupo_sanguineo){
+    public Patient(String id, String historia, String ci, String emision, String nombre, String apellido, String sexo,
+                   String fecha_nac, String lugar_nac, String gi, String ec, String oc, String grupo_sanguineo){
         this.id = id;
         this.historia = historia;
         this.ci = ci;
         this.emision = emision;
         this.nombre = nombre;
         this.apellido = apellido;
+        this.sexo = sexo;
         this.fecha_nac = fecha_nac;
         this.lugar_nac = lugar_nac;
+        this.grado_instruccion = gi;
+        this.estado_civil = ec;
+        this.ocupacion = oc;
         this.grupo_sanguineo = grupo_sanguineo;
-    }
-
-    public void setSexo(String gender){
-        this.sexo = gender;
-    }
-
-    public void setGradoInstruccion(String instruction){
-        this.grado_instruccion = instruction;
-    }
-
-    public void setEstadoCivil(String civil){
-        this.estado_civil = civil;
-    }
-
-    public void setOcupacion(String ocupation){
-        this.ocupacion = ocupation;
     }
 }

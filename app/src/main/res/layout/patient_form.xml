@@ -16,32 +16,31 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scrollbars="vertical">
+
         <LinearLayout
             android:layout_width="fill_parent"
             android:orientation="vertical"
             android:layout_height="wrap_content">
 
-            <!--TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Editar informacion de paciente"
-                android:id="@+id/textView"
-                android:layout_below="@+id/ScrollView01"
-                android:layout_centerHorizontal="true" />-->
-
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="match_parent"
                 android:layout_weight="4">
 
-                <EditText
+
+                <android.support.design.widget.TextInputLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="3"
-                    android:id="@+id/ci_field"
-                    android:hint="@string/ci_field"/>
+                    android:layout_weight="3">
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:id="@+id/ci_field"
+                        android:hint="@string/ci_field"/>
+                </android.support.design.widget.TextInputLayout>
 
                 <Spinner
                     android:layout_width="wrap_content"
@@ -52,27 +51,37 @@
 
             </LinearLayout>
 
-            <EditText
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:ems="10"
-                android:id="@+id/name_field"
-                android:hint="@string/name_field"
-                android:layout_below="@+id/ScrollView01"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
+                android:layout_height="wrap_content">
 
-            <EditText
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:ems="10"
+                    android:id="@+id/name_field"
+                    android:hint="@string/name_field"
+                    android:layout_below="@+id/ScrollView01"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:ems="10"
-                android:id="@+id/lastname_field"
-                android:hint="@string/lastname_field"
-                android:layout_below="@+id/editText"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:ems="10"
+                    android:id="@+id/lastname_field"
+                    android:hint="@string/lastname_field"
+                    android:layout_below="@+id/editText"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true" />
+            </android.support.design.widget.TextInputLayout>
 
             <Spinner
                 android:layout_width="match_parent"
@@ -80,16 +89,21 @@
                 android:id="@+id/gender_field"
                 android:entries="@array/gender_options" />
 
-            <EditText
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="date"
-                android:ems="10"
-                android:id="@+id/birthday_field"
-                android:hint="@string/birthday_field"
-                android:layout_below="@+id/ScrollView01"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="date"
+                    android:ems="10"
+                    android:id="@+id/birthday_field"
+                    android:hint="@string/birthday_field"
+                    android:layout_below="@+id/ScrollView01"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true" />
+            </android.support.design.widget.TextInputLayout>
 
             <Spinner
                 android:layout_width="match_parent"
@@ -97,29 +111,44 @@
                 android:id="@+id/birthplace_field"
                 android:entries="@array/birthplace_options" />
 
-            <EditText
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/instruction_field"
-                android:hint="@string/instruction_field"
-                android:layout_below="@+id/editText6"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
+                android:layout_height="wrap_content">
 
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/civilstatus_field"
-                android:hint="@string/civilstatus_field"/>
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/instruction_field"
+                    android:hint="@string/instruction_field"
+                    android:layout_below="@+id/editText6"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true" />
+            </android.support.design.widget.TextInputLayout>
 
-            <EditText
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/ocupation_field"
-                android:hint="@string/ocupation_field"
-                android:layout_below="@+id/ScrollView01"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/civilstatus_field"
+                    android:hint="@string/civilstatus_field"/>
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/ocupation_field"
+                    android:hint="@string/ocupation_field"
+                    android:layout_below="@+id/ScrollView01"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true" />
+            </android.support.design.widget.TextInputLayout>
 
             <Spinner
                 android:layout_width="match_parent"

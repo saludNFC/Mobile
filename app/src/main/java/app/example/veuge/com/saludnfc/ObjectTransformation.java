@@ -10,6 +10,7 @@ import java.util.Iterator;
 import app.example.veuge.com.saludnfc.models.Consultation;
 import app.example.veuge.com.saludnfc.models.Control;
 import app.example.veuge.com.saludnfc.models.History;
+import app.example.veuge.com.saludnfc.models.Patient;
 
 /**
  * Created by veuge on 05-06-16.
@@ -176,5 +177,47 @@ public class ObjectTransformation {
             controls[i] = control;
         }
         return controls;
+    }
+
+    public Patient[] buildPatientObject(JSONArray patientDetails) throws JSONException{
+        final String OWM_ID = "identificador_paciente";
+        final String OWM_HC = "historia_clinica";
+        final String OWM_CI = "ci";
+        final String OWM_EMISION = "emision";
+        final String OWM_NAME = "nombre";
+        final String OWM_LASTNAME = "apellido";
+        final String OWM_GENDER = "sexo";
+        final String OWM_BIRTHDAY = "fecha_nacimiento";
+        final String OWM_BIRTHPLACE = "lugar_nacimiento";
+        final String OWM_INSTRUCTION = "grado_instruccion";
+        final String OWM_CIVILSTATUS = "estado_civil";
+        final String OWM_OCUPATION = "ocupacion";
+        final String OWM_BLOODTYPE = "grupo_sanguineo";
+
+        Patient[] patients = new Patient[patientDetails.length()];
+
+        for(int i = 0; i < patientDetails.length(); i++){
+            String id = "", hc = "", ci = "", emi = "", nom = "", ape = "", sex = "", fnac = "",
+                    lnac = "", gi = "", ec = "", ocu = "", gs = "";
+            JSONObject patientObject = patientDetails.getJSONObject(i);
+
+            id = patientObject.getString(OWM_ID);
+            hc = patientObject.getString(OWM_HC);
+            ci = patientObject.getString(OWM_CI);
+            emi = patientObject.getString(OWM_EMISION);
+            nom = patientObject.getString(OWM_NAME);
+            ape = patientObject.getString(OWM_LASTNAME);
+            sex = patientObject.getString(OWM_GENDER);
+            fnac = patientObject.getString(OWM_BIRTHDAY);
+            lnac = patientObject.getString(OWM_BIRTHPLACE);
+            gi = patientObject.getString(OWM_INSTRUCTION);
+            ec = patientObject.getString(OWM_CIVILSTATUS);
+            ocu = patientObject.getString(OWM_OCUPATION);
+            gs = patientObject.getString(OWM_BLOODTYPE);
+
+            Patient patient = new Patient(id, hc, ci, emi, nom, ape, sex, fnac, lnac, gi, ec, ocu, gs);
+            patients[i] = patient;
+        }
+        return patients;
     }
 }

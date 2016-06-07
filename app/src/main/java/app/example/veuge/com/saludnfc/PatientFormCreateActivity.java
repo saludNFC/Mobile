@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -37,7 +38,6 @@ public class PatientFormCreateActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         token = intent.getStringExtra("token");
-        Log.i("TOKEN => ", "patient form " + token);
 
         saveButton = (Button) findViewById(R.id.patient_save);
         saveButton.setText("Crear Paciente");
@@ -64,12 +64,24 @@ public class PatientFormCreateActivity extends AppCompatActivity {
         ciemision_value = emision.getSelectedItem().toString();
         name_value = name.getText().toString();
         lastname_value = lastname.getText().toString();
-        gender_value = gender.getSelectedItem().toString();
+
+        if(! gender.getSelectedItem().toString().equals("")){
+            gender_value = gender.getSelectedItem().toString();
+        }
         birthday_value = birthday.getText().toString();
         birthplace_value = birthplace.getSelectedItem().toString();
-        instruction_value = instruction.getText().toString();
-        civilstatus_value = civilstatus.getText().toString();
-        ocupation_value = ocupation.getText().toString();
+
+        if(! instruction.getText().toString().equals("")){
+            instruction_value = instruction.getText().toString();
+        }
+
+        if(! civilstatus.getText().toString().equals("")){
+            civilstatus_value = civilstatus.getText().toString();
+        }
+
+        if(! ocupation.getText().toString().equals("")){
+            ocupation_value = ocupation.getText().toString();
+        }
         bloodtype_value = bloodtype.getSelectedItem().toString();
 
         List<NameValuePair> nameValuePair = new ArrayList<NameValuePair>(2);
@@ -89,32 +101,86 @@ public class PatientFormCreateActivity extends AppCompatActivity {
             PostAsyncTask pat = new PostAsyncTask(url, path, token);
             pat.execute(nameValuePair);
             String response = pat.get();
-            HashMapTransformation hmt = new HashMapTransformation(null);
-
-            // This contains form validation json array :O
-            responseArray = hmt.getJsonFromString(response);
-            Log.i("SERVER RESPONSE => ", "patient post " + responseArray);
+            evaluateResponse(response);
         }
         catch (Exception ex){
             ex.printStackTrace();
         }
-        for(int i = 0; i < responseArray.length(); i++){
-            try{
-                JSONObject x = responseArray.getJSONObject(i);
-                String newPatient = x.getString("message");
-                Log.i("New patient code! ", newPatient);
+//        for(int i = 0; i < responseArray.length(); i++){
+//            try{
+//                JSONObject x = responseArray.getJSONObject(i);
+//                String newPatient = x.getString("message");
+//                Log.i("New patient code! ", newPatient);
+//
+//                Intent intent = new Intent(PatientFormCreateActivity.this, PatientActivity.class);
+//                intent.putExtra("token", token);
+//                intent.putExtra("patientID", "");
+//                intent.putExtra("patientHistory", newPatient);
+//
+//                startActivity(intent);
+//            }
+//            catch (JSONException je){
+//                je.printStackTrace();
+//            }
+//        }
+    }
 
-                Intent intent = new Intent(PatientFormCreateActivity.this, PatientActivity.class);
-                intent.putExtra("token", token);
-                intent.putExtra("patientID", "");
-                intent.putExtra("patientHistory", newPatient);
+    private void evaluateResponse(String response) {
+        ObjectTransformation hmt = new ObjectTransformation();
 
-                startActivity(intent);
-            }
-            catch (JSONException je){
-                je.printStackTrace();
+        try{
+            JSONArray responseArray = hmt.getJsonFromString(response);
+            for(int i = 0; i < responseArray.length(); i ++){
+                if(responseArray.getString(i).contains("message")){
+                    JSONObject x = responseArray.getJSONObject(i);
+                    String newPatient = x.getString("message");
+                    savedSuccess(newPatient);
+                }
+                else{
+                    savedFailed(responseArray);
+                }
             }
         }
+        catch (JSONException ex){
+            ex.printStackTrace();
+        }
+    }
 
+    private void savedSuccess(String newPatient) {
+        Toast.makeText(this, "Paciente creado correctamente", Toast.LENGTH_LONG).show();
+
+        Intent intent = new Intent(PatientFormCreateActivity.this, PatientActivity.class);
+        intent.putExtra("token", token);
+        intent.putExtra("patientID", "");
+        intent.putExtra("patientHistory", newPatient);
+
+        startActivity(intent);
+    }
+
+    private void savedFailed(JSONArray errorResponse) throws JSONException {
+        for(int i = 0; i < errorResponse.length(); i++){
+            int length = errorResponse.getString(i).length();
+            String error = errorResponse.getString(i).substring(1, length - 1);
+            if(errorResponse.getString(i).contains("ci")){
+                ci.setError(error);
+                ci.requestFocus();
+                break;
+            }
+            if(errorResponse.getString(i).contains("nombre")){
+                name.setError(error);
+                name.requestFocus();
+                break;
+            }
+            if(errorResponse.getString(i).contains("apellido")){
+                lastname.setError(error);
+                lastname.requestFocus();
+                break;
+            }
+            if(errorResponse.getString(i).contains("fecha_nac")){
+                birthday.setError(error);
+                birthday.requestFocus();
+                break;
+            }
+        }
     }
 }

@@ -11,10 +11,12 @@ import org.json.JSONArray;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import app.example.veuge.com.saludnfc.models.Patient;
+
 public class PatientsActivity extends AppCompatActivity{
 
     private ArrayAdapter<String> mPatientAdapter;
-    private HashMap[] patients;
+    private Patient[] patients;
     private static String token;
 
     @Override
@@ -46,8 +48,8 @@ public class PatientsActivity extends AppCompatActivity{
 
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                String patientHistory = patients[position].get(1).toString();
-                String patientID = patients[position].get(0).toString();
+                String patientHistory = patients[position].historia;
+                String patientID = patients[position].id;
                 Intent intent = new Intent(PatientsActivity.this, PatientActivity.class);
 
                 intent.putExtra("patientID", patientID);
@@ -75,7 +77,7 @@ public class PatientsActivity extends AppCompatActivity{
         String url = ((Variables) this.getApplication()).getUrl();
         String path = "api/paciente";
         String resp;
-        HashMapTransformation hmt = new HashMapTransformation(patients);
+        ObjectTransformation hmt = new ObjectTransformation();
 
         try {
             GetAsyncTask gat = new GetAsyncTask(url, path, token);
@@ -83,7 +85,7 @@ public class PatientsActivity extends AppCompatActivity{
             resp = gat.get();
 
             JSONArray patientsArray = hmt.getJsonFromString(resp);
-            patients = hmt.buildPatientHashmap(patientsArray);
+            patients = hmt.buildPatientObject(patientsArray);
             //patients = hmt.getPatientDataFromJson(resp);
         }
         catch (Exception ex) {
@@ -93,7 +95,7 @@ public class PatientsActivity extends AppCompatActivity{
         if (patients != null) {
             mPatientAdapter.clear();
             for (int i = 0; i < patients.length; i++) {
-                mPatientAdapter.add(patients[i].get(5).toString() + ", " + patients[i].get(4).toString());
+                mPatientAdapter.add(patients[i].apellido + ", " + patients[i].nombre);
             }
         }
     }

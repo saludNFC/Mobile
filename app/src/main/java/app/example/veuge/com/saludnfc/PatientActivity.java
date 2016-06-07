@@ -16,9 +16,11 @@ import org.json.JSONArray;
 
 import java.util.HashMap;
 
+import app.example.veuge.com.saludnfc.models.Patient;
+
 public class PatientActivity extends AppCompatActivity {
 
-    public HashMap[] patient; // array of length 1
+    public Patient[] patient; // array of length 1
     public static String patientID, codHC, token, payload;
 
     TextView name, misc, history, ci, blood;
@@ -37,8 +39,6 @@ public class PatientActivity extends AppCompatActivity {
         blood = (TextView) findViewById(R.id.patient_bloodtype);
 
         Intent intent = getIntent();
-        String x = intent.getAction();
-        Toast.makeText(this, "Action: " + x, Toast.LENGTH_LONG).show();
 
         if(intent.getAction() == null){
             patientID = intent.getStringExtra("patientID");
@@ -66,30 +66,28 @@ public class PatientActivity extends AppCompatActivity {
         String path = "api/paciente/" + codHC;
 
         String resp;
-        HashMapTransformation hmt = new HashMapTransformation(patient);
+        ObjectTransformation hmt = new ObjectTransformation();
 
         try{
             GetAsyncTask gat = new GetAsyncTask(url, path, token);
             gat.execute();
             resp = gat.get();
             JSONArray patientArray = hmt.getJsonFromString(resp);
-            patient = hmt.buildPatientHashmap(patientArray);
+            patient = hmt.buildPatientObject(patientArray);
             //patient = hmt.getPatientDataFromJson(resp);
         }
         catch (Exception ex){
             ex.printStackTrace();
         }
         if(patient != null){
-            if (patient != null && patient[0].get(3) != null && patient[0].get(4) != null ) {
-                name.setText(patient[0].get(5).toString() + " " + patient[0].get(4).toString());
+           name.setText(patient[0].nombre + " " + patient[0].apellido);
 
-                misce += patient[0].get(6).toString() + ", " + patient[0].get(7).toString();
-                misc.setText(misce);
-            }
+           misce += patient[0].sexo + ", " + patient[0].fecha_nac;
+           misc.setText(misce);
 
-            history.setText(codHC);
-            ci.setText(patient[0].get(2).toString() + " " + patient[0].get(3).toString());
-            blood.setText(patient[0].get(12).toString());
+           history.setText(codHC);
+           ci.setText(patient[0].ci + " " + patient[0].emision);
+           blood.setText(patient[0].grupo_sanguineo);
         }
     }
 
@@ -132,7 +130,7 @@ public class PatientActivity extends AppCompatActivity {
 
         intent.putExtra("patientID", patientID);
         intent.putExtra("patientHistory", codHC);
-        intent.putExtra("patientName", patient[0].get(4).toString() + " " + patient[0].get(5).toString());
+        intent.putExtra("patientName", patient[0].nombre + " " + patient[0].apellido);
         intent.putExtra("token", token);
 
         startActivity(intent);
