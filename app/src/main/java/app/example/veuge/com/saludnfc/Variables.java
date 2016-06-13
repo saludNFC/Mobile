@@ -14,6 +14,7 @@ import android.widget.TextView;
  */
 public class Variables extends Application {
     private String url = "http://192.168.1.164:8000/";
+    //private String url = "http://192.168.43.4:8000/";
 
     public String getUrl(){
         return url;

@@ -88,17 +88,17 @@ public class HistoriesActivity extends AppCompatActivity {
                 //mHistoryAdapter.add(histories[i].id + ", " + histories[i].historyType);
 
                 if(histories[i].historyType.equals("Familiar")){
-                    mHistoryAdapter.add(histories[i].id + ", " + histories[i].historyType + ", " +
+                    mHistoryAdapter.add(histories[i].createdAt + ", " + histories[i].historyType + ", " +
                             histories[i].grade + ", " + histories[i].illness);
                 }
 
                 if(histories[i].historyType.equals("Personal")){
-                    mHistoryAdapter.add(histories[i].id + ", " + histories[i].historyType + ", " +
+                    mHistoryAdapter.add(histories[i].createdAt + ", " + histories[i].historyType + ", " +
                             histories[i].typePersonal + ", " + histories[i].description);
                 }
 
                 if(histories[i].historyType.equals("Medicamentos")){
-                    mHistoryAdapter.add(histories[i].id + ", " + histories[i].historyType + ", " +
+                    mHistoryAdapter.add(histories[i].createdAt + ", " + histories[i].historyType + ", " +
                             histories[i].med + ", " + histories[i].via);
                 }
             }

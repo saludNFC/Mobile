@@ -22,8 +22,6 @@ import java.util.List;
 
 public class ControlFormCreateActivity extends AppCompatActivity {
 
-    private final String LOG_TAG = ControlFormCreateActivity.class.getSimpleName();
-
     TextView title;
     Spinner controlType;
     LinearLayout vaccineForm, growthForm, triageForm, gineForm, geriForm;
@@ -33,14 +31,15 @@ public class ControlFormCreateActivity extends AppCompatActivity {
      * Form fields!
      */
     EditText vaccineField, dosisField, weightField, heightField, temperatureField, heartrateField, sistoleField,
-            diastoleField, lastmenstField, lastmamoField, sexactField, lastpapaField, notesField;
+            diastoleField, lastmenstField, lastmamoField, sexactField, lastpapaField, notesField, createdField;
     Spinner viaTypeField, geriTypeField;
 
     /**
      * Input values
      */
-    String controlTypeValue, vaccineValue, viaValue, dosisValue, weightValue, heightValue, temperatureValue, heartrateValue,
-            sistoleValue, diastoleValue, lastmenstValue, lastmamoValue, sexactValue, lastpapaValue, geriTypeValue, notesValue;
+    String controlTypeValue, vaccineValue, viaValue, dosisValue, weightValue, heightValue, temperatureValue,
+            heartrateValue, sistoleValue, diastoleValue, lastmenstValue, lastmamoValue, sexactValue, lastpapaValue,
+            geriTypeValue, notesValue, createdValue;
 
     public static String patientID, codHC, token;
 
@@ -72,6 +71,8 @@ public class ControlFormCreateActivity extends AppCompatActivity {
         gineForm.setVisibility(View.GONE);
         geriForm = (LinearLayout) findViewById(R.id.geri_form);
         geriForm.setVisibility(View.GONE);
+
+        createdField = (EditText) findViewById(R.id.createdc_field);
 
         vaccineField = (EditText) findViewById(R.id.vaccine_field);
         viaTypeField = (Spinner) findViewById(R.id.viav_field);
@@ -106,6 +107,8 @@ public class ControlFormCreateActivity extends AppCompatActivity {
         String url = ((Variables) this.getApplication()).getUrl();
         String path = "api/paciente/" + codHC + "/controles";
         List<NameValuePair> newControl = new ArrayList<NameValuePair>(2);
+
+        createdValue = createdField.getText().toString();
 
         if(vaccineForm.getVisibility() == View.VISIBLE) {
             controlTypeValue = "Vacunacion";
@@ -156,11 +159,13 @@ public class ControlFormCreateActivity extends AppCompatActivity {
             newControl.add(new BasicNameValuePair("notes", notesValue));
         }
         newControl.add(new BasicNameValuePair("control_type", controlTypeValue));
+        newControl.add(new BasicNameValuePair("created_at", createdValue));
 
         try{
             PostAsyncTask pat = new PostAsyncTask(url, path, token);
             pat.execute(newControl);
             String response = pat.get();
+            Log.i("RESPONSE ===> ", response);
             evaluateResponse(response);
         }
         catch (Exception ex){

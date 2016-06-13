@@ -37,7 +37,6 @@ public class ControlActivity extends AppCompatActivity {
 
         String url = ((Variables) this.getApplication()).getUrl();
         String path = "api/paciente/" + codHC + "/controles/" + controlID;
-        Log.i(LOG_TAG, "URL => " + url + path);
 
         String resp;
         ObjectTransformation hmt = new ObjectTransformation();
@@ -58,6 +57,7 @@ public class ControlActivity extends AppCompatActivity {
             Context context = getApplicationContext();
 
             ((Variables)this.getApplication()).insertViews(context, controlMain, "Tipo:", control[0].controlType);
+            ((Variables)this.getApplication()).insertViews(context, controlMain, "Fecha registro:", control[0].createdAt);
 
             if((control[0].controlType).equals("Vacunacion")){
                 ((Variables)this.getApplication()).insertViews(context, controlMain, "Vacuna:", control[0].vaccine);

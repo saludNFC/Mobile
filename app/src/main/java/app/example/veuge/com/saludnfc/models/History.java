@@ -6,10 +6,10 @@ package app.example.veuge.com.saludnfc.models;
 public class History {
     public String id, historyType, grade, illness,
             typePersonal, description,
-            med, via, dateIni;
+            med, via, dateIni, createdAt;
 
     public History(String id, String ht, String gr, String ill, String tp, String des, String med, String via,
-                   String date){
+                   String date, String ca){
         this.id = id;
         this.historyType = ht;
         this.grade = gr;
@@ -19,6 +19,7 @@ public class History {
         this.med = med;
         this.via = via;
         this.dateIni = date;
+        this.createdAt = ca;
     }
 
     /**

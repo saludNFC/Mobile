@@ -9,13 +9,15 @@ public class Control {
             weight, height,
             temperature, heartRate, sistole, diastole,
             lastMenst, lastMamo, sex, lastPapa,
-            geriatric, notes;
+            geriatric, notes, createdAt;
 
-    public Control(String id, String ct, String vac, String viaV, String dosis, String we, String he,
-            String temp, String hr, String sis, String dia, String menst, String mamo, String sex, String papa, String ger, String notes){
+    public Control(String id, String ct, String vac, String viaV, String dosis, String we, String he, String temp,
+                   String hr, String sis, String dia, String menst, String mamo, String sex, String papa, String ger,
+                   String notes, String ca){
 
         this.id = id;
         this.controlType = ct;
+        this.createdAt = ca;
         this.vaccine = vac;
         this.viaVac = viaV;
         this.dosis = dosis;

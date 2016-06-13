@@ -44,6 +44,7 @@ public class ObjectTransformation {
         final String OWM_DIAGNOSIS = "diagnostico";
         final String OWM_TREATMENT = "tratamiento";
         final String OWM_JUSTIFICATION = "justificacion";
+        final String OWM_DATE = "fecha_creacion";
 
         Consultation[] consultations = new Consultation[consultationArray.length()];
 
@@ -56,8 +57,9 @@ public class ObjectTransformation {
             String diagnosis = consultationObject.getString(OWM_DIAGNOSIS);
             String treatment = consultationObject.getString(OWM_TREATMENT);
             String justification = consultationObject.getString(OWM_JUSTIFICATION);
+            String created = consultationObject.getString(OWM_DATE);
 
-            Consultation consultation = new Consultation(id, anamnesis, physicalE, diagnosis, treatment, justification);
+            Consultation consultation = new Consultation(id, anamnesis, physicalE, diagnosis, treatment, justification, created);
             consultations[i] = consultation;
         }
         return consultations;
@@ -74,8 +76,10 @@ public class ObjectTransformation {
         final String OWM_MED = "medicamento";
         final String OWM_VIA = "via_administracion";
         final String OWM_DATE_INI = "fecha_inicio";
+        final String OWM_DATE = "fecha_creacion";
 
-        String id = "", type = "", grade = "", illness = "", ptype = "", desc = "", med = "", via = "", date = "";
+        String id = "", type = "", grade = "", illness = "", ptype = "", desc = "", med = "", via = "", date = "",
+                created = "";
 
         History[] histories = new History[historyDetails.length()];
         for(int i = 0; i < historyDetails.length(); i++){
@@ -84,6 +88,7 @@ public class ObjectTransformation {
 
             id = historyObject.getString(OWM_ID);
             type = historyObject.getString(OWM_TYPE);
+            created = historyObject.getString(OWM_DATE);
 
             switch (historyObject.get(OWM_TYPE).toString()){
                 case "Familiar":
@@ -101,7 +106,7 @@ public class ObjectTransformation {
                     date = historyObject.getString(OWM_DATE_INI);
                     break;
             }
-            History history = new History(id, type, grade, illness, ptype, desc, med, via, date);
+            History history = new History(id, type, grade, illness, ptype, desc, med, via, date, created);
             histories[i] = history;
         }
         return histories;
@@ -131,6 +136,8 @@ public class ObjectTransformation {
         final String OWM_GER_TYPE = "tipo_valoracion";
         final String OWM_NOTES = "descripcion";
 
+        final String OWM_DATE = "fecha_creacion";
+
         Control[] controls = new Control[controlDetails.length()];
 
         for(int i = 0; i < controlDetails.length(); i++){
@@ -139,10 +146,12 @@ public class ObjectTransformation {
                     weight = "", height = "",
                     temperature = "", heartRate = "", sistole = "", diastole = "",
                     menst = "", mamo ="", sex = "", papa = "",
-                    typeGeri = "", notes = "";
+                    typeGeri = "", notes = "",
+                    ca = "";
 
             id = controlObject.getString(OWM_ID);
             type = controlObject.getString(OWM_TYPE);
+            ca = controlObject.getString(OWM_DATE);
 
             switch (controlObject.get(OWM_TYPE).toString()){
                 case "Vacunacion":
@@ -173,7 +182,7 @@ public class ObjectTransformation {
                     break;
             }
             Control control = new Control(id, type, vaccine, viaVac, dosis, weight, height, temperature, heartRate,
-                    sistole, diastole, menst, mamo, sex, papa, typeGeri, notes);
+                    sistole, diastole, menst, mamo, sex, papa, typeGeri, notes, ca);
             controls[i] = control;
         }
         return controls;

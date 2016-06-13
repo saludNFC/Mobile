@@ -25,9 +25,9 @@ public class ConsultationFormCreateActivity extends AppCompatActivity {
     TextView title;
     Button saveBtn;
 
-    EditText anamnesisField, physicalField, diagnosisField, treatmentField, justificationField;
+    EditText createdField, anamnesisField, physicalField, diagnosisField, treatmentField, justificationField;
 
-    String anamnesisValue, physicalValue, diagnosisValue, treatmentValue, justificationValue;
+    String createdValue, anamnesisValue, physicalValue, diagnosisValue, treatmentValue, justificationValue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +45,7 @@ public class ConsultationFormCreateActivity extends AppCompatActivity {
         saveBtn = (Button) findViewById(R.id.consultation_save);
         saveBtn.setText("Crear consulta médica");
 
+        createdField = (EditText) findViewById(R.id.createdco_field);
         anamnesisField = (EditText) findViewById(R.id.anamnesis_field);
         physicalField = (EditText) findViewById(R.id.physical_field);
         diagnosisField = (EditText) findViewById(R.id.diagnosis_field);
@@ -63,6 +64,7 @@ public class ConsultationFormCreateActivity extends AppCompatActivity {
         physicalField.setError(null);
         diagnosisField.setError(null);
 
+        createdValue = createdField.getText().toString();
         anamnesisValue = anamnesisField.getText().toString();
         physicalValue = physicalField.getText().toString();
         diagnosisValue = diagnosisField.getText().toString();
@@ -74,6 +76,7 @@ public class ConsultationFormCreateActivity extends AppCompatActivity {
         }
 
         List<NameValuePair> newConsultation = new ArrayList<NameValuePair>(2);
+        newConsultation.add(new BasicNameValuePair("created_at", createdValue));
         newConsultation.add(new BasicNameValuePair("anamnesis", anamnesisValue));
         newConsultation.add(new BasicNameValuePair("physical_exam", physicalValue));
         newConsultation.add(new BasicNameValuePair("diagnosis", diagnosisValue));
@@ -84,6 +87,7 @@ public class ConsultationFormCreateActivity extends AppCompatActivity {
         try{
             pat.execute(newConsultation);
             String response = pat.get();
+            Log.i(LOG_TAG, "RESPONSE ===> " + response);
             evaluateServerResponse(response);
         }
         catch (Exception ex){

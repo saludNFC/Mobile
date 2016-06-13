@@ -30,13 +30,14 @@ public class HistoryFormCreateActivity extends AppCompatActivity {
     /**
      * Form fields!
      */
-    EditText gradeField, illnessField, descriptionField, medField, dateiniField;
+    EditText gradeField, illnessField, descriptionField, medField, dateiniField, createdField;
     Spinner personalTypeField, viaTypeField;
 
     /**
      * Input values
      */
-    String historyTypeValue, gradeValue, illnessValue, personalTypeValue, descriptionValue, medValue, dateiniValue, viaTypeValue;
+    String historyTypeValue, gradeValue, illnessValue, personalTypeValue, descriptionValue, medValue, dateiniValue,
+            viaTypeValue, createdValue;
 
     public static String patientID, codHC, token;
 
@@ -65,6 +66,8 @@ public class HistoryFormCreateActivity extends AppCompatActivity {
         medForm = (LinearLayout) findViewById(R.id.medicine_form);
         medForm.setVisibility(View.GONE);
 
+        createdField = (EditText) findViewById(R.id.created_field);
+
         gradeField = (EditText) findViewById(R.id.grade_field);
         illnessField = (EditText) findViewById(R.id.illness_field);
 
@@ -88,6 +91,8 @@ public class HistoryFormCreateActivity extends AppCompatActivity {
         String url = ((Variables) this.getApplication()).getUrl();
         String path = "api/paciente/" + codHC + "/antecedentes";
         List<NameValuePair> newHistory = new ArrayList<NameValuePair>(2);
+
+        createdValue = createdField.getText().toString();
 
         if(familiarForm.getVisibility() == View.VISIBLE) {
             historyTypeValue = "Familiar";
@@ -116,6 +121,7 @@ public class HistoryFormCreateActivity extends AppCompatActivity {
             newHistory.add(new BasicNameValuePair("date_ini", dateiniValue));
         }
         newHistory.add(new BasicNameValuePair("history_type", historyTypeValue));
+        newHistory.add(new BasicNameValuePair("created_at", createdValue));
 
         try{
             PostAsyncTask pat = new PostAsyncTask(url, path, token);

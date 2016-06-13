@@ -90,25 +90,25 @@ public class ControlsActivity extends AppCompatActivity {
 
             for (int i = 0; i < controls.length; i++) {
                 if(controls[i].controlType.equals("Vacunacion")){
-                    mControlAdapter.add(controls[i].id + ", " + controls[i].controlType + ", " +
+                    mControlAdapter.add(controls[i].createdAt + ", " + controls[i].controlType + ", " +
                             controls[i].vaccine + ", " + controls[i].viaVac);
                 }
 
                 if(controls[i].controlType.equals("Crecimiento")){
-                    mControlAdapter.add(controls[i].id + ", " + controls[i].controlType + ", " +
+                    mControlAdapter.add(controls[i].createdAt + ", " + controls[i].controlType + ", " +
                             controls[i].weight + "Kg, " + controls[i].height + "cm.");
                 }
 
                 if(controls[i].controlType.equals("Triaje")){
-                    mControlAdapter.add(controls[i].id + ", " + controls[i].controlType + ", " +
+                    mControlAdapter.add(controls[i].createdAt + ", " + controls[i].controlType + ", " +
                             controls[i].temperature + "°C, " + controls[i].heartRate);
                 }
                 if(controls[i].controlType.equals("Ginecologico")){
-                    mControlAdapter.add(controls[i].id + ", " + controls[i].controlType + ", " +
+                    mControlAdapter.add(controls[i].createdAt + ", " + controls[i].controlType + ", " +
                             controls[i].lastMenst + ", " + controls[i].lastMamo);
                 }
                 if(controls[i].controlType.equals("Geriatrico")){
-                    mControlAdapter.add(controls[i].id + ", " + controls[i].controlType + ", " +
+                    mControlAdapter.add(controls[i].createdAt + ", " + controls[i].controlType + ", " +
                             controls[i].geriatric + ", " + controls[i].notes);
                 }
             }

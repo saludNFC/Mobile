@@ -55,6 +55,7 @@ public class ConsultationActivity extends AppCompatActivity {
             consultationTitle.setText("Detalle de Consulta Médica " + consultation[0].id);
             Context context = getApplicationContext();
 
+            ((Variables)this.getApplication()).insertViews(context, consultationMain, "Fecha registro:", consultation[0].createdAt);
             ((Variables)this.getApplication()).insertViews(context, consultationMain, "Anamnesis:", consultation[0].anamnesis);
             ((Variables)this.getApplication()).insertViews(context, consultationMain, "Examen físico:", consultation[0].physicalExam);
             ((Variables)this.getApplication()).insertViews(context, consultationMain, "Diagnóstico:", consultation[0].diagnosis);

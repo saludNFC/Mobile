@@ -89,7 +89,8 @@ public class ConsultationsActivity extends AppCompatActivity {
             mConsultationAdapter.clear();
 
             for (int i = 0; i < consultations.length; i++) {
-                mConsultationAdapter.add(trimString(consultations[i].anamnesis) + ", "
+                mConsultationAdapter.add(consultations[i].createdAt + ", "
+                        + trimString(consultations[i].anamnesis) + ", "
                         + trimString(consultations[i].physicalExam) + ", " + trimString(consultations[i].diagnosis));
             }
         }

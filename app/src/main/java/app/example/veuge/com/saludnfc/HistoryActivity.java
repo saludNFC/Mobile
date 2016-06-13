@@ -46,7 +46,6 @@ public class HistoryActivity extends AppCompatActivity {
             gat.execute();
             resp = gat.get();
             JSONArray historyArray = hmt.getJsonFromString(resp);
-            Log.i(LOG_TAG, "JSON ARRAY => " + historyArray);
             history = hmt.buildHistoryObject(historyArray);
         }
         catch (Exception ex){
@@ -58,6 +57,7 @@ public class HistoryActivity extends AppCompatActivity {
             Context context = getApplicationContext();
 
             ((Variables)this.getApplication()).insertViews(context, historyMain, "Tipo:", history[0].historyType);
+            ((Variables)this.getApplication()).insertViews(context, historyMain, "Fecha registro:", history[0].createdAt);
 
             if((history[0].historyType).equals("Familiar")){
                 ((Variables)this.getApplication()).insertViews(context, historyMain, "Grado parentesco:", history[0].grade);
