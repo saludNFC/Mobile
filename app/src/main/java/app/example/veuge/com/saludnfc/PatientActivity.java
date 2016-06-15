@@ -91,6 +91,15 @@ public class PatientActivity extends AppCompatActivity {
         }
     }
 
+    public void patientContact(View view){
+        Intent intent = new Intent(PatientActivity.this, ContactActivity.class);
+
+        intent.putExtra("patientID", patientID);
+        intent.putExtra("patientHistory", codHC);
+        intent.putExtra("token", token);
+        startActivity(intent);
+    }
+
     public void patientFormCreate(View view){
         Intent intent = new Intent(PatientActivity.this, PatientFormCreateActivity.class);
         intent.putExtra("historia", codHC);

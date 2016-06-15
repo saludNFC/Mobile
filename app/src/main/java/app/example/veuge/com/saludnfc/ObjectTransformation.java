@@ -4,10 +4,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.HashMap;
 import java.util.Iterator;
 
 import app.example.veuge.com.saludnfc.models.Consultation;
+import app.example.veuge.com.saludnfc.models.Contact;
 import app.example.veuge.com.saludnfc.models.Control;
 import app.example.veuge.com.saludnfc.models.History;
 import app.example.veuge.com.saludnfc.models.Patient;
@@ -186,6 +186,31 @@ public class ObjectTransformation {
             controls[i] = control;
         }
         return controls;
+    }
+
+    public Contact[] buildContactObject(JSONArray contactArray) throws JSONException{
+        final String OWM_ID = "identificador_contacto";
+        final String OWM_NAME = "nombres";
+        final String OWM_LASTNAME = "apellidos";
+        final String OWM_RELATIONSHIP = "relacion_parentesco";
+        final String OWM_PHONE = "telefono";
+
+        Contact[] contacts = new Contact[contactArray.length()];
+
+        for(int i = 0; i < contactArray.length(); i++){
+            JSONObject contactObject = contactArray.getJSONObject(i);
+
+            String id = contactObject.getString(OWM_ID);
+            String name = contactObject.getString(OWM_NAME);
+            String lastname = contactObject.getString(OWM_LASTNAME);
+            String relationship = contactObject.getString(OWM_RELATIONSHIP);
+            String phone = contactObject.getString(OWM_PHONE);
+
+            //Contact contact = new Contact(id, name, lastname, relationship, phone);
+            Contact contact = new Contact(id, name, lastname, relationship, phone);
+            contacts[i] = contact;
+        }
+        return contacts;
     }
 
     public Patient[] buildPatientObject(JSONArray patientDetails) throws JSONException{

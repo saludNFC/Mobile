@@ -32,10 +32,13 @@
         <activity android:name=".PatientActivity">
             <intent-filter>
                 <action android:name="android.nfc.action.NDEF_DISCOVERED" />
+
                 <category android:name="android.intent.category.DEFAULT" />
-                <data android:scheme="vnd.android.nfc"
+
+                <data
                     android:host="ext"
-                    android:pathPrefix="/saludnfc.com:mobile"/>
+                    android:pathPrefix="/saludnfc.com:mobile"
+                    android:scheme="vnd.android.nfc" />
             </intent-filter>
         </activity>
         <activity android:name=".PatientFormCreateActivity" />
@@ -49,7 +52,8 @@
         <activity android:name=".ControlFormCreateActivity" />
         <activity android:name=".ConsultationFormCreateActivity" />
         <activity android:name=".NfcWriterActivity" />
-        <!--<activity android:name=".NfcReaderActivity">
+        <!--
+        <activity android:name=".NfcReaderActivity">
             <intent-filter>
                 <action android:name="android.nfc.action.NDEF_DISCOVERED" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -57,7 +61,9 @@
                     android:host="ext"
                     android:pathPrefix="/saludnfc.com:mobile"/>
             </intent-filter>
-        </activity>-->
+        </activity>
+        -->
+        <activity android:name=".ContactActivity"></activity>
     </application>
 
 </manifest>

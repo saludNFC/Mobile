@@ -14,7 +14,7 @@ import app.example.veuge.com.saludnfc.models.Consultation;
 public class ConsultationActivity extends AppCompatActivity {
 
     public static String codHC, codConsulta, token;
-    //public HashMap[] consultation;
+    //public HashMap[] contacts;
     public Consultation[] consultation;
 
     public TextView consultationTitle;
@@ -38,7 +38,7 @@ public class ConsultationActivity extends AppCompatActivity {
         String path = "api/paciente/" + codHC + "/consultas/" + codConsulta;
 
         String resp;
-        //HashMapTransformation hmt = new HashMapTransformation(consultation);
+        //HashMapTransformation hmt = new HashMapTransformation(contacts);
         ObjectTransformation hmt = new ObjectTransformation();
 
         try{

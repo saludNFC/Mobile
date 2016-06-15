@@ -146,7 +146,12 @@
     <string name="error_invalid_password">This password is too short</string>
     <string name="error_incorrect_password">This password is incorrect</string>
     <string name="error_field_required">This field is required</string>
-    <string name="permission_rationale">"Contacts permissions are needed for providing email
-        completions."
-    </string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email completions."</string>
+
+    <!-- CONTACT -->
+    <string name="contact_title">Contacto</string>
+    <string name="contact_name">Nombre</string>
+    <string name="contact_lastname">Apellido</string>
+    <string name="contact_relationship">Relación de parentesco</string>
+    <string name="contact_phone">Telefono</string>
 </resources>

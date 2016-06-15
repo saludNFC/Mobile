@@ -1,10 +1,9 @@
 package app.example.veuge.com.saludnfc.models;
 
 /**
- * Created by veuge on 05-06-16.
+ * Created by veuge on 14-06-16.
  */
 public class Consultation {
-
     public String id, idPaciente, anamnesis, physicalExam, diagnosis, treatment, justification, createdAt;
 
     public Consultation(String id, String anam, String pe, String diag, String treat, String jus, String ca){

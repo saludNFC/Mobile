@@ -87,4 +87,11 @@
             android:onClick="patientConsultations"/>
     </LinearLayout>
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/contact_title"
+        android:id="@+id/patientContact"
+        android:onClick="patientContact"/>
+
 </LinearLayout>
