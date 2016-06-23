@@ -1,6 +1,5 @@
-package app.example.veuge.com.saludnfc;
+package app.example.veuge.com.saludnfc.network;
 
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -10,7 +9,6 @@ import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
