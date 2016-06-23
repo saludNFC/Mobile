@@ -10,11 +10,12 @@ import android.widget.TextView;
 import org.json.JSONArray;
 
 import app.example.veuge.com.saludnfc.models.Consultation;
+import app.example.veuge.com.saludnfc.network.GetAsyncTask;
 
 public class ConsultationActivity extends AppCompatActivity {
 
-    public static String codHC, codConsulta, token;
-    //public HashMap[] contacts;
+    public static String codHC, token;
+    public static int codConsulta;
     public Consultation[] consultation;
 
     public TextView consultationTitle;
@@ -31,7 +32,7 @@ public class ConsultationActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         codHC = intent.getStringExtra("historia_clinica");
-        codConsulta = intent.getStringExtra("consultaID");
+        codConsulta = intent.getIntExtra("consultaID", -1);
         token = intent.getStringExtra("token");
 
         String url = ((Variables) this.getApplication()).getUrl();

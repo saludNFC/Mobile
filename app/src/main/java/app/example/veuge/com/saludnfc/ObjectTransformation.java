@@ -51,7 +51,7 @@ public class ObjectTransformation {
         for(int i = 0; i < consultationArray.length(); i++){
             JSONObject consultationObject = consultationArray.getJSONObject(i);
 
-            String id = consultationObject.getString(OWM_ID);
+            int id = consultationObject.getInt(OWM_ID);
             String anamnesis = consultationObject.getString(OWM_ANAMNESIS);
             String physicalE = consultationObject.getString(OWM_PHYSICAL_EXAM);
             String diagnosis = consultationObject.getString(OWM_DIAGNOSIS);
@@ -78,7 +78,8 @@ public class ObjectTransformation {
         final String OWM_DATE_INI = "fecha_inicio";
         final String OWM_DATE = "fecha_creacion";
 
-        String id = "", type = "", grade = "", illness = "", ptype = "", desc = "", med = "", via = "", date = "",
+        int id = -1;
+        String type = "", grade = "", illness = "", ptype = "", desc = "", med = "", via = "", date = "",
                 created = "";
 
         History[] histories = new History[historyDetails.length()];
@@ -86,7 +87,7 @@ public class ObjectTransformation {
 
             JSONObject historyObject = historyDetails.getJSONObject(i);
 
-            id = historyObject.getString(OWM_ID);
+            id = historyObject.getInt(OWM_ID);
             type = historyObject.getString(OWM_TYPE);
             created = historyObject.getString(OWM_DATE);
 
@@ -142,14 +143,15 @@ public class ObjectTransformation {
 
         for(int i = 0; i < controlDetails.length(); i++){
             JSONObject controlObject = controlDetails.getJSONObject(i);
-            String id = "", type = "", vaccine = "", viaVac = "", dosis= "",
-                    weight = "", height = "",
-                    temperature = "", heartRate = "", sistole = "", diastole = "",
-                    menst = "", mamo ="", sex = "", papa = "",
+            int id = -1, dosis = -1, heartRate = -1, systole = -1, diastole = -1;
+            float weight = -1, height = -1, temperature = -1;
+            boolean sex = false;
+            String type = "", vaccine = "", viaVac = "",
+                    menst = "", mamo ="", papa = "",
                     typeGeri = "", notes = "",
                     ca = "";
 
-            id = controlObject.getString(OWM_ID);
+            id = controlObject.getInt(OWM_ID);
             type = controlObject.getString(OWM_TYPE);
             ca = controlObject.getString(OWM_DATE);
 
@@ -157,23 +159,23 @@ public class ObjectTransformation {
                 case "Vacunacion":
                     vaccine = controlObject.getString(OWM_VACCINE);
                     viaVac = controlObject.getString(OWM_VIA);
-                    dosis = controlObject.getString(OWM_DOSIS);
+                    dosis = controlObject.getInt(OWM_DOSIS);
                     break;
 
                 case "Crecimiento":
-                    weight = controlObject.getString(OWM_WEIGHT);
-                    height = controlObject.getString(OWM_HEIGHT);
+                    weight = (float) controlObject.getDouble(OWM_WEIGHT);
+                    height = (float) controlObject.getDouble(OWM_HEIGHT);
                     break;
                 case "Triaje":
-                    temperature = controlObject.getString(OWM_TEMPERATURE);
-                    heartRate = controlObject.getString(OWM_HEARTRATE);
-                    sistole = controlObject.getString(OWM_SISTOLE);
-                    diastole = controlObject.getString(OWM_DIASTOLE);
+                    temperature = (float) controlObject.getDouble(OWM_TEMPERATURE);
+                    heartRate = controlObject.getInt(OWM_HEARTRATE);
+                    systole = controlObject.getInt(OWM_SISTOLE);
+                    diastole = controlObject.getInt(OWM_DIASTOLE);
                     break;
                 case "Ginecologico":
                     menst = controlObject.getString(OWM_LASTMENST);
                     mamo = controlObject.getString(OWM_LASTMAMOG);
-                    sex = controlObject.getString(OWM_SEXACT);
+                    sex = controlObject.getBoolean(OWM_SEXACT);
                     papa = controlObject.getString(OWM_LASTPAPAN);
                     break;
                 case "Geriatrico":
@@ -182,7 +184,7 @@ public class ObjectTransformation {
                     break;
             }
             Control control = new Control(id, type, vaccine, viaVac, dosis, weight, height, temperature, heartRate,
-                    sistole, diastole, menst, mamo, sex, papa, typeGeri, notes, ca);
+                    systole, diastole, menst, mamo, sex, papa, typeGeri, notes, ca);
             controls[i] = control;
         }
         return controls;
@@ -200,7 +202,7 @@ public class ObjectTransformation {
         for(int i = 0; i < contactArray.length(); i++){
             JSONObject contactObject = contactArray.getJSONObject(i);
 
-            String id = contactObject.getString(OWM_ID);
+            int id = contactObject.getInt(OWM_ID);
             String name = contactObject.getString(OWM_NAME);
             String lastname = contactObject.getString(OWM_LASTNAME);
             String relationship = contactObject.getString(OWM_RELATIONSHIP);
@@ -231,11 +233,12 @@ public class ObjectTransformation {
         Patient[] patients = new Patient[patientDetails.length()];
 
         for(int i = 0; i < patientDetails.length(); i++){
-            String id = "", hc = "", ci = "", emi = "", nom = "", ape = "", sex = "", fnac = "",
+            int id;
+            String hc = "", ci = "", emi = "", nom = "", ape = "", sex = "", fnac = "",
                     lnac = "", gi = "", ec = "", ocu = "", gs = "";
             JSONObject patientObject = patientDetails.getJSONObject(i);
 
-            id = patientObject.getString(OWM_ID);
+            id = patientObject.getInt(OWM_ID);
             hc = patientObject.getString(OWM_HC);
             ci = patientObject.getString(OWM_CI);
             emi = patientObject.getString(OWM_EMISION);

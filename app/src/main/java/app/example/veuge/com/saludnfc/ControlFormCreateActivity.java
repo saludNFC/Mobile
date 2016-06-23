@@ -20,6 +20,8 @@ import org.json.JSONException;
 import java.util.ArrayList;
 import java.util.List;
 
+import app.example.veuge.com.saludnfc.network.PostAsyncTask;
+
 public class ControlFormCreateActivity extends AppCompatActivity {
 
     TextView title;
@@ -137,7 +139,7 @@ public class ControlFormCreateActivity extends AppCompatActivity {
 
             newControl.add(new BasicNameValuePair("temperature", temperatureValue));
             newControl.add(new BasicNameValuePair("heart_rate", heartrateValue));
-            newControl.add(new BasicNameValuePair("sistole", sistoleValue));
+            newControl.add(new BasicNameValuePair("systole", sistoleValue));
             newControl.add(new BasicNameValuePair("diastole", diastoleValue));
         }
         if(gineForm.getVisibility() == View.VISIBLE){
@@ -236,7 +238,7 @@ public class ControlFormCreateActivity extends AppCompatActivity {
                 heartrateField.requestFocus();
                 break;
             }
-            if(errorResponse.getString(i).contains("sistole")){
+            if(errorResponse.getString(i).contains("systole")){
                 sistoleField.setError(error);
                 sistoleField.requestFocus();
                 break;

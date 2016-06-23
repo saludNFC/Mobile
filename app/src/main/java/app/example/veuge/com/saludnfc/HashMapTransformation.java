@@ -134,7 +134,7 @@ public class HashMapTransformation {
 
         final String OWM_TEMPERATURE = "temperatura";
         final String OWM_HEARTRATE = "frecuencia_cardiaca";
-        final String OWM_SISTOLE = "sistole";
+        final String OWM_SISTOLE = "systole";
         final String OWM_DIASTOLE = "diastole";
 
         final String OWM_LASTMENST = "ultima_menstruacion";

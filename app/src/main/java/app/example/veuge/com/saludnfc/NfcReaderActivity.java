@@ -16,7 +16,8 @@ import java.util.Date;
 
 public class NfcReaderActivity extends AppCompatActivity {
 
-    String patientID, patientCod, payload;
+    int patientID;
+    String patientCod, payload;
     TextView patientIdTv, patientCodTv;
 
     @Override
@@ -42,8 +43,8 @@ public class NfcReaderActivity extends AppCompatActivity {
 
                     String delimiter = ":";
                     String[] temp = payload.split(delimiter);
-                    patientCod=temp[0];
-                    patientID=temp[1];
+                    patientCod = temp[0];
+                    patientID = Integer.valueOf(temp[1]);
                 }
             }
             patientIdTv.setText(patientID);

@@ -11,10 +11,11 @@ import android.widget.TextView;
 import org.json.JSONArray;
 
 import app.example.veuge.com.saludnfc.models.Contact;
+import app.example.veuge.com.saludnfc.network.GetAsyncTask;
 
 public class ContactActivity extends AppCompatActivity {
 
-    public static String codHC, codConsulta, token;
+    public static String codHC, token;
     //public HashMap[] contacts;
     public Contact[] contacts;
 

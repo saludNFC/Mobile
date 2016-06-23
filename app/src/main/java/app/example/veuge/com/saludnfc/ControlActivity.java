@@ -10,13 +10,13 @@ import android.widget.TextView;
 
 import org.json.JSONArray;
 
-import java.util.HashMap;
-
 import app.example.veuge.com.saludnfc.models.Control;
+import app.example.veuge.com.saludnfc.network.GetAsyncTask;
 
 public class ControlActivity extends AppCompatActivity {
 
-    public static String codHC, controlID, token;
+    public static String codHC, token;
+    public static int controlID;
     private final String LOG_TAG = HistoryActivity.class.getSimpleName();
     public Control[] control;
     public TextView controlTitle;
@@ -32,7 +32,7 @@ public class ControlActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         codHC = intent.getStringExtra("historia_clinica");
-        controlID = intent.getStringExtra("control");
+        controlID = intent.getIntExtra("control", -1);
         token = intent.getStringExtra("token");
 
         String url = ((Variables) this.getApplication()).getUrl();
@@ -62,16 +62,19 @@ public class ControlActivity extends AppCompatActivity {
             if((control[0].controlType).equals("Vacunacion")){
                 ((Variables)this.getApplication()).insertViews(context, controlMain, "Vacuna:", control[0].vaccine);
                 ((Variables)this.getApplication()).insertViews(context, controlMain, "Via administración:", control[0].viaVac);
-                ((Variables)this.getApplication()).insertViews(context, controlMain, "Dosis:", control[0].dosis);
+                ((Variables)this.getApplication()).insertViews(context, controlMain, "Dosis:", control[0].dosis + "");
             }
             else if((control[0].controlType).equals("Crecimiento")){
-                ((Variables)this.getApplication()).insertViews(context, controlMain, "Peso: (Kg)", control[0].weight);
-                ((Variables)this.getApplication()).insertViews(context, controlMain, "Altura: (cm)", control[0].height);
+                ((Variables)this.getApplication()).insertViews(context, controlMain, "Peso: (Kg)", control[0].weight + "");
+                ((Variables)this.getApplication()).insertViews(context, controlMain, "Altura: (cm)", control[0].height + "");
             }
             else if((control[0].controlType).equals("Triaje")){
-                ((Variables)this.getApplication()).insertViews(context, controlMain, "Temperatura: (°C)", control[0].temperature);
-                ((Variables)this.getApplication()).insertViews(context, controlMain, "Frecuencia cardiaca:", control[0].heartRate);
-                String blood_pressure = control[0].sistole.concat(" / ").concat(control[0].diastole);
+                ((Variables)this.getApplication()).insertViews(context, controlMain, "Temperatura: (°C)", control[0].temperature + "");
+                ((Variables)this.getApplication()).insertViews(context, controlMain, "Frecuencia cardiaca:", control[0].heartRate + "");
+
+                String sys = control[0].systole + "";
+                String dia = control[0].diastole + "";
+                String blood_pressure = sys.concat(" / ").concat(dia);
                 ((Variables)this.getApplication()).insertViews(context, controlMain, "Presión arterial:", blood_pressure);
             }
             else if((control[0].controlType).equals("Ginecologico")){
@@ -79,9 +82,9 @@ public class ControlActivity extends AppCompatActivity {
                 if(! control[0].lastMamo.equals("")){
                     ((Variables)this.getApplication()).insertViews(context, controlMain, "Última mamografía:", control[0].lastMamo);
                 }
-                if(! control[0].sex.equals("")){
-                    ((Variables)this.getApplication()).insertViews(context, controlMain, "Vida sexual activa:", control[0].sex);
-                }
+
+                    ((Variables)this.getApplication()).insertViews(context, controlMain, "Vida sexual activa:", control[0].sex + "");
+
                 if(! control[0].lastPapa.equals("")){
                     ((Variables)this.getApplication()).insertViews(context, controlMain, "Último papanicolau", control[0].lastPapa);
                 }

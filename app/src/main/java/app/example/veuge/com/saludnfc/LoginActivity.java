@@ -39,6 +39,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import app.example.veuge.com.saludnfc.network.PostAsyncTask;
+
 import static android.Manifest.permission.READ_CONTACTS;
 
 /**

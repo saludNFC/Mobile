@@ -4,17 +4,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import org.json.JSONArray;
 
 import app.example.veuge.com.saludnfc.models.History;
+import app.example.veuge.com.saludnfc.network.GetAsyncTask;
 
 public class HistoryActivity extends AppCompatActivity {
 
-    public static String codHC, antecedente, token;
+    public static String codHC, token;
+    public static int antecedente;
     private final String LOG_TAG = HistoryActivity.class.getSimpleName();
     //public HashMap[] history;
     public History[] history;
@@ -32,7 +33,7 @@ public class HistoryActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         codHC = intent.getStringExtra("historia_clinica");
-        antecedente = intent.getStringExtra("antecedente");
+        antecedente = intent.getIntExtra("antecedente", -1);
         token = intent.getStringExtra("token");
 
         String url = ((Variables) this.getApplication()).getUrl();

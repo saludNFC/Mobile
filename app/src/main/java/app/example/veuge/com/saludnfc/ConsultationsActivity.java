@@ -13,6 +13,7 @@ import org.json.JSONArray;
 import java.util.ArrayList;
 
 import app.example.veuge.com.saludnfc.models.Consultation;
+import app.example.veuge.com.saludnfc.network.GetAsyncTask;
 
 public class ConsultationsActivity extends AppCompatActivity {
 
@@ -20,7 +21,8 @@ public class ConsultationsActivity extends AppCompatActivity {
     //private HashMap[] consultations;
     private Consultation[] consultations;
 
-    private String codHC, patientID, token;
+    private String codHC, token;
+    private int patientID;
 
     @Override
     public void onStart() {
@@ -35,7 +37,7 @@ public class ConsultationsActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         codHC = intent.getStringExtra("patientHistory");
-        patientID = intent.getStringExtra("patientID");
+        patientID = intent.getIntExtra("patientID", -1);
         token = intent.getStringExtra("token");
 
         mConsultationAdapter = new ArrayAdapter<String>(
@@ -54,7 +56,7 @@ public class ConsultationsActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 //String consultationID = consultations[position].get(1).toString();
-                String consultationID = consultations[position].id;
+                int consultationID = consultations[position].id;
                 Intent intent = new Intent(ConsultationsActivity.this, ConsultationActivity.class);
 
                 intent.putExtra("historia_clinica", codHC);

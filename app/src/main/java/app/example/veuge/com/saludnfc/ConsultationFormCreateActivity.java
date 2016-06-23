@@ -18,6 +18,8 @@ import org.json.JSONException;
 import java.util.ArrayList;
 import java.util.List;
 
+import app.example.veuge.com.saludnfc.network.PostAsyncTask;
+
 public class ConsultationFormCreateActivity extends AppCompatActivity {
 
     private final String LOG_TAG = ConsultationFormCreateActivity.class.getSimpleName();

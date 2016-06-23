@@ -13,13 +13,15 @@ import org.json.JSONArray;
 import java.util.ArrayList;
 
 import app.example.veuge.com.saludnfc.models.Control;
+import app.example.veuge.com.saludnfc.network.GetAsyncTask;
 
 public class ControlsActivity extends AppCompatActivity {
 
     private ArrayAdapter<String> mControlAdapter;
     private Control[] controls;
 
-    private static String patientID, codHC, token;
+    private static String codHC, token;
+    private static int patientID;
 
     @Override
     public void onStart() {
@@ -33,7 +35,7 @@ public class ControlsActivity extends AppCompatActivity {
         setContentView(R.layout.controls);
 
         Intent intent = getIntent();
-        patientID = intent.getStringExtra("patientID");
+        patientID = intent.getIntExtra("patientID", -1);
         codHC = intent.getStringExtra("patientHistory");
         token = intent.getStringExtra("token");
 
@@ -52,7 +54,7 @@ public class ControlsActivity extends AppCompatActivity {
 
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                String patientControl = controls[position].id;
+                int patientControl = controls[position].id;
                 Intent intent = new Intent(ControlsActivity.this, ControlActivity.class);
 
                 intent.putExtra("historia_clinica", codHC);

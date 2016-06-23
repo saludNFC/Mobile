@@ -10,18 +10,17 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.json.JSONArray;
 
-import java.util.HashMap;
-
 import app.example.veuge.com.saludnfc.models.Patient;
+import app.example.veuge.com.saludnfc.network.GetAsyncTask;
 
 public class PatientActivity extends AppCompatActivity {
 
     public Patient[] patient; // array of length 1
-    public static String patientID, codHC, token, payload;
+    public int patientID;
+    public static String codHC, token, payload;
 
     TextView name, misc, history, ci, blood;
 
@@ -41,7 +40,7 @@ public class PatientActivity extends AppCompatActivity {
         Intent intent = getIntent();
 
         if(intent.getAction() == null){
-            patientID = intent.getStringExtra("patientID");
+            patientID = intent.getIntExtra("patientID", -1);
             codHC = intent.getStringExtra("patientHistory");
             token = intent.getStringExtra("token");
         }
@@ -56,11 +55,13 @@ public class PatientActivity extends AppCompatActivity {
                         String delimiter = ":";
                         String[] temp = payload.split(delimiter);
                         codHC = temp[0];
-                        patientID = temp[1];
+                        patientID = Integer.valueOf(temp[1]);
                     }
                 }
             }
         }
+
+
 
         String url = ((Variables) this.getApplication()).getUrl();
         String path = "api/paciente/" + codHC;

@@ -19,7 +19,8 @@ import java.io.IOException;
 
 public class NfcWriterActivity extends AppCompatActivity {
 
-    String codHC, patientID, patientName, token;
+    int patientID;
+    String codHC, patientName, token;
     TextView codHcTv, patientNameTv, infoTv;
 
     private NfcAdapter mNfcAdapter;
@@ -35,8 +36,8 @@ public class NfcWriterActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         codHC = intent.getStringExtra("patientHistory");
-        patientID = intent.getStringExtra("patientID");
-        Toast.makeText(this, patientID, Toast.LENGTH_LONG).show();
+        patientID = intent.getIntExtra("patientID", -1);
+        Toast.makeText(this, patientID + "", Toast.LENGTH_LONG).show();
         patientName = intent.getStringExtra("patientName");
 
         codHcTv = (TextView) findViewById(R.id.cod_hc);

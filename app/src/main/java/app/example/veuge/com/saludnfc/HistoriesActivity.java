@@ -11,13 +11,15 @@ import org.json.JSONArray;
 import java.util.ArrayList;
 
 import app.example.veuge.com.saludnfc.models.History;
+import app.example.veuge.com.saludnfc.network.GetAsyncTask;
 
 public class HistoriesActivity extends AppCompatActivity {
 
     private ArrayAdapter<String> mHistoryAdapter;
     private History[] histories;
 
-    private static String patientID, codHC, token;
+    private static int patientID;
+    private static String codHC, token;
 
     @Override
     public void onStart() {
@@ -31,7 +33,7 @@ public class HistoriesActivity extends AppCompatActivity {
         setContentView(R.layout.histories);
 
         Intent intent = getIntent();
-        patientID = intent.getStringExtra("patientID");
+        patientID = intent.getIntExtra("patientID", -1);
         codHC = intent.getStringExtra("patientHistory");
         token = intent.getStringExtra("token");
 
@@ -50,7 +52,7 @@ public class HistoriesActivity extends AppCompatActivity {
 
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                String patientHistory = histories[position].id;
+                int patientHistory = histories[position].id;
                 Intent intent = new Intent(HistoriesActivity.this, HistoryActivity.class);
 
                 intent.putExtra("historia_clinica", codHC);
