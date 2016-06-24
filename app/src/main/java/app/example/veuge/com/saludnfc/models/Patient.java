@@ -4,9 +4,15 @@ package app.example.veuge.com.saludnfc.models;
  * Created by veuge on 03-06-16.
  */
 
-public class Patient {
+import java.io.Serializable;
 
-    public String id;
+/**
+ * I don't care for getters and setters ¬¬
+ */
+
+public class Patient implements Serializable{
+
+    public int id;
     public String historia;
     public String ci;
     public String emision;
@@ -20,12 +26,18 @@ public class Patient {
     public String ocupacion;
     public String grupo_sanguineo;
 
-    public Patient(String id, String historia,
-                   String ci,String emision,
-                   String nombre, String apellido,
-                   String sexo, String fecha_nac,
-                   String lugar_nac, String gi,
-                   String ec, String oc,
+    public Patient(int id,
+                   String historia,
+                   String ci,
+                   String emision,
+                   String nombre,
+                   String apellido,
+                   String sexo,
+                   String fecha_nac,
+                   String lugar_nac,
+                   String gi,
+                   String ec,
+                   String oc,
                    String grupo_sanguineo){
         this.id = id;
         this.historia = historia;
