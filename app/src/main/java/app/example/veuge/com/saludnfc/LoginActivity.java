@@ -44,7 +44,7 @@ import app.example.veuge.com.saludnfc.network.PostAsyncTask;
 import static android.Manifest.permission.READ_CONTACTS;
 
 /**
- * A login screen that offers login via email/password.
+ * A activity_login screen that offers activity_login via email/password.
  */
 public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
 
@@ -58,7 +58,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private static final int REQUEST_READ_CONTACTS = 0;
 
     /**
-     * Keep track of the login task to ensure we can cancel it if requested.
+     * Keep track of the activity_login task to ensure we can cancel it if requested.
      */
     private PostAsyncTask mAuthTask = null;
 
@@ -71,8 +71,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.login);
-        // Set up the login form.
+        setContentView(R.layout.activity_login);
+        // Set up the activity_login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
 
@@ -144,9 +144,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
 
     /**
-     * Attempts to sign in or register the account specified by the login form.
+     * Attempts to sign in or register the account specified by the activity_login form.
      * If there are form errors (invalid email, missing fields, etc.), the
-     * errors are presented and no actual login attempt is made.
+     * errors are presented and no actual activity_login attempt is made.
      */
     private void attemptLogin() {
         if (mAuthTask != null) {
@@ -157,7 +157,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mEmailView.setError(null);
         mPasswordView.setError(null);
 
-        // Store values at the time of the login attempt.
+        // Store values at the time of the activity_login attempt.
         String email = mEmailView.getText().toString();
         String password = mPasswordView.getText().toString();
 
@@ -183,12 +183,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
 
         if (cancel) {
-            // There was an error; don't attempt login and focus the first
+            // There was an error; don't attempt activity_login and focus the first
             // form field with an error.
             focusView.requestFocus();
         } else {
             // Show a progress spinner, and kick off a background task to
-            // perform the user login attempt.
+            // perform the user activity_login attempt.
             showProgress(true);
             //mAuthTask = new UserLoginTask(email, password);
             //mAuthTask.execute((Void) null);
@@ -268,7 +268,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     }
 
     /**
-     * Shows the progress UI and hides the login form.
+     * Shows the progress UI and hides the activity_login form.
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
     private void showProgress(final boolean show) {

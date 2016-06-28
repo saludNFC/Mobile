@@ -19,6 +19,9 @@ import java.io.IOException;
 
 public class NfcWriterActivity extends AppCompatActivity {
 
+    /**
+     * DEPRECATED, now this is in NfcWriter activity
+     */
     int patientID;
     String codHC, patientName, token;
     TextView codHcTv, patientNameTv, infoTv;

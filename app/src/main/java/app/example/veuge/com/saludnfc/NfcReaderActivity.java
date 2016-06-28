@@ -16,6 +16,10 @@ import java.util.Date;
 
 public class NfcReaderActivity extends AppCompatActivity {
 
+    /**
+     * POC, the NfcReader should in fact be in the PatientActivity
+     */
+
     int patientID;
     String patientCod, payload;
     TextView patientIdTv, patientCodTv;
