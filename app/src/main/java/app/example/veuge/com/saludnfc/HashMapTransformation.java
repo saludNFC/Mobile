@@ -12,6 +12,11 @@ import java.util.Iterator;
  */
 public class HashMapTransformation {
 
+    /**
+     * DEPRECATED! no need to use a Hashmap when I can use the models
+     * Array of models or list of models? O.o
+     */
+
     public HashMap[] result;
 
     public HashMapTransformation(HashMap[] res) {
