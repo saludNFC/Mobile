@@ -56,14 +56,15 @@
     <!-- Fields -->
     <string name="history_type_field">Tipo de antecedente</string>
     <string name="nul">--- Escoja un tipo de antecedente ---</string>
-    <string name="fam">Familiar</string>
-    <string name="per">Personal</string>
-    <string name="med">Medicamentos</string>
+    <string name="fam">Antecedente Familiar</string>
+    <string name="per">Antecedente Personal</string>
+    <string name="med">Antecedente Medicamentos</string>
 
     <string name="grade_field">Grado de parentesco</string>
     <string name="illness_field">Enfermedad</string>
 
     <string name="personal_type_field">--- Escoja un tipo de antecedente personal ---</string>
+    <string name="personal_type">Tipo de antecedente personal</string>
     <string name="description_field">Descripción</string>
 
     <string name="med_field">Nombre del medicamento</string>
@@ -98,6 +99,7 @@
     <string name="sistole_field">Sistole</string>
     <string name="diastole_field">Diastole</string>
     <string name="separator">/</string>
+    <string name="pre_arterial">Presion arterial</string>
 
     <string name="lastmenst_field">Fecha última menstruación</string>
     <string name="lastmamo_field">Fecha última mamografía</string>
@@ -108,11 +110,11 @@
     <string name="notes_field">Descripcion</string>
 
     <string name="nad">--- Escoja un tipo de control ---</string>
-    <string name="vac">Vacunacion</string>
-    <string name="cre">Crecimiento</string>
-    <string name="tri">Triaje</string>
-    <string name="gin">Ginecologico</string>
-    <string name="ger">Geriatrico</string>
+    <string name="vac">Control de Vacunacion</string>
+    <string name="cre">Control de Crecimiento</string>
+    <string name="tri">Control de Triaje</string>
+    <string name="gin">Control Ginecologico</string>
+    <string name="ger">Control Geriatrico</string>
 
     <string name="der">Intra-dermica</string>
     <string name="mus">Intra-muscular</string>
@@ -129,15 +131,17 @@
 
     <!-- CONSULTATION -->
     <string name="consultation_title">Consultas Médicas</string>
+    <string name="consultation_detail_title">Consulta Médica</string>
     <!-- Fields-->
     <string name="anamnesis">Anamnesis</string>
     <string name="physical">Examen físico</string>
     <string name="diagnosis">Diagnóstico</string>
     <string name="treatment">Tratamiento</string>
     <string name="justification">Justificación</string>
-    <string name="title_activity_login">Iniciar Sesión</string>
 
-    <!-- Strings related to login -->
+
+    <!-- Strings related to activity_login -->
+    <string name="title_activity_login">Iniciar Sesión</string>
     <string name="prompt_email">Correo Electrónico</string>
     <string name="prompt_password">Password</string>
     <string name="action_sign_in">Iniciar sesión</string>
@@ -149,9 +153,16 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email completions."</string>
 
     <!-- CONTACT -->
-    <string name="contact_title">Contacto</string>
+    <string name="contact_title">Contacto de emergencia</string>
     <string name="contact_name">Nombre</string>
     <string name="contact_lastname">Apellido</string>
     <string name="contact_relationship">Relación de parentesco</string>
     <string name="contact_phone">Telefono</string>
+
+    <!-- NFC! -->
+    <string name="nfc_title">Carnet NFC</string>
+    <string name="nfc_question">¿Guardar datos del paciente?</string>
+    <string name="nfc_patient">Paciente</string>
+    <string name="nfc_patient_hc">Código de Historia Clínica</string>
+    <string name="nfc_instructions">Acerque el nuevo carnet al dispositivo</string>
 </resources>

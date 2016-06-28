@@ -89,4 +89,27 @@
         <item>@string/vcog</item>
         <item>@string/vsoc</item>
     </string-array>
+
+    <!-- DUMMY TESTS -->
+    <string-array name="dummy_patients_names">
+        <item>Clavijo Altamirano, Verónica Eugenia</item>
+        <item>Clavijo Altamirano, Alejandra Sofia</item>
+        <item>Clavijo Marin, Jose Daniel</item>
+        <item>Bascope Altamirano, Juan Pablo</item>
+        <item>Altamirano Clavijo, Norah Maria</item>
+        <item>Altamirano Clavijo, Fresia Rossmery</item>
+        <item>Rojas Altamirano, Eliana Claudia</item>
+        <item>Rojas Altamirano, Daniela Fresia</item>
+    </string-array>
+
+    <string-array name="dummy_patients_hc">
+        <item>CAV-16051992</item>
+        <item>CAA-06031990</item>
+        <item>CMJ-01011952</item>
+        <item>BAJ-15081985</item>
+        <item>ACN-02021951</item>
+        <item>ACF-13021957</item>
+        <item>RAE-23071987</item>
+        <item>RAD-04081989</item>
+    </string-array>
 </resources>
