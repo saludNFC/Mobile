@@ -19,6 +19,12 @@ import java.io.InputStreamReader;
  */
 public class GetAsyncTask extends AsyncTask<Void, Void, String> {
 
+    /**
+     * TODO
+     * Error handling
+     * Change from HTTPClient to Volley, if possible
+     */
+
     public String url; // http://192.168.1.164:8000/
     public String path; // api/paciente
                         // api/paciente/xxx-123456

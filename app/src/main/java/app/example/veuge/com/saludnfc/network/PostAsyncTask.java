@@ -24,6 +24,11 @@ import java.util.List;
  * Created by veuge on 29-05-16.
  */
 public class PostAsyncTask extends AsyncTask<List<NameValuePair>, Void, String> {
+    /**
+     * TODO
+     * Error handling!!!!
+     */
+
     public String url;
     public String path;
     public String token;
