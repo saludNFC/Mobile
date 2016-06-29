@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <ImageView
+        android:id="@+id/control_type"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:scaleType="centerCrop"
+        android:layout_gravity="center_vertical"
+        android:src="@drawable/ic_contact"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp">
+
+        <TextView
+            android:id="@+id/detail_one"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="Dummy Text"
+            android:textAppearance="?attr/textAppearanceListItem"
+            android:textSize="@dimen/article_subheading"
+            android:paddingLeft="8dp"
+            android:ellipsize="end"
+            android:singleLine="true"/>
+
+        <TextView
+            android:id="@+id/detail_two"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="Dummy Text"
+            android:textAppearance="?attr/textAppearanceListItem"
+            android:textSize="@dimen/list_body"
+            android:textColor="@color/medium_grey"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:paddingLeft="8dp" />
+
+        <TextView
+            android:id="@+id/created_at"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="Dummy Text"
+            android:textAppearance="?attr/textAppearanceListItem"
+            android:textSize="@dimen/list_body"
+            android:textColor="@color/medium_grey"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:paddingLeft="8dp"/>
+    </LinearLayout>
+</LinearLayout>
