@@ -5,7 +5,7 @@
     <!-- PATIENTS -->
     <!-- FIELDS -->
     <string name="ci_field">Cédula de identidad</string>
-    <string name="ciemision_field">Emisión de cédula de identidad</string>
+    <string name="ciemision_field">Emisión</string>
     <string name="name_field">Nombres</string>
     <string name="lastname_field">Apellidos</string>
     <string name="gender_field">Sexo</string>
