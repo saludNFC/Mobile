@@ -13,10 +13,10 @@ import android.widget.TextView;
  * Created by veuge on 28-05-16.
  */
 public class Variables extends Application {
-    //private String url = "http://192.168.1.159:8000/";
-    // private String url = "http://192.168.1.164:8000/";  //
-    // private String url = "http://192.168.43.4:8000/"; //Hotspot tethering with cellphone
-    private String url = "http://192.168.42.132:8000/"; // USB tethering with cellphone
+    //private String url = "http://192.168.1.159:8000/"; // Router WiFi
+    private String url = "http://192.168.1.164:8000/";  // Router
+    // private String url = "http://192.168.43.4:8000/"; // Hotspot tethering with cellphone
+    // private String url = "http://192.168.42.132:8000/"; // USB tethering with cellphone
 
 
     public String getUrl(){
