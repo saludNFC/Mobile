@@ -19,7 +19,6 @@ import android.widget.Toast;
 import org.json.JSONArray;
 
 import app.example.veuge.com.saludnfc.ObjectTransformation;
-import app.example.veuge.com.saludnfc.PatientFormCreateActivity;
 import app.example.veuge.com.saludnfc.R;
 import app.example.veuge.com.saludnfc.Variables;
 import app.example.veuge.com.saludnfc.adapters.PatientsAdapter;
@@ -34,6 +33,8 @@ public class PatientsList extends AppCompatActivity {
     private Patient[] patients;
     private FloatingActionButton fab;
 
+    private String token;
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -45,20 +46,10 @@ public class PatientsList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.patients_list);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        Intent intent = getIntent();
+        token = intent.getStringExtra("token");
 
-        mLayoutManager = new LinearLayoutManager(this);
-
-        mRecyclerView = (RecyclerView) findViewById(R.id.patient_recycler);
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        mRecyclerView.setHasFixedSize(true);
-        adapter = new PatientsAdapter(mRecyclerView.getContext());
-        patients = getPatientsList();
-        adapter.setPatientsList(patients);
-        mRecyclerView.setAdapter(adapter);
-
-        fab = (FloatingActionButton) findViewById(R.id.fab);
+        setupUI();
     }
 
     @Override
@@ -93,10 +84,26 @@ public class PatientsList extends AppCompatActivity {
         return patients;
     }
 
-    public void floatingButton(View view){
-        Toast.makeText(this, "CHAU", Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(this, PatientFormCreateActivity.class);
-        intent.putExtra("token", "");
+    public void setupUI(){
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        mLayoutManager = new LinearLayoutManager(this);
+
+        mRecyclerView = (RecyclerView) findViewById(R.id.patient_recycler);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.setHasFixedSize(true);
+        adapter = new PatientsAdapter(mRecyclerView.getContext());
+        patients = getPatientsList();
+        adapter.setPatientsList(patients);
+        mRecyclerView.setAdapter(adapter);
+
+        fab = (FloatingActionButton) findViewById(R.id.add_patient);
+    }
+
+    public void createPatient(View view){
+        Intent intent = new Intent(this, PatientCreate.class);
+        intent.putExtra("token", token);
         this.startActivity(intent);
     }
 }
