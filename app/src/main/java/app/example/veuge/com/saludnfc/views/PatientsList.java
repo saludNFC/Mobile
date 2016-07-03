@@ -47,9 +47,12 @@ public class PatientsList extends AppCompatActivity {
         setContentView(R.layout.patients_list);
 
         Intent intent = getIntent();
-        token = intent.getStringExtra("token");
+        //token = intent.getStringExtra("token");
+        token = ((Variables) this.getApplication()).getToken();
 
         setupUI();
+
+        getPatientsList();
     }
 
     @Override
@@ -70,7 +73,7 @@ public class PatientsList extends AppCompatActivity {
         ObjectTransformation hmt = new ObjectTransformation();
 
         try {
-            GetAsyncTask gat = new GetAsyncTask(url, path, "");
+            GetAsyncTask gat = new GetAsyncTask(url, path, token);
             gat.execute();
             resp = gat.get();
 

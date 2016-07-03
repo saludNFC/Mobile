@@ -53,4 +53,30 @@ public class Patient implements Serializable{
         this.ocupacion = oc;
         this.grupo_sanguineo = grupo_sanguineo;
     }
+
+    public Patient(String historia,
+                   String ci,
+                   String emision,
+                   String nombre,
+                   String apellido,
+                   String sexo,
+                   String fecha_nac,
+                   String lugar_nac,
+                   String gi,
+                   String ec,
+                   String oc,
+                   String grupo_sanguineo){
+        this.historia = historia;
+        this.ci = ci;
+        this.emision = emision;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.sexo = sexo;
+        this.fecha_nac = fecha_nac;
+        this.lugar_nac = lugar_nac;
+        this.grado_instruccion = gi;
+        this.estado_civil = ec;
+        this.ocupacion = oc;
+        this.grupo_sanguineo = grupo_sanguineo;
+    }
 }

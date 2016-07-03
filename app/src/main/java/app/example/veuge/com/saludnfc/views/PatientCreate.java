@@ -1,9 +1,6 @@
 package app.example.veuge.com.saludnfc.views;
 
-import android.content.Context;
 import android.content.Intent;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,7 +8,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
@@ -26,10 +22,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import app.example.veuge.com.saludnfc.ObjectTransformation;
-import app.example.veuge.com.saludnfc.PatientActivity;
 import app.example.veuge.com.saludnfc.R;
 import app.example.veuge.com.saludnfc.Variables;
-import app.example.veuge.com.saludnfc.models.Patient;
 import app.example.veuge.com.saludnfc.network.PostAsyncTask;
 
 public class PatientCreate extends AppCompatActivity {
@@ -57,7 +51,7 @@ public class PatientCreate extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.form_patient);
         Intent intent = getIntent();
-        token = intent.getStringExtra("token");
+        token = ((Variables) this.getApplication()).getToken();
         nameValuePair = new ArrayList<NameValuePair>(2);
 
         setUI();
@@ -157,13 +151,12 @@ public class PatientCreate extends AppCompatActivity {
         try{
             JSONArray responseArray = hmt.getJsonFromString(response);
             for(int i = 0; i < responseArray.length(); i ++){
-                if(responseArray.getString(i).contains("message")){
+                if(responseArray.getString(i).contains("success")){
                     JSONObject x = responseArray.getJSONObject(i);
-                    String newPatient = x.getString("message");
+                    String newPatient = x.getString("success_message");
                     savedSuccess(newPatient);
                 }
                 else{
-                    Log.d("RESPONSE ERROR", responseArray + "");
                     savedFailed(responseArray);
                 }
             }
@@ -188,7 +181,12 @@ public class PatientCreate extends AppCompatActivity {
         for(int i = 0; i < errorResponse.length(); i++){
             int length = errorResponse.getString(i).length();
             String error = errorResponse.getString(i).substring(1, length - 1);
-            Log.d("ERROR", error);
+            if(error.contains(403 + "")){
+                Toast.makeText(this, errorResponse.getString(i), Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(PatientCreate.this, PatientsList.class);
+                startActivity(intent);
+                break;
+            }
             if(errorResponse.getString(i).contains("ci")){
                 ciField.setError(error);
                 ciField.requestFocus();

@@ -18,7 +18,6 @@ import android.widget.TextView;
 
 import org.json.JSONArray;
 
-import app.example.veuge.com.saludnfc.NfcWriterActivity;
 import app.example.veuge.com.saludnfc.ObjectTransformation;
 import app.example.veuge.com.saludnfc.R;
 import app.example.veuge.com.saludnfc.Variables;
