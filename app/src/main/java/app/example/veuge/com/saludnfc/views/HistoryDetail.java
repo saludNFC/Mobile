@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import org.json.JSONArray;
 
+import java.util.List;
+
 import app.example.veuge.com.saludnfc.ObjectTransformation;
 import app.example.veuge.com.saludnfc.R;
 import app.example.veuge.com.saludnfc.Variables;
@@ -31,7 +33,7 @@ public class HistoryDetail extends AppCompatActivity {
     private TextView detailThree;
 
     private History history;
-    private History[] historyAPI;
+    private List<History> historyAPI;
     private HistoriesAdapter adapter;
 
     private String codHC;

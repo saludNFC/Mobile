@@ -3,11 +3,14 @@ package app.example.veuge.com.saludnfc.adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.util.List;
 
 import app.example.veuge.com.saludnfc.R;
 import app.example.veuge.com.saludnfc.models.History;
@@ -19,13 +22,13 @@ import app.example.veuge.com.saludnfc.views.HistoryDetail;
 public class HistoriesAdapter extends RecyclerView.Adapter <HistoriesAdapter.ViewHolderHistories> {
 
     private LayoutInflater layoutInflater;
-    private History[] historiesList;
+    private List<History> historiesList;
 
     public HistoriesAdapter(Context context){
         layoutInflater = LayoutInflater.from(context);
     }
 
-    public void  setHistoriesList(History[] historiesList){
+    public void  setHistoriesList(List<History> historiesList){
         this.historiesList = historiesList;
     }
 
@@ -38,8 +41,7 @@ public class HistoriesAdapter extends RecyclerView.Adapter <HistoriesAdapter.Vie
 
     @Override
     public void onBindViewHolder(ViewHolderHistories holder, int position) {
-        final History currentHistory = historiesList[position];
-
+        final History currentHistory = historiesList.get(position);
         switch (currentHistory.historyType){
             case "Familiar":
                 holder.historyType.setImageResource(R.drawable.ic_familiar);
@@ -73,7 +75,7 @@ public class HistoriesAdapter extends RecyclerView.Adapter <HistoriesAdapter.Vie
 
     @Override
     public int getItemCount() {
-        return historiesList.length;
+        return historiesList.size();
     }
 
     static class ViewHolderHistories extends RecyclerView.ViewHolder{

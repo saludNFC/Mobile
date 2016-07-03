@@ -1,13 +1,18 @@
 package app.example.veuge.com.saludnfc.views;
 
+import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import org.json.JSONArray;
+
+import java.util.List;
 
 import app.example.veuge.com.saludnfc.ObjectTransformation;
 import app.example.veuge.com.saludnfc.R;
@@ -24,7 +29,9 @@ public class HistoriesList extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManagerH;
     private HistoriesAdapter adapter;
-    private History[] histories = null;
+    private List<History> histories = null;
+    private FloatingActionButton addHistoryBtn;
+    private String token;
 
     /*@Override
     protected void onStart() {
@@ -37,31 +44,27 @@ public class HistoriesList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.histories_list);
 
-        mLayoutManagerH = new LinearLayoutManager(this);
+        setupUI();
 
         patientHCode = getIntent().getStringExtra("PATIENT_CODE");
+        token = ((Variables) this.getApplication()).getToken();
         histories = getHistoriesList();
 
-        mRecyclerView = (RecyclerView) findViewById(R.id.history_recycler);
-        mRecyclerView.setLayoutManager(mLayoutManagerH);
-        mRecyclerView.setHasFixedSize(true);
-
         adapter = new HistoriesAdapter(mRecyclerView.getContext());
-
 
         adapter.setHistoriesList(histories);
         mRecyclerView.setAdapter(adapter);
     }
 
-    private History[] getHistoriesList() {
+    private List<History> getHistoriesList() {
         String url = ((Variables) this.getApplication()).getUrl();
         String path = "api/paciente/" + patientHCode + "/antecedentes";
         String resp;
-        History[] histories = null;
+        List<History> histories = null;
         ObjectTransformation hmt = new ObjectTransformation();
 
         try {
-            GetAsyncTask gat = new GetAsyncTask(url, path, "");
+            GetAsyncTask gat = new GetAsyncTask(url, path, token);
             gat.execute();
             resp = gat.get();
 
@@ -73,5 +76,19 @@ public class HistoriesList extends AppCompatActivity {
             ex.printStackTrace();
         }
         return histories;
+    }
+
+    private void setupUI() {
+        mLayoutManagerH = new LinearLayoutManager(this);
+        mRecyclerView = (RecyclerView) findViewById(R.id.history_recycler);
+        mRecyclerView.setLayoutManager(mLayoutManagerH);
+        mRecyclerView.setHasFixedSize(true);
+        addHistoryBtn = (FloatingActionButton) findViewById(R.id.add_history);
+    }
+
+    public void createHistory(View view){
+        Intent intent = new Intent(this, HistoryCreate.class);
+        intent.putExtra("PATIENT_CODE", patientHCode);
+        startActivity(intent);
     }
 }

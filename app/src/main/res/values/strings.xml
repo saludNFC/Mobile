@@ -4,6 +4,7 @@
 
     <!-- PATIENTS -->
     <!-- FIELDS -->
+    <string name="patient_create">Crear paciente</string>
     <string name="ci_field">Cédula de identidad</string>
     <string name="ciemision_field">Emisión</string>
     <string name="name_field">Nombres</string>
@@ -13,7 +14,7 @@
     <string name="birthplace_field">Lugar de nacimiento</string>
     <string name="instruction_field">Grado de instrucción</string>
     <string name="civilstatus_field">Estado civil</string>
-    <string name="ocupation_field">Ocupación</string>
+    <string name="occupation_field">Ocupación</string>
     <string name="bloodtype_field">Tipo de sangre</string>
 
     <!-- Departamentos ABBR -->
@@ -54,6 +55,7 @@
 
     <!-- HISTORIES -->
     <!-- Fields -->
+    <string name="history_create">Crear antecedente</string>
     <string name="history_type_field">Tipo de antecedente</string>
     <string name="nul">--- Escoja un tipo de antecedente ---</string>
     <string name="fam">Antecedente Familiar</string>

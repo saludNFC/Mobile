@@ -1,10 +1,14 @@
 package app.example.veuge.com.saludnfc;
 
+import android.util.Log;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import app.example.veuge.com.saludnfc.models.Consultation;
 import app.example.veuge.com.saludnfc.models.Contact;
@@ -65,7 +69,7 @@ public class ObjectTransformation {
         return consultations;
     }
 
-    public History[] buildHistoryObject(JSONArray historyDetails) throws JSONException{
+    public List<History> buildHistoryObject(JSONArray historyDetails) throws JSONException{
         final String OWM_PATIENT = "identificador_paciente";
         final String OWM_ID = "identificador_antecedente";
         final String OWM_TYPE = "tipo_antecedente";
@@ -82,33 +86,35 @@ public class ObjectTransformation {
         String type = "", grade = "", illness = "", ptype = "", desc = "", med = "", via = "", date = "",
                 created = "";
 
-        History[] histories = new History[historyDetails.length()];
+        List<History> histories = new ArrayList<>();
+
         for(int i = 0; i < historyDetails.length(); i++){
+            if(! historyDetails.isNull(i)){
+                JSONObject historyObject = historyDetails.getJSONObject(i);
 
-            JSONObject historyObject = historyDetails.getJSONObject(i);
+                id = historyObject.getInt(OWM_ID);
+                type = historyObject.getString(OWM_TYPE);
+                created = historyObject.getString(OWM_DATE);
 
-            id = historyObject.getInt(OWM_ID);
-            type = historyObject.getString(OWM_TYPE);
-            created = historyObject.getString(OWM_DATE);
+                switch (historyObject.get(OWM_TYPE).toString()){
+                    case "Familiar":
+                        grade = historyObject.getString(OWM_GRADE);
+                        illness = historyObject.getString(OWM_ILLNESS);
+                        break;
 
-            switch (historyObject.get(OWM_TYPE).toString()){
-                case "Familiar":
-                    grade = historyObject.getString(OWM_GRADE);
-                    illness = historyObject.getString(OWM_ILLNESS);
-                    break;
-
-                case "Personal":
-                    ptype = historyObject.getString(OWM_PERSONAL_TYPE);
-                    desc = historyObject.getString(OWM_DESC);
-                    break;
-                case "Medicamentos":
-                    med = historyObject.getString(OWM_MED);
-                    via = historyObject.getString(OWM_VIA);
-                    date = historyObject.getString(OWM_DATE_INI);
-                    break;
+                    case "Personal":
+                        ptype = historyObject.getString(OWM_PERSONAL_TYPE);
+                        desc = historyObject.getString(OWM_DESC);
+                        break;
+                    case "Medicamentos":
+                        med = historyObject.getString(OWM_MED);
+                        via = historyObject.getString(OWM_VIA);
+                        date = historyObject.getString(OWM_DATE_INI);
+                        break;
+                }
+                History history = new History(id, type, grade, illness, ptype, desc, med, via, date, created);
+                histories.add(history);
             }
-            History history = new History(id, type, grade, illness, ptype, desc, med, via, date, created);
-            histories[i] = history;
         }
         return histories;
     }
