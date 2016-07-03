@@ -6,9 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import org.json.JSONArray;
 
@@ -19,7 +17,6 @@ import app.example.veuge.com.saludnfc.R;
 import app.example.veuge.com.saludnfc.Variables;
 import app.example.veuge.com.saludnfc.adapters.HistoriesAdapter;
 import app.example.veuge.com.saludnfc.models.History;
-import app.example.veuge.com.saludnfc.models.Patient;
 import app.example.veuge.com.saludnfc.network.GetAsyncTask;
 
 public class HistoriesList extends AppCompatActivity {

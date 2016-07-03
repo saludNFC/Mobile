@@ -3,11 +3,7 @@ package app.example.veuge.com.saludnfc.views;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
-import android.content.CursorLoader;
 import android.content.Intent;
-import android.content.Loader;
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.Build;
 import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
@@ -179,7 +175,8 @@ public class Login extends AppCompatActivity {
         Log.i("evaluateResponse", "Login successful");
         //finish();
         Intent intent = new Intent(Login.this, PatientsList.class);
-        intent.putExtra("token", token);
+        ((Variables) this.getApplication()).setToken(token);
+        //intent.putExtra("token", token);
         startActivity(intent);
     }
 

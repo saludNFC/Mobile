@@ -11,7 +11,6 @@ import app.example.veuge.com.saludnfc.ObjectTransformation;
 import app.example.veuge.com.saludnfc.R;
 import app.example.veuge.com.saludnfc.Variables;
 import app.example.veuge.com.saludnfc.adapters.ConsultationsAdapter;
-import app.example.veuge.com.saludnfc.adapters.ControlsAdapter;
 import app.example.veuge.com.saludnfc.models.Consultation;
 import app.example.veuge.com.saludnfc.network.GetAsyncTask;
 
