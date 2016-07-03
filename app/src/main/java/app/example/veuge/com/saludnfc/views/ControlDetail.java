@@ -9,6 +9,9 @@ import android.widget.TextView;
 
 import org.json.JSONArray;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import app.example.veuge.com.saludnfc.ObjectTransformation;
 import app.example.veuge.com.saludnfc.R;
 import app.example.veuge.com.saludnfc.Variables;
@@ -31,7 +34,7 @@ public class ControlDetail extends AppCompatActivity {
     private TextView detailFour;
 
     private Control control;
-    private Control[] controlAPI;
+    private List<Control> controlAPI;
     private ControlsAdapter adapter;
 
     private String codHC;
@@ -44,6 +47,8 @@ public class ControlDetail extends AppCompatActivity {
 
         Intent intent = getIntent();
         control = (Control) intent.getSerializableExtra("CONTROL");
+
+        controlAPI = new ArrayList<>();
 
         setupUI();
         fillDetails();

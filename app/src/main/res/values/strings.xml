@@ -88,6 +88,7 @@
 
     <!-- CONTROLS -->
     <!-- Fields-->
+    <string name="control_create">Crear control</string>
     <string name="control_type_field">Tipo de Control</string>
     <string name="vaccine_field">Vacuna</string>
     <string name="viav_field">Via de administración</string>
@@ -98,7 +99,7 @@
 
     <string name="temperature_field">Temperatura (°C)</string>
     <string name="heartrate_field">Frecuencia cardíaca</string>
-    <string name="sistole_field">Sistole</string>
+    <string name="systole_field">Sistole</string>
     <string name="diastole_field">Diastole</string>
     <string name="separator">/</string>
     <string name="pre_arterial">Presion arterial</string>

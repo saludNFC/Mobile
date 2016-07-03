@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.List;
+
 import app.example.veuge.com.saludnfc.R;
 import app.example.veuge.com.saludnfc.models.Control;
 import app.example.veuge.com.saludnfc.views.ControlDetail;
@@ -18,13 +20,13 @@ import app.example.veuge.com.saludnfc.views.ControlDetail;
  */
 public class ControlsAdapter extends RecyclerView.Adapter <ControlsAdapter.ViewHolderControls> {
     private LayoutInflater layoutInflater;
-    private Control[] controlsList;
+    private List<Control> controlsList;
 
     public ControlsAdapter(Context context){
         layoutInflater = LayoutInflater.from(context);
     }
 
-    public void setControlsList(Control[] controlsList){
+    public void setControlsList(List<Control> controlsList){
         this.controlsList = controlsList;
     }
 
@@ -37,7 +39,7 @@ public class ControlsAdapter extends RecyclerView.Adapter <ControlsAdapter.ViewH
 
     @Override
     public void onBindViewHolder(ViewHolderControls holder, int position) {
-        final Control currentControl = controlsList[position];
+        final Control currentControl = controlsList.get(position);
 
         switch (currentControl.controlType){
             case "Vacunacion":
@@ -82,7 +84,7 @@ public class ControlsAdapter extends RecyclerView.Adapter <ControlsAdapter.ViewH
 
     @Override
     public int getItemCount() {
-        return controlsList.length;
+        return controlsList.size();
     }
 
     static class ViewHolderControls extends RecyclerView.ViewHolder{

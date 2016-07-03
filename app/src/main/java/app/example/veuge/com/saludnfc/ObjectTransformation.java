@@ -119,7 +119,7 @@ public class ObjectTransformation {
         return histories;
     }
 
-    public Control[] buildControlObject(JSONArray controlDetails) throws JSONException{
+    public List<Control> buildControlObject(JSONArray controlDetails) throws JSONException{
         final String OWM_ID = "identificador_control";
         final String OWM_TYPE = "tipo_control";
 
@@ -145,53 +145,55 @@ public class ObjectTransformation {
 
         final String OWM_DATE = "fecha_creacion";
 
-        Control[] controls = new Control[controlDetails.length()];
+        List<Control> controls = new ArrayList<>();
 
         for(int i = 0; i < controlDetails.length(); i++){
-            JSONObject controlObject = controlDetails.getJSONObject(i);
-            int id = -1, dosis = -1, heartRate = -1, systole = -1, diastole = -1;
-            float weight = -1, height = -1, temperature = -1;
-            boolean sex = false;
-            String type = "", vaccine = "", viaVac = "",
-                    menst = "", mamo ="", papa = "",
-                    typeGeri = "", notes = "",
-                    ca = "";
+            if(! controlDetails.isNull(i)){
+                JSONObject controlObject = controlDetails.getJSONObject(i);
+                int id = -1, dosis = -1, heartRate = -1, systole = -1, diastole = -1;
+                float weight = -1, height = -1, temperature = -1;
+                boolean sex = false;
+                String type = "", vaccine = "", viaVac = "",
+                        menst = "", mamo ="", papa = "",
+                        typeGeri = "", notes = "",
+                        ca = "";
 
-            id = controlObject.getInt(OWM_ID);
-            type = controlObject.getString(OWM_TYPE);
-            ca = controlObject.getString(OWM_DATE);
+                id = controlObject.getInt(OWM_ID);
+                type = controlObject.getString(OWM_TYPE);
+                ca = controlObject.getString(OWM_DATE);
 
-            switch (controlObject.get(OWM_TYPE).toString()){
-                case "Vacunacion":
-                    vaccine = controlObject.getString(OWM_VACCINE);
-                    viaVac = controlObject.getString(OWM_VIA);
-                    dosis = controlObject.getInt(OWM_DOSIS);
-                    break;
+                switch (controlObject.get(OWM_TYPE).toString()){
+                    case "Vacunacion":
+                        vaccine = controlObject.getString(OWM_VACCINE);
+                        viaVac = controlObject.getString(OWM_VIA);
+                        dosis = controlObject.getInt(OWM_DOSIS);
+                        break;
 
-                case "Crecimiento":
-                    weight = (float) controlObject.getDouble(OWM_WEIGHT);
-                    height = (float) controlObject.getDouble(OWM_HEIGHT);
-                    break;
-                case "Triaje":
-                    temperature = (float) controlObject.getDouble(OWM_TEMPERATURE);
-                    heartRate = controlObject.getInt(OWM_HEARTRATE);
-                    systole = controlObject.getInt(OWM_SISTOLE);
-                    diastole = controlObject.getInt(OWM_DIASTOLE);
-                    break;
-                case "Ginecologico":
-                    menst = controlObject.getString(OWM_LASTMENST);
-                    mamo = controlObject.getString(OWM_LASTMAMOG);
-                    sex = controlObject.getBoolean(OWM_SEXACT);
-                    papa = controlObject.getString(OWM_LASTPAPAN);
-                    break;
-                case "Geriatrico":
-                    typeGeri = controlObject.getString(OWM_GER_TYPE);
-                    notes = controlObject.getString(OWM_NOTES);
-                    break;
+                    case "Crecimiento":
+                        weight = (float) controlObject.getDouble(OWM_WEIGHT);
+                        height = (float) controlObject.getDouble(OWM_HEIGHT);
+                        break;
+                    case "Triaje":
+                        temperature = (float) controlObject.getDouble(OWM_TEMPERATURE);
+                        heartRate = controlObject.getInt(OWM_HEARTRATE);
+                        systole = controlObject.getInt(OWM_SISTOLE);
+                        diastole = controlObject.getInt(OWM_DIASTOLE);
+                        break;
+                    case "Ginecologico":
+                        menst = controlObject.getString(OWM_LASTMENST);
+                        mamo = controlObject.getString(OWM_LASTMAMOG);
+                        sex = controlObject.getBoolean(OWM_SEXACT);
+                        papa = controlObject.getString(OWM_LASTPAPAN);
+                        break;
+                    case "Geriatrico":
+                        typeGeri = controlObject.getString(OWM_GER_TYPE);
+                        notes = controlObject.getString(OWM_NOTES);
+                        break;
+                }
+                Control control = new Control(id, type, vaccine, viaVac, dosis, weight, height, temperature, heartRate,
+                        systole, diastole, menst, mamo, sex, papa, typeGeri, notes, ca);
+                controls.add(control);
             }
-            Control control = new Control(id, type, vaccine, viaVac, dosis, weight, height, temperature, heartRate,
-                    systole, diastole, menst, mamo, sex, papa, typeGeri, notes, ca);
-            controls[i] = control;
         }
         return controls;
     }
