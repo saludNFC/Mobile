@@ -25,19 +25,16 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
-import app.example.veuge.com.saludnfc.HashMapTransformation;
+import app.example.veuge.com.saludnfc.ObjectTransformation;
 import app.example.veuge.com.saludnfc.R;
 import app.example.veuge.com.saludnfc.Variables;
 import app.example.veuge.com.saludnfc.network.PostAsyncTask;
 
 public class Login extends AppCompatActivity {
 
-    private String path = "api/auth";
-    private String response, token = "", message, status_code;
-
+    private String response, token = "";
     private PostAsyncTask mAuthTask = null;
 
     private AutoCompleteTextView emailView;
@@ -128,6 +125,7 @@ public class Login extends AppCompatActivity {
             //mAuthTask = new UserLoginTask(email, password);
             //mAuthTask.execute((Void) null);
             String url = ((Variables) this.getApplication()).getUrl();
+            String path = "api/auth";
 
             mAuthTask = new PostAsyncTask(url, path, token);
 
@@ -146,21 +144,19 @@ public class Login extends AppCompatActivity {
     }
 
     private void evaluateResponse(String response) {
-        HashMapTransformation hmt = new HashMapTransformation(null);
+        ObjectTransformation hmt = new ObjectTransformation();
         try {
-            JSONArray x = hmt.getJsonFromString(response);
-            HashMap login = hmt.buildLoginHashmap(x);
+            JSONArray loginArray = hmt.getJsonFromString(response);
 
-            if(login.containsKey(2)){
-                message = login.get(1).toString();
-                status_code = login.get(2).toString();
-                Log.i("evaluateResponse", "LOGIN FAILED " + message + " " + status_code);
-                loginFailed();
-            }
-            else {
-                token = login.get(1).toString();
-                Log.i("evaluateResponse", "LOGIN SUCCESS " + token);
-                loginSuccess();
+            for (int i = 0; i < loginArray.length(); i++){
+                if(loginArray.getString(i).contains("token")){
+                    token = loginArray.getJSONObject(i).getString("token");
+                    Log.d("TOKEN", token);
+                    loginSuccess();
+                }
+                else {
+                    loginFailed();
+                }
             }
         }
         catch (JSONException e){
@@ -171,20 +167,19 @@ public class Login extends AppCompatActivity {
     public void loginSuccess(){
         mAuthTask = null;
         showProgress(false);
+        Log.d("LOGIN", "login success");
 
-        Log.i("evaluateResponse", "Login successful");
         //finish();
         Intent intent = new Intent(Login.this, PatientsList.class);
         ((Variables) this.getApplication()).setToken(token);
-        //intent.putExtra("token", token);
         startActivity(intent);
     }
 
     public void loginFailed(){
         mAuthTask = null;
         showProgress(false);
+        Log.d("LOGIN", "login failed");
 
-        Log.i("evaluateResponse", "Login failed");
         passwordView.setError(getString(R.string.error_incorrect_password));
         passwordView.requestFocus();
     }
@@ -237,25 +232,5 @@ public class Login extends AppCompatActivity {
             progressView.setVisibility(show ? View.VISIBLE : View.GONE);
             loginForm.setVisibility(show ? View.GONE : View.VISIBLE);
         }
-    }
-
-    private void addEmailsToAutoComplete(List<String> emailAddressCollection) {
-        //Create adapter to tell the AutoCompleteTextView what to show in its dropdown list.
-        ArrayAdapter<String> adapter =
-                new ArrayAdapter<>(Login.this,
-                        android.R.layout.simple_dropdown_item_1line, emailAddressCollection);
-
-        emailView.setAdapter(adapter);
-    }
-
-
-    private interface ProfileQuery {
-        String[] PROJECTION = {
-                ContactsContract.CommonDataKinds.Email.ADDRESS,
-                ContactsContract.CommonDataKinds.Email.IS_PRIMARY,
-        };
-
-        int ADDRESS = 0;
-        int IS_PRIMARY = 1;
     }
 }
