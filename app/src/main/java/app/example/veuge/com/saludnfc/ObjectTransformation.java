@@ -1,7 +1,5 @@
 package app.example.veuge.com.saludnfc;
 
-import android.util.Log;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -41,7 +39,7 @@ public class ObjectTransformation {
         }
     }
 
-    public Consultation[] buildConsultationObject(JSONArray consultationArray) throws JSONException{
+    public List<Consultation> buildConsultationObject(JSONArray consultationArray) throws JSONException{
         final String OWM_ID = "identificador_consulta";
         final String OWM_ANAMNESIS = "anamnesis";
         final String OWM_PHYSICAL_EXAM = "examen_físico";
@@ -50,21 +48,23 @@ public class ObjectTransformation {
         final String OWM_JUSTIFICATION = "justificacion";
         final String OWM_DATE = "fecha_creacion";
 
-        Consultation[] consultations = new Consultation[consultationArray.length()];
+        List<Consultation> consultations = new ArrayList<>();
 
         for(int i = 0; i < consultationArray.length(); i++){
-            JSONObject consultationObject = consultationArray.getJSONObject(i);
+            if(! consultationArray.isNull(i)){
+                JSONObject consultationObject = consultationArray.getJSONObject(i);
 
-            int id = consultationObject.getInt(OWM_ID);
-            String anamnesis = consultationObject.getString(OWM_ANAMNESIS);
-            String physicalE = consultationObject.getString(OWM_PHYSICAL_EXAM);
-            String diagnosis = consultationObject.getString(OWM_DIAGNOSIS);
-            String treatment = consultationObject.getString(OWM_TREATMENT);
-            String justification = consultationObject.getString(OWM_JUSTIFICATION);
-            String created = consultationObject.getString(OWM_DATE);
+                int id = consultationObject.getInt(OWM_ID);
+                String anamnesis = consultationObject.getString(OWM_ANAMNESIS);
+                String physicalE = consultationObject.getString(OWM_PHYSICAL_EXAM);
+                String diagnosis = consultationObject.getString(OWM_DIAGNOSIS);
+                String treatment = consultationObject.getString(OWM_TREATMENT);
+                String justification = consultationObject.getString(OWM_JUSTIFICATION);
+                String created = consultationObject.getString(OWM_DATE);
 
-            Consultation consultation = new Consultation(id, anamnesis, physicalE, diagnosis, treatment, justification, created);
-            consultations[i] = consultation;
+                Consultation consultation = new Consultation(id, anamnesis, physicalE, diagnosis, treatment, justification, created);
+                consultations.add(consultation);
+            }
         }
         return consultations;
     }
@@ -223,7 +223,7 @@ public class ObjectTransformation {
         return contacts;
     }
 
-    public Patient[] buildPatientObject(JSONArray patientDetails) throws JSONException{
+    public List<Patient> buildPatientObject(JSONArray patientDetails) throws JSONException{
         final String OWM_ID = "identificador_paciente";
         final String OWM_HC = "historia_clinica";
         final String OWM_CI = "ci";
@@ -238,7 +238,7 @@ public class ObjectTransformation {
         final String OWM_OCUPATION = "ocupacion";
         final String OWM_BLOODTYPE = "grupo_sanguineo";
 
-        Patient[] patients = new Patient[patientDetails.length()];
+        List<Patient> patients = new ArrayList<>();
 
         for(int i = 0; i < patientDetails.length(); i++){
             int id;
@@ -261,7 +261,7 @@ public class ObjectTransformation {
             gs = patientObject.getString(OWM_BLOODTYPE);
 
             Patient patient = new Patient(id, hc, ci, emi, nom, ape, sex, fnac, lnac, gi, ec, ocu, gs);
-            patients[i] = patient;
+            patients.add(patient);
         }
         return patients;
     }

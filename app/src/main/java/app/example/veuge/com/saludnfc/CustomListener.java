@@ -3,15 +3,21 @@ package app.example.veuge.com.saludnfc;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 /**
  * Created by veuge on 30-05-16.
  */
-public class CustomListener implements AdapterView.OnItemSelectedListener {
+public class CustomListener implements Spinner.OnItemSelectedListener {
+
+    /**
+     * DEPRECATED
+     */
 
     public LinearLayout[] linearLayouts;
     public String selected;
+
     public CustomListener(LinearLayout... params){
         this.linearLayouts = params;
         selected = "";

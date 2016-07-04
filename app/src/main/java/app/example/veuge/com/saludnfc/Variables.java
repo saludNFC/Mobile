@@ -13,14 +13,29 @@ import android.widget.TextView;
  * Created by veuge on 28-05-16.
  */
 public class Variables extends Application {
-    //private String url = "http://192.168.1.159:8000/"; // Router WiFi
-    private String url = "http://192.168.1.164:8000/";  // Router
-    // private String url = "http://192.168.43.4:8000/"; // Hotspot tethering with cellphone
-    // private String url = "http://192.168.42.132:8000/"; // USB tethering with cellphone
+    private String url = "http://192.168.1.159:8000/"; // Router WiFi
+    //  private String url = "http://192.168.1.164:8000/";  // Router
+    //  private String url = "http://192.168.43.4:8000/"; // Hotspot tethering with cellphone
+    //  private String url = "http://192.168.42.132:8000/"; // USB tethering with cellphone
 
+    /**
+     * There must be a better way to handle the auth token
+     * Perhaps with the AccountManager class?
+     * By now I will store the token as a global variable simple with a string
+     * MEH
+     */
+    private String token;
 
     public String getUrl(){
         return url;
+    }
+
+    public String getToken(){
+        return token;
+    }
+
+    public void setToken(String tok){
+        this.token = tok;
     }
 
     public void insertViews(Context context, ViewGroup father, String label, String text){

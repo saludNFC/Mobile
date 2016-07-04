@@ -22,13 +22,13 @@ import app.example.veuge.com.saludnfc.network.GetAsyncTask;
 public class HistoriesList extends AppCompatActivity {
 
     private String patientHCode;
+    private String token;
 
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManagerH;
     private HistoriesAdapter adapter;
     private List<History> histories = null;
     private FloatingActionButton addHistoryBtn;
-    private String token;
 
     /*@Override
     protected void onStart() {
@@ -53,6 +53,14 @@ public class HistoriesList extends AppCompatActivity {
         mRecyclerView.setAdapter(adapter);
     }
 
+    private void setupUI() {
+        mLayoutManagerH = new LinearLayoutManager(this);
+        mRecyclerView = (RecyclerView) findViewById(R.id.history_recycler);
+        mRecyclerView.setLayoutManager(mLayoutManagerH);
+        mRecyclerView.setHasFixedSize(true);
+        addHistoryBtn = (FloatingActionButton) findViewById(R.id.add_history);
+    }
+
     private List<History> getHistoriesList() {
         String url = ((Variables) this.getApplication()).getUrl();
         String path = "api/paciente/" + patientHCode + "/antecedentes";
@@ -73,14 +81,6 @@ public class HistoriesList extends AppCompatActivity {
             ex.printStackTrace();
         }
         return histories;
-    }
-
-    private void setupUI() {
-        mLayoutManagerH = new LinearLayoutManager(this);
-        mRecyclerView = (RecyclerView) findViewById(R.id.history_recycler);
-        mRecyclerView.setLayoutManager(mLayoutManagerH);
-        mRecyclerView.setHasFixedSize(true);
-        addHistoryBtn = (FloatingActionButton) findViewById(R.id.add_history);
     }
 
     public void createHistory(View view){

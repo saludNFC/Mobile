@@ -18,6 +18,8 @@ import android.widget.TextView;
 
 import org.json.JSONArray;
 
+import java.util.List;
+
 import app.example.veuge.com.saludnfc.ObjectTransformation;
 import app.example.veuge.com.saludnfc.R;
 import app.example.veuge.com.saludnfc.Variables;
@@ -35,7 +37,7 @@ public class PatientDetail extends AppCompatActivity {
     private GridView gridView;
 
     private Patient patient;
-    private Patient[] patientNFC;
+    private List<Patient> patientNFC;
     private PatientsAdapter adapter;
 
     private String payload, codHC;
@@ -67,7 +69,7 @@ public class PatientDetail extends AppCompatActivity {
                 }
             }
             getPatientFromAPI();
-            patient = patientNFC[0];
+            patient = patientNFC.get(0);
         }
 
         setupUI();

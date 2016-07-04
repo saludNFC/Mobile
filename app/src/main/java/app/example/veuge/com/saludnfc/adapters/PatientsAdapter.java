@@ -8,6 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.util.List;
+
 import app.example.veuge.com.saludnfc.R;
 import app.example.veuge.com.saludnfc.models.Patient;
 import app.example.veuge.com.saludnfc.views.PatientDetail;
@@ -19,13 +22,13 @@ import app.example.veuge.com.saludnfc.views.PatientDetail;
 public class PatientsAdapter extends RecyclerView.Adapter<PatientsAdapter.ViewHolderPatients> {
 
     private LayoutInflater layoutInflater;
-    private Patient[] patientsList;
+    private List<Patient> patientsList;
 
     public PatientsAdapter(Context context){
         layoutInflater = LayoutInflater.from(context);
     }
 
-    public void  setPatientsList(Patient[] patientsList){
+    public void  setPatientsList(List<Patient> patientsList){
         this.patientsList = patientsList;
     }
 
@@ -38,7 +41,7 @@ public class PatientsAdapter extends RecyclerView.Adapter<PatientsAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(final ViewHolderPatients holder, int position) {
-        final Patient currentPatient = patientsList[position];
+        final Patient currentPatient = patientsList.get(position);
         if(currentPatient.sexo.equals("Femenino")){
             holder.patientCard.setImageResource(R.drawable.ic_ufemale);
         }
@@ -61,7 +64,7 @@ public class PatientsAdapter extends RecyclerView.Adapter<PatientsAdapter.ViewHo
 
     @Override
     public int getItemCount() {
-        return patientsList.length;
+        return patientsList.size();
     }
 
     static class ViewHolderPatients extends RecyclerView.ViewHolder{

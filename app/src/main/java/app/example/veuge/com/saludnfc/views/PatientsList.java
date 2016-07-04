@@ -10,10 +10,13 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 
 import org.json.JSONArray;
+
+import java.util.List;
 
 import app.example.veuge.com.saludnfc.ObjectTransformation;
 import app.example.veuge.com.saludnfc.R;
@@ -27,16 +30,16 @@ public class PatientsList extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
     private PatientsAdapter adapter;
-    private Patient[] patients;
+    private List<Patient> patients;
     private FloatingActionButton fab;
 
     private String token;
 
-    @Override
+    /*@Override
     protected void onStart() {
         super.onStart();
         getPatientsList();
-    }
+    }*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +49,7 @@ public class PatientsList extends AppCompatActivity {
         Intent intent = getIntent();
         //token = intent.getStringExtra("token");
         token = ((Variables) this.getApplication()).getToken();
+        Log.d("TOKEN", token);
 
         setupUI();
 
@@ -62,11 +66,11 @@ public class PatientsList extends AppCompatActivity {
         return true;
     }
 
-    private Patient[] getPatientsList() {
+    private List<Patient> getPatientsList() {
         String url = ((Variables) this.getApplication()).getUrl();
         String path = "api/paciente";
         String resp;
-        Patient[] patients = null;
+        List<Patient> patients = null;
         ObjectTransformation hmt = new ObjectTransformation();
 
         try {
