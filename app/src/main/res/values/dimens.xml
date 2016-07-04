@@ -8,6 +8,7 @@
     <dimen name="tile_height">160dp</dimen>
     <dimen name="app_bar_height">270dp</dimen>
     <dimen name="article_keylines">72dp</dimen>
+    <dimen name="edittext_height">80dp</dimen>
     <dimen name="avator_size">40dp</dimen>
     <dimen name="card_title_height">40dp</dimen>
     <dimen name="article_titles">20sp</dimen>

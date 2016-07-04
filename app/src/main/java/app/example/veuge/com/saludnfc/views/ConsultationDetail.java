@@ -7,6 +7,8 @@ import android.widget.TextView;
 
 import org.json.JSONArray;
 
+import java.util.List;
+
 import app.example.veuge.com.saludnfc.ObjectTransformation;
 import app.example.veuge.com.saludnfc.R;
 import app.example.veuge.com.saludnfc.Variables;
@@ -24,7 +26,7 @@ public class ConsultationDetail extends AppCompatActivity {
     private TextView justification;
 
     private Consultation consultation;
-    private Consultation[] consultationAPI;
+    private List<Consultation> consultationAPI;
     private ConsultationsAdapter adapter;
 
     private String codHC;

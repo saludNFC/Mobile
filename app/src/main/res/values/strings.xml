@@ -133,6 +133,7 @@
     <string name="vsoc">Valoracion Social</string>
 
     <!-- CONSULTATION -->
+    <string name="consultation_create">Crear consulta médica</string>
     <string name="consultation_title">Consultas Médicas</string>
     <string name="consultation_detail_title">Consulta Médica</string>
     <!-- Fields-->

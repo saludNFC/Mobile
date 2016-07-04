@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.List;
+
 import app.example.veuge.com.saludnfc.R;
 import app.example.veuge.com.saludnfc.models.Consultation;
 import app.example.veuge.com.saludnfc.views.ConsultationDetail;
@@ -18,13 +20,13 @@ import app.example.veuge.com.saludnfc.views.ConsultationDetail;
  */
 public class ConsultationsAdapter extends RecyclerView.Adapter <ConsultationsAdapter.ViewHolderConsultations>{
     private LayoutInflater layoutInflater;
-    private Consultation[] consultationsList;
+    private List<Consultation> consultationsList;
 
     public ConsultationsAdapter(Context context) {
         layoutInflater = LayoutInflater.from(context);
     }
 
-    public void setConsultationsList(Consultation[] consultationsList) {
+    public void setConsultationsList(List<Consultation> consultationsList) {
         this.consultationsList = consultationsList;
     }
 
@@ -37,7 +39,7 @@ public class ConsultationsAdapter extends RecyclerView.Adapter <ConsultationsAda
 
     @Override
     public void onBindViewHolder(ViewHolderConsultations holder, int position) {
-        final Consultation currentConsultation = consultationsList[position];
+        final Consultation currentConsultation = consultationsList.get(position);
 
         holder.consultation.setImageResource(R.drawable.ic_stethoscope);
         holder.anamnesis.setText(currentConsultation.anamnesis);
@@ -57,7 +59,7 @@ public class ConsultationsAdapter extends RecyclerView.Adapter <ConsultationsAda
 
     @Override
     public int getItemCount() {
-        return consultationsList.length;
+        return consultationsList.size();
     }
 
     static class ViewHolderConsultations extends RecyclerView.ViewHolder {
