@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -26,10 +27,12 @@ import java.util.List;
 import app.example.veuge.com.saludnfc.ObjectTransformation;
 import app.example.veuge.com.saludnfc.R;
 import app.example.veuge.com.saludnfc.Variables;
+import app.example.veuge.com.saludnfc.models.Patient;
 import app.example.veuge.com.saludnfc.network.PostAsyncTask;
 
 public class HistoryCreate extends AppCompatActivity {
 
+    private Patient currentPatient;
     private String patientHCode;
     private String token;
 
@@ -51,6 +54,7 @@ public class HistoryCreate extends AppCompatActivity {
     private TextInputLayout dateIniField;
 
     private Button saveHistoryBtn;
+    private Toolbar toolbar;
 
     List<NameValuePair> newHistory;
 
@@ -61,6 +65,7 @@ public class HistoryCreate extends AppCompatActivity {
 
         Intent intent = getIntent();
         patientHCode = intent.getStringExtra("PATIENT_CODE");
+        currentPatient = (Patient) intent.getSerializableExtra("PATIENT");
         token = ((Variables) this.getApplication()).getToken();
         newHistory = new ArrayList<NameValuePair>(2);
 
@@ -93,6 +98,9 @@ public class HistoryCreate extends AppCompatActivity {
         dateIniField = (TextInputLayout) findViewById(R.id.dateini_wrapper);
 
         saveHistoryBtn = (Button) findViewById(R.id.history_save);
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle(currentPatient.nombre + " " +  currentPatient.apellido);
     }
 
     public void spinnerAdapters(){
@@ -246,6 +254,7 @@ public class HistoryCreate extends AppCompatActivity {
 
         Intent intent = new Intent(HistoryCreate.this, HistoriesList.class);
         intent.putExtra("PATIENT_CODE", patientHCode);
+        intent.putExtra("PATIENT", currentPatient);
         startActivity(intent);
     }
 

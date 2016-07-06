@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import org.json.JSONArray;
@@ -18,10 +19,12 @@ import app.example.veuge.com.saludnfc.R;
 import app.example.veuge.com.saludnfc.Variables;
 import app.example.veuge.com.saludnfc.adapters.ConsultationsAdapter;
 import app.example.veuge.com.saludnfc.models.Consultation;
+import app.example.veuge.com.saludnfc.models.Patient;
 import app.example.veuge.com.saludnfc.network.GetAsyncTask;
 
 public class ConsultationsList extends AppCompatActivity {
 
+    private Patient currentPatient;
     private String patientHCode;
     private String token;
 
@@ -30,14 +33,17 @@ public class ConsultationsList extends AppCompatActivity {
     private ConsultationsAdapter adapter;
     private List<Consultation> consultations = null;
     private FloatingActionButton addConsultationBtn;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.consultations_list);
+        patientHCode = getIntent().getStringExtra("PATIENT_CODE");
+        currentPatient = (Patient) getIntent().getSerializableExtra("PATIENT");
+
         setupUI();
 
-        patientHCode = getIntent().getStringExtra("PATIENT_CODE");
         token = ((Variables) this.getApplication()).getToken();
         consultations = getConsultationsList();
 
@@ -52,6 +58,9 @@ public class ConsultationsList extends AppCompatActivity {
         mRecyclerView.setLayoutManager(mLayoutManagerH);
         mRecyclerView.setHasFixedSize(true);
         addConsultationBtn = (FloatingActionButton) findViewById(R.id.add_consultation);
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle(currentPatient.nombre + " " + currentPatient.apellido);
     }
 
     public List<Consultation> getConsultationsList() {

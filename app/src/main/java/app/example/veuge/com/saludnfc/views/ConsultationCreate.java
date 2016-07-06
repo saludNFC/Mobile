@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -20,10 +21,12 @@ import java.util.List;
 import app.example.veuge.com.saludnfc.ObjectTransformation;
 import app.example.veuge.com.saludnfc.R;
 import app.example.veuge.com.saludnfc.Variables;
+import app.example.veuge.com.saludnfc.models.Patient;
 import app.example.veuge.com.saludnfc.network.PostAsyncTask;
 
 public class ConsultationCreate extends AppCompatActivity {
 
+    private Patient currentPatient;
     private String patientHCode;
     private String token;
 
@@ -34,6 +37,7 @@ public class ConsultationCreate extends AppCompatActivity {
     private TextInputLayout treatmentField;
     private TextInputLayout justificationField;
     private Button saveConsultationBtn;
+    private Toolbar toolbar;
 
     List<NameValuePair> newConsultation;
 
@@ -44,6 +48,7 @@ public class ConsultationCreate extends AppCompatActivity {
 
         Intent intent = getIntent();
         patientHCode = intent.getStringExtra("PATIENT_CODE");
+        currentPatient = (Patient) intent.getSerializableExtra("PATIENT");
         token = ((Variables) this.getApplication()).getToken();
         newConsultation = new ArrayList<>();
 
@@ -59,6 +64,9 @@ public class ConsultationCreate extends AppCompatActivity {
         justificationField = (TextInputLayout) findViewById(R.id.justification_wrapper);
 
         saveConsultationBtn = (Button) findViewById(R.id.consultation_save);
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle(currentPatient.nombre + " " + currentPatient.apellido);
     }
 
     public void consultationSave(View view){

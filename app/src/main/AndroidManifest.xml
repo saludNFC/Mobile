@@ -5,16 +5,15 @@
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.NFC" />
-
-    <uses-feature
-        android:name="android.hardware.nfc"
-        android:required="false" />
-
     <!-- To auto-complete the email text field in the activity_login form with the user's emails -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
+
+    <uses-feature
+        android:name="android.hardware.nfc"
+        android:required="false" />
 
     <application
         android:name=".Variables"
@@ -23,39 +22,151 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".views.Login">
+
+        <activity
+            android:name=".views.Login"
+            android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- PATIENTS SECTION -->
         <activity android:name=".views.PatientsList" />
-        <activity android:name=".views.PatientDetail">
+
+        <activity
+            android:name=".views.PatientCreate"
+            android:parentActivityName=".views.PatientsList"
+            android:noHistory="true">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".views.PatientsList" />
+        </activity>
+
+        <activity
+            android:name=".views.PatientDetail"
+            android:parentActivityName=".views.PatientsList">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".views.PatientsList" />
             <intent-filter>
                 <action android:name="android.nfc.action.NDEF_DISCOVERED" />
-
                 <category android:name="android.intent.category.DEFAULT" />
-
                 <data
                     android:host="ext"
                     android:pathPrefix="/saludnfc.com:mobile"
                     android:scheme="vnd.android.nfc" />
             </intent-filter>
         </activity>
-        <activity android:name=".views.HistoriesList" />
-        <activity android:name=".views.ControlsList" />
-        <activity android:name=".views.ConsultationsList" />
-        <activity android:name=".views.LogActivity" />
-        <activity android:name=".views.HistoryDetail" />
-        <activity android:name=".views.ControlDetail" />
-        <activity android:name=".views.ConsultationDetail" />
-        <activity android:name=".views.ContactDetail" />
-        <activity android:name=".views.NfcWriter" />
-        <activity android:name=".views.PatientCreate" />
-        <activity android:name=".views.HistoryCreate" />
-        <activity android:name=".views.ControlCreate" />
-        <activity android:name=".views.ConsultationCreate" />
-    </application>
 
+        <!-- HISTORIES SECTION -->
+        <activity
+            android:name=".views.HistoriesList"
+            android:parentActivityName=".views.PatientDetail"
+            android:noHistory="true">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".views.PatientDetail" />
+        </activity>
+        <activity
+            android:name=".views.HistoryDetail"
+            android:parentActivityName=".views.HistoriesList"
+            android:noHistory="true">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".views.HistoriesList" />
+        </activity>
+        <activity
+            android:name=".views.HistoryCreate"
+            android:parentActivityName=".views.HistoriesList"
+            android:noHistory="true">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".views.HistoriesList" />
+        </activity>
+
+        <!-- CONTROLS SECTION -->
+        <activity
+            android:name=".views.ControlsList"
+            android:parentActivityName=".views.PatientDetail"
+            android:noHistory="true">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".views.PatientDetail" />
+        </activity>
+        <activity
+            android:name=".views.ControlDetail"
+            android:parentActivityName=".views.ControlsList"
+            android:noHistory="true">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".views.ControlsList" />
+        </activity>
+        <activity
+            android:name=".views.ControlCreate"
+            android:parentActivityName=".views.ControlsList"
+            android:noHistory="true">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".views.ControlsList" />
+        </activity>
+
+        <!-- CONSULTATIONS SECTION -->
+        <activity
+            android:name=".views.ConsultationsList"
+            android:parentActivityName=".views.PatientDetail"
+            android:noHistory="true">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".views.PatientDetail" />
+        </activity>
+        <activity
+            android:name=".views.ConsultationDetail"
+            android:parentActivityName=".views.ConsultationsList"
+            android:noHistory="true">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".views.ConsultationsList" />
+        </activity>
+        <activity
+            android:name=".views.ConsultationCreate"
+            android:parentActivityName=".views.ConsultationsList"
+            android:noHistory="true">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".views.ConsultationsList" />
+        </activity>
+
+        <!-- NFC SECTION -->
+        <activity
+            android:name=".views.NfcWriter"
+            android:parentActivityName=".views.PatientDetail"
+            android:noHistory="true">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".views.PatientDetail" />
+        </activity>
+
+        <!-- LOG SECTION -->
+        <activity
+            android:name=".views.LogActivity"
+            android:parentActivityName=".views.PatientDetail"
+            android:noHistory="true">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".views.PatientDetail" />
+        </activity>
+
+        <!-- CONTACT SECTION -->
+        <activity
+            android:name=".views.ContactDetail"
+            android:parentActivityName=".views.PatientDetail"
+            android:noHistory="true">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".views.PatientDetail" />
+        </activity>
+    </application>
 </manifest>

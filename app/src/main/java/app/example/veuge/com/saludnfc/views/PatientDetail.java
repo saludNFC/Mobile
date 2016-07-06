@@ -109,8 +109,6 @@ public class PatientDetail extends AppCompatActivity {
                 switch (position) {
                     case 0:
                         intent = new Intent(context, NfcWriter.class);
-                        intent.putExtra("PATIENT", patient);
-
                         break;
                     case 1:
                         intent = new Intent(context, ContactDetail.class);
@@ -127,6 +125,7 @@ public class PatientDetail extends AppCompatActivity {
                     case 5:
                         intent = new Intent(context, ConsultationsList.class);
                 }
+                intent.putExtra("PATIENT", patient);
                 intent.putExtra("PATIENT_CODE", patient.historia);
                 context.startActivity(intent);
             }
@@ -155,7 +154,6 @@ public class PatientDetail extends AppCompatActivity {
                 };
             }
         } else {
-            Log.d("NFC Transportation", "Unknown intent.");
             finish();
         }
 

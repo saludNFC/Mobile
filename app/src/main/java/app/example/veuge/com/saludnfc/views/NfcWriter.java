@@ -68,7 +68,7 @@ public class NfcWriter extends AppCompatActivity {
     @Override
     public void onPause() {
         super.onPause();
-        mNfcAdapter.disableForegroundDispatch(this);
+        //mNfcAdapter.disableForegroundDispatch(this);
     }
 
     @Override

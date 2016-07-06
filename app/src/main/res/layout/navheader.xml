@@ -4,5 +4,6 @@
     android:layout_height="@dimen/navheader_height"
     android:background="?attr/colorPrimaryDark"
     android:orientation="vertical"
-    android:padding="@dimen/md_keylines">
+    android:padding="@dimen/md_keylines"
+    android:id="@+id/nav_header">
 </LinearLayout>

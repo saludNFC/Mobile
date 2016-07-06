@@ -3,7 +3,12 @@ package app.example.veuge.com.saludnfc.views;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
+import android.support.graphics.drawable.VectorDrawableCompat;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,7 +17,9 @@ import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import org.json.JSONArray;
 
@@ -23,9 +30,13 @@ import app.example.veuge.com.saludnfc.R;
 import app.example.veuge.com.saludnfc.Variables;
 import app.example.veuge.com.saludnfc.adapters.PatientsAdapter;
 import app.example.veuge.com.saludnfc.models.Patient;
+import app.example.veuge.com.saludnfc.models.User;
 import app.example.veuge.com.saludnfc.network.GetAsyncTask;
 
 public class PatientsList extends AppCompatActivity {
+
+    private User user;
+    private DrawerLayout drawerLayout;
 
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -35,22 +46,14 @@ public class PatientsList extends AppCompatActivity {
 
     private String token;
 
-    /*@Override
-    protected void onStart() {
-        super.onStart();
-        getPatientsList();
-    }*/
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.patients_list);
 
         Intent intent = getIntent();
-        //token = intent.getStringExtra("token");
+        user = (User) intent.getSerializableExtra("USER");
         token = ((Variables) this.getApplication()).getToken();
-        Log.d("TOKEN", token);
-
         setupUI();
 
         getPatientsList();
@@ -89,9 +92,38 @@ public class PatientsList extends AppCompatActivity {
     }
 
     public void setupUI(){
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer);
+        Menu menu = navigationView.getMenu();
+        MenuItem userName = menu.findItem(R.id.user_name);
+        userName.setTitle(user.name);
+
+        ActionBar supportActionBar = getSupportActionBar();
+        if (supportActionBar != null) {
+            VectorDrawableCompat indicator = VectorDrawableCompat.create(getResources(), R.drawable.ic_menu, getTheme());
+            indicator.setTint(ResourcesCompat.getColor(getResources(),R.color.white,getTheme()));
+            supportActionBar.setHomeAsUpIndicator(indicator);
+            supportActionBar.setDisplayHomeAsUpEnabled(true);
+        }
+
+        navigationView.setNavigationItemSelectedListener(
+                new NavigationView.OnNavigationItemSelectedListener() {
+                    // This method will trigger on item Click of navigation menu
+                    @Override
+                    public boolean onNavigationItemSelected(MenuItem menuItem) {
+                        // Set item in checked state
+                        menuItem.setChecked(true);
+
+                        // TODO: handle navigation
+
+                        // Closing drawer on item click
+                        drawerLayout.closeDrawers();
+                        return true;
+                    }
+                });
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         mLayoutManager = new LinearLayoutManager(this);
 
         mRecyclerView = (RecyclerView) findViewById(R.id.patient_recycler);
@@ -101,13 +133,12 @@ public class PatientsList extends AppCompatActivity {
         patients = getPatientsList();
         adapter.setPatientsList(patients);
         mRecyclerView.setAdapter(adapter);
-
         fab = (FloatingActionButton) findViewById(R.id.add_patient);
     }
 
     public void createPatient(View view){
         Intent intent = new Intent(this, PatientCreate.class);
-        intent.putExtra("token", token);
+        intent.putExtra("USER", user);
         this.startActivity(intent);
     }
 }

@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import org.json.JSONArray;
@@ -17,10 +18,12 @@ import app.example.veuge.com.saludnfc.R;
 import app.example.veuge.com.saludnfc.Variables;
 import app.example.veuge.com.saludnfc.adapters.ControlsAdapter;
 import app.example.veuge.com.saludnfc.models.Control;
+import app.example.veuge.com.saludnfc.models.Patient;
 import app.example.veuge.com.saludnfc.network.GetAsyncTask;
 
 public class ControlsList extends AppCompatActivity {
 
+    private Patient currentPatient;
     private String patientHCode;
     private String token;
 
@@ -29,12 +32,14 @@ public class ControlsList extends AppCompatActivity {
     private ControlsAdapter adapter;
     private List<Control> controls;
     private FloatingActionButton addControlBtn;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.controls_list);
 
+        currentPatient = (Patient) getIntent().getSerializableExtra("PATIENT");
         patientHCode = getIntent().getStringExtra("PATIENT_CODE");
         token = ((Variables) this.getApplication()).getToken();
 
@@ -52,6 +57,9 @@ public class ControlsList extends AppCompatActivity {
         adapter.setControlsList(controls);
         mRecyclerView.setAdapter(adapter);
         addControlBtn = (FloatingActionButton) findViewById(R.id.add_control);
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle(currentPatient.nombre + " " + currentPatient.apellido);
     }
     private List<Control> getControlsList() {
         String url = ((Variables) this.getApplication()).getUrl();
@@ -77,6 +85,7 @@ public class ControlsList extends AppCompatActivity {
 
     public void createControl(View view){
         Intent intent = new Intent(this, ControlCreate.class);
+        intent.putExtra("PATIENT", currentPatient);
         intent.putExtra("PATIENT_CODE", patientHCode);
         startActivity(intent);
     }

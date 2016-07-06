@@ -169,4 +169,7 @@
     <string name="nfc_patient">Paciente</string>
     <string name="nfc_patient_hc">Código de Historia Clínica</string>
     <string name="nfc_instructions">Acerque el nuevo carnet al dispositivo</string>
+
+    <string name="drawer_open">Open</string>
+    <string name="drawer_close">Close</string>
 </resources>

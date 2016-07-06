@@ -3,6 +3,7 @@ package app.example.veuge.com.saludnfc.views;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -17,6 +18,7 @@ import app.example.veuge.com.saludnfc.R;
 import app.example.veuge.com.saludnfc.Variables;
 import app.example.veuge.com.saludnfc.adapters.ControlsAdapter;
 import app.example.veuge.com.saludnfc.models.Control;
+import app.example.veuge.com.saludnfc.models.Patient;
 import app.example.veuge.com.saludnfc.network.GetAsyncTask;
 
 public class ControlDetail extends AppCompatActivity {

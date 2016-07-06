@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import org.json.JSONArray;
@@ -17,10 +18,12 @@ import app.example.veuge.com.saludnfc.R;
 import app.example.veuge.com.saludnfc.Variables;
 import app.example.veuge.com.saludnfc.adapters.HistoriesAdapter;
 import app.example.veuge.com.saludnfc.models.History;
+import app.example.veuge.com.saludnfc.models.Patient;
 import app.example.veuge.com.saludnfc.network.GetAsyncTask;
 
 public class HistoriesList extends AppCompatActivity {
 
+    private Patient currentPatient;
     private String patientHCode;
     private String token;
 
@@ -29,21 +32,17 @@ public class HistoriesList extends AppCompatActivity {
     private HistoriesAdapter adapter;
     private List<History> histories = null;
     private FloatingActionButton addHistoryBtn;
-
-    /*@Override
-    protected void onStart() {
-        super.onStart();
-        getHistoriesList();
-    }*/
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.histories_list);
+        patientHCode = getIntent().getStringExtra("PATIENT_CODE");
+        currentPatient = (Patient) getIntent().getSerializableExtra("PATIENT");
 
         setupUI();
 
-        patientHCode = getIntent().getStringExtra("PATIENT_CODE");
         token = ((Variables) this.getApplication()).getToken();
         histories = getHistoriesList();
 
@@ -59,6 +58,9 @@ public class HistoriesList extends AppCompatActivity {
         mRecyclerView.setLayoutManager(mLayoutManagerH);
         mRecyclerView.setHasFixedSize(true);
         addHistoryBtn = (FloatingActionButton) findViewById(R.id.add_history);
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle(currentPatient.nombre + " " + currentPatient.apellido);
     }
 
     private List<History> getHistoriesList() {
@@ -86,6 +88,7 @@ public class HistoriesList extends AppCompatActivity {
     public void createHistory(View view){
         Intent intent = new Intent(this, HistoryCreate.class);
         intent.putExtra("PATIENT_CODE", patientHCode);
+        intent.putExtra("PATIENT", currentPatient);
         startActivity(intent);
     }
 }

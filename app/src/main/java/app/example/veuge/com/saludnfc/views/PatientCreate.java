@@ -2,8 +2,13 @@ package app.example.veuge.com.saludnfc.views;
 
 import android.content.Intent;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.app.NavUtils;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -23,11 +28,15 @@ import java.util.List;
 import app.example.veuge.com.saludnfc.ObjectTransformation;
 import app.example.veuge.com.saludnfc.R;
 import app.example.veuge.com.saludnfc.Variables;
+import app.example.veuge.com.saludnfc.models.User;
 import app.example.veuge.com.saludnfc.network.PostAsyncTask;
 
 public class PatientCreate extends AppCompatActivity {
 
+    private User user;
     //  UI elements
+    private Toolbar toolbar;
+
     private TextInputLayout ciField;
     private MaterialBetterSpinner emisionField;
     private TextInputLayout nameField;
@@ -49,13 +58,27 @@ public class PatientCreate extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.form_patient);
+
         Intent intent = getIntent();
+        user = (User) intent.getSerializableExtra("USER");
+
         token = ((Variables) this.getApplication()).getToken();
         nameValuePair = new ArrayList<NameValuePair>(2);
 
         setUI();
         spinnerAdapters();
     }
+
+    /*@Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }*/
 
     public void setUI(){
         ciField = (TextInputLayout) findViewById(R.id.ci_wrapper);
@@ -70,6 +93,12 @@ public class PatientCreate extends AppCompatActivity {
         occupationField = (TextInputLayout) findViewById(R.id.occupation_wrapper);
         bloodField = (MaterialBetterSpinner) findViewById(R.id.bloodtype_field);
         saveButton = (Button) findViewById(R.id.patient_save);
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        /*setSupportActionBar(toolbar);
+
+        ActionBar ab = getSupportActionBar();
+        ab.setDisplayHomeAsUpEnabled(true);*/
     }
 
     public void spinnerAdapters(){
@@ -167,10 +196,7 @@ public class PatientCreate extends AppCompatActivity {
 
     private void savedSuccess(String newPatient) {
         Intent intent = new Intent(PatientCreate.this, PatientsList.class);
-        intent.putExtra("token", token);
-        intent.putExtra("patientID", "");
-        intent.putExtra("patientHistory", newPatient);
-
+        intent.putExtra("USER", user);
         Toast.makeText(this, "Paciente creado correctamente", Toast.LENGTH_SHORT).show();
 
         startActivity(intent);

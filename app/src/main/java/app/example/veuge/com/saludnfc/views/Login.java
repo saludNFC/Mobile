@@ -23,6 +23,7 @@ import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +31,8 @@ import java.util.List;
 import app.example.veuge.com.saludnfc.ObjectTransformation;
 import app.example.veuge.com.saludnfc.R;
 import app.example.veuge.com.saludnfc.Variables;
+import app.example.veuge.com.saludnfc.models.User;
+import app.example.veuge.com.saludnfc.network.GetAsyncTask;
 import app.example.veuge.com.saludnfc.network.PostAsyncTask;
 
 public class Login extends AppCompatActivity {
@@ -119,11 +122,8 @@ public class Login extends AppCompatActivity {
             // form field with an error.
             focusView.requestFocus();
         } else {
-            // Show a progress spinner, and kick off a background task to
-            // perform the user activity_login attempt.
             showProgress(true);
-            //mAuthTask = new UserLoginTask(email, password);
-            //mAuthTask.execute((Void) null);
+
             String url = ((Variables) this.getApplication()).getUrl();
             String path = "api/auth";
 
@@ -151,7 +151,6 @@ public class Login extends AppCompatActivity {
             for (int i = 0; i < loginArray.length(); i++){
                 if(loginArray.getString(i).contains("token")){
                     token = loginArray.getJSONObject(i).getString("token");
-                    Log.d("TOKEN", token);
                     loginSuccess();
                 }
                 else {
@@ -167,12 +166,39 @@ public class Login extends AppCompatActivity {
     public void loginSuccess(){
         mAuthTask = null;
         showProgress(false);
-        Log.d("LOGIN", "login success");
-
-        //finish();
-        Intent intent = new Intent(Login.this, PatientsList.class);
+        String url = ((Variables) this.getApplication()).getUrl();
+        String path = "api/auth";
         ((Variables) this.getApplication()).setToken(token);
-        startActivity(intent);
+        ObjectTransformation hmt = new ObjectTransformation();
+
+        Log.d("LOGIN", "login success");
+        try {
+
+            GetAsyncTask gat = new GetAsyncTask(url, path, token);
+            gat.execute();
+            String resp = gat.get();
+
+            JSONArray authUser = hmt.getJsonFromString(resp);
+
+            for (int i = 0; i < authUser.length(); i++){
+                JSONObject userObject = authUser.getJSONObject(i);
+                int id = userObject.getInt("id");
+                String name = userObject.getString("name");
+                String email = userObject.getString("email");
+                String proRegistration = userObject.getString("pro_registration");
+                String speciality = userObject.getString("specialty");
+
+                User authenticated = new User(id, name, email, proRegistration, speciality);
+
+                Intent intent = new Intent(Login.this, PatientsList.class);
+                intent.putExtra("USER", authenticated);
+                startActivity(intent);
+                finish();
+            }
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     public void loginFailed(){

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -25,10 +26,12 @@ import java.util.List;
 import app.example.veuge.com.saludnfc.ObjectTransformation;
 import app.example.veuge.com.saludnfc.R;
 import app.example.veuge.com.saludnfc.Variables;
+import app.example.veuge.com.saludnfc.models.Patient;
 import app.example.veuge.com.saludnfc.network.PostAsyncTask;
 
 public class ControlCreate extends AppCompatActivity {
 
+    private Patient currentPatient;
     private String patientHCode;
     private String token;
 
@@ -62,6 +65,8 @@ public class ControlCreate extends AppCompatActivity {
 
     private Button saveControlBtn;
 
+    private Toolbar toolbar;
+
     List<NameValuePair> newControl;
 
     @Override
@@ -70,6 +75,7 @@ public class ControlCreate extends AppCompatActivity {
         setContentView(R.layout.form_control);
 
         Intent intent = getIntent();
+        currentPatient = (Patient) intent.getSerializableExtra("PATIENT");
         patientHCode = intent.getStringExtra("PATIENT_CODE");
         token = ((Variables) this.getApplication()).getToken();
         newControl = new ArrayList<NameValuePair>(2);
@@ -118,6 +124,9 @@ public class ControlCreate extends AppCompatActivity {
         notesField = (TextInputLayout) findViewById(R.id.notes_wrapper);
 
         saveControlBtn = (Button) findViewById(R.id.control_save);
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle(currentPatient.nombre + " " + currentPatient.apellido);
     }
 
     public void spinnerAdapters(){
@@ -317,6 +326,7 @@ public class ControlCreate extends AppCompatActivity {
 
         Intent intent = new Intent(ControlCreate.this, ControlsList.class);
         intent.putExtra("PATIENT_CODE", patientHCode);
+        intent.putExtra("PATIENT", currentPatient);
         startActivity(intent);
     }
 
