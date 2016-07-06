@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import org.apache.http.NameValuePair;
@@ -31,6 +32,7 @@ public class ConsultationCreate extends AppCompatActivity {
     private String token;
 
     private TextInputLayout createdAtField;
+    private EditText createdAtET;
     private TextInputLayout anamnesisField;
     private TextInputLayout physicalField;
     private TextInputLayout diagnosisField;
@@ -57,6 +59,9 @@ public class ConsultationCreate extends AppCompatActivity {
 
     public void setupUI(){
         createdAtField = (TextInputLayout) findViewById(R.id.createdat_wrapper);
+        createdAtET = (EditText) findViewById(R.id.createdat_field);
+        ((Variables) this.getApplication()).calendarView(createdAtET);
+
         anamnesisField = (TextInputLayout) findViewById(R.id.anamnesis_wrapper);
         physicalField = (TextInputLayout) findViewById(R.id.physical_wrapper);
         diagnosisField = (TextInputLayout) findViewById(R.id.diagnosis_wrapper);

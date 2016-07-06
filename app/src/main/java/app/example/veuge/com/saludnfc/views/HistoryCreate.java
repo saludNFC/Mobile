@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -41,6 +42,7 @@ public class HistoryCreate extends AppCompatActivity {
     private LinearLayout medicineForm;
 
     private TextInputLayout createdAt;
+    private EditText createdAtET;
     private MaterialBetterSpinner historyType;
 
     private TextInputLayout gradeField;
@@ -84,6 +86,9 @@ public class HistoryCreate extends AppCompatActivity {
         medicineForm.setVisibility(View.GONE);
 
         createdAt = (TextInputLayout) findViewById(R.id.createdat_wrapper);
+        createdAtET = (EditText) findViewById(R.id.createdat_field);
+        ((Variables) this.getApplication()).calendarView(createdAtET);
+
         historyType = (MaterialBetterSpinner) findViewById(R.id.history_type_field);
         addListenerOnSpinnerItemSelection();
 

@@ -45,7 +45,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/created_field"
-                    android:inputType="date" />
+                    android:inputType="date"
+                    android:focusable="false"/>
             </android.support.design.widget.TextInputLayout>
 
             <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
@@ -220,7 +221,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/lastmenst_field"
-                        android:inputType="date"/>
+                        android:inputType="date"
+                        android:focusable="false"/>
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
@@ -233,7 +235,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/lastmamo_field"
-                        android:inputType="date"/>
+                        android:inputType="date"
+                        android:focusable="false"/>
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
@@ -246,7 +249,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/lastpapa_field"
-                        android:inputType="date"/>
+                        android:inputType="date"
+                        android:focusable="false"/>
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>
 

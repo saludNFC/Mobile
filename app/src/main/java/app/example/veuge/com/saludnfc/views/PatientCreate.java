@@ -1,5 +1,6 @@
 package app.example.veuge.com.saludnfc.views;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.NavUtils;
@@ -12,6 +13,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
@@ -23,6 +27,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import app.example.veuge.com.saludnfc.ObjectTransformation;
@@ -35,7 +40,6 @@ public class PatientCreate extends AppCompatActivity {
 
     private User user;
     //  UI elements
-    private Toolbar toolbar;
 
     private TextInputLayout ciField;
     private MaterialBetterSpinner emisionField;
@@ -43,6 +47,7 @@ public class PatientCreate extends AppCompatActivity {
     private TextInputLayout lastnameField;
     private MaterialBetterSpinner genderField;
     private TextInputLayout birthdayField;
+    private EditText birthdayET;
     private MaterialBetterSpinner birthplaceField;
     private TextInputLayout instructionField;
     private TextInputLayout civilField;
@@ -69,17 +74,6 @@ public class PatientCreate extends AppCompatActivity {
         spinnerAdapters();
     }
 
-    /*@Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            // Respond to the action bar's Up/Home button
-            case android.R.id.home:
-                NavUtils.navigateUpFromSameTask(this);
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }*/
-
     public void setUI(){
         ciField = (TextInputLayout) findViewById(R.id.ci_wrapper);
         emisionField = (MaterialBetterSpinner) findViewById(R.id.ciemision_field);
@@ -94,11 +88,8 @@ public class PatientCreate extends AppCompatActivity {
         bloodField = (MaterialBetterSpinner) findViewById(R.id.bloodtype_field);
         saveButton = (Button) findViewById(R.id.patient_save);
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        /*setSupportActionBar(toolbar);
-
-        ActionBar ab = getSupportActionBar();
-        ab.setDisplayHomeAsUpEnabled(true);*/
+        birthdayET = (EditText) findViewById(R.id.birthday_field);
+        ((Variables) this.getApplication()).calendarView(birthdayET);
     }
 
     public void spinnerAdapters(){

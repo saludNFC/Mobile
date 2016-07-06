@@ -10,7 +10,9 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
@@ -42,6 +44,7 @@ public class ControlCreate extends AppCompatActivity {
     private LinearLayout geriatricForm;
 
     private TextInputLayout createdAt;
+    private EditText createdAtET;
     private MaterialBetterSpinner controlType;
 
     private TextInputLayout vaccineField;
@@ -57,8 +60,11 @@ public class ControlCreate extends AppCompatActivity {
     private TextInputLayout diastoleField;
 
     private TextInputLayout lastMenstField;
+    private EditText lastMenstET;
     private TextInputLayout lastMamoField;
+    private EditText lastMamoET;
     private TextInputLayout lastPapaField;
+    private EditText lastPapaET;
 
     private MaterialBetterSpinner geriatricTypeField;
     private TextInputLayout notesField;
@@ -101,6 +107,9 @@ public class ControlCreate extends AppCompatActivity {
         geriatricForm.setVisibility(View.GONE);
 
         createdAt = (TextInputLayout) findViewById(R.id.createdat_wrapper);
+        createdAtET = (EditText) findViewById(R.id.createdat_field);
+        ((Variables) this.getApplication()).calendarView(createdAtET);
+
         controlType = (MaterialBetterSpinner) findViewById(R.id.control_type_field);
         addListenerOnSpinnerItemSelection();
 
@@ -117,8 +126,16 @@ public class ControlCreate extends AppCompatActivity {
         diastoleField = (TextInputLayout) findViewById(R.id.diastole_wrapper);
 
         lastMenstField = (TextInputLayout) findViewById(R.id.lastmenst_wrapper);
+        lastMenstET = (EditText) findViewById(R.id.lastmenst_field);
+        ((Variables) this.getApplication()).calendarView(lastMenstET);
+
         lastMamoField = (TextInputLayout) findViewById(R.id.lastmamo_wrapper);
+        lastMamoET = (EditText) findViewById(R.id.lastmamo_field);
+        ((Variables) this.getApplication()).calendarView(lastMamoET);
+
         lastPapaField = (TextInputLayout) findViewById(R.id.lastpapa_wrapper);
+        lastPapaET = (EditText) findViewById(R.id.lastpapa_field);
+        ((Variables) this.getApplication()).calendarView(lastPapaET);
 
         geriatricTypeField = (MaterialBetterSpinner) findViewById(R.id.geriatric_type_field);
         notesField = (TextInputLayout) findViewById(R.id.notes_wrapper);

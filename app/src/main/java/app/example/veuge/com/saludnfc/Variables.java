@@ -1,13 +1,21 @@
 package app.example.veuge.com.saludnfc;
 
 import android.app.Application;
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.util.Log;
 import android.view.Gravity;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by veuge on 28-05-16.
@@ -38,44 +46,31 @@ public class Variables extends Application {
         this.token = tok;
     }
 
-    public void insertViews(Context context, ViewGroup father, String label, String text){
-        LinearLayout container = new LinearLayout(context);
-        container.setOrientation(LinearLayout.HORIZONTAL);
-        container.setLayoutParams(
-                new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.MATCH_PARENT,
-                        LinearLayout.LayoutParams.WRAP_CONTENT
-                )
-        );
-        container.setWeightSum(1f);
+    public void calendarView(final EditText et){
 
-        TextView labelTV = new TextView(context);
-        labelTV.setGravity(Gravity.LEFT);
-        labelTV.setTypeface(null, Typeface.BOLD);
-        labelTV.setLayoutParams(
-                new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.WRAP_CONTENT,
-                        LinearLayout.LayoutParams.WRAP_CONTENT,
-                        (float) 0.5
-                )
-        );
-        labelTV.setTextColor(Color.parseColor("#000000"));
-        labelTV.setText(label);
+        et.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("CALENDAR?", "calendar????");
+                final Calendar c = Calendar.getInstance();
+                final int day = c.get(Calendar.DAY_OF_MONTH);
+                final int month = c.get(Calendar.MONTH);
+                final int year = c.get(Calendar.YEAR);
 
-        TextView textTV = new TextView(context);
-        textTV.setLayoutParams(
-                new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.WRAP_CONTENT,
-                        LinearLayout.LayoutParams.WRAP_CONTENT,
-                        (float) 0.5
-                )
-        );
-        textTV.setGravity(Gravity.RIGHT);
-        textTV.setTextColor(Color.parseColor("#000000"));
-        textTV.setText(text);
+                DatePickerDialog datePickerDialog = new DatePickerDialog(v.getContext(),
+                        new DatePickerDialog.OnDateSetListener() {
 
-        container.addView(labelTV);
-        container.addView(textTV);
-        father.addView(container);
+                            @Override
+                            public void onDateSet(DatePicker view, int year,
+                                                  int monthOfYear, int dayOfMonth) {
+
+                                et.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+
+                            }
+                        }, year, month, day);
+                datePickerDialog.getDatePicker().setMaxDate(new Date().getTime());
+                datePickerDialog.show();
+            }
+        });
     }
 }
