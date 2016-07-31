@@ -88,6 +88,7 @@ public class ConsultationsList extends AppCompatActivity {
     public void createConsultation(View view){
         Intent intent = new Intent(this, ConsultationCreate.class);
         intent.putExtra("PATIENT_CODE", patientHCode);
+        intent.putExtra("PATIENT", currentPatient);
         startActivity(intent);
     }
 }

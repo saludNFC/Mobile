@@ -51,6 +51,7 @@ public class ConsultationCreate extends AppCompatActivity {
         Intent intent = getIntent();
         patientHCode = intent.getStringExtra("PATIENT_CODE");
         currentPatient = (Patient) intent.getSerializableExtra("PATIENT");
+        Log.d("CURRENT PATIENT", currentPatient + "");
         token = ((Variables) this.getApplication()).getToken();
         newConsultation = new ArrayList<>();
 
@@ -141,6 +142,7 @@ public class ConsultationCreate extends AppCompatActivity {
 
         Intent intent = new Intent(ConsultationCreate.this, ConsultationsList.class);
         intent.putExtra("PATIENT_CODE", patientHCode);
+        intent.putExtra("PATIENT", currentPatient);
         startActivity(intent);
     }
 

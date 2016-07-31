@@ -20,10 +20,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import app.example.veuge.com.saludnfc.ObjectTransformation;
 import app.example.veuge.com.saludnfc.R;
@@ -35,6 +37,7 @@ import app.example.veuge.com.saludnfc.network.GetAsyncTask;
 
 public class PatientsList extends AppCompatActivity {
 
+    private String url;
     private User user;
     private DrawerLayout drawerLayout;
 
@@ -51,6 +54,7 @@ public class PatientsList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.patients_list);
 
+        String url = ((Variables) this.getApplication()).getUrl();
         Intent intent = getIntent();
         user = (User) intent.getSerializableExtra("USER");
         token = ((Variables) this.getApplication()).getToken();
@@ -114,7 +118,19 @@ public class PatientsList extends AppCompatActivity {
                         // Set item in checked state
                         menuItem.setChecked(true);
 
-                        // TODO: handle navigation
+                        GetAsyncTask gat = new GetAsyncTask("http://192.168.1.159:8000/", "api/logout", token);
+                        gat.execute();
+                        Log.d("CERRAR SESION", "SESION");
+                        try {
+                            String resp = gat.get();
+                            Log.d("RESPONSE", resp);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        } catch (ExecutionException e) {
+                            e.printStackTrace();
+                        }
+                        finish();
+                        System.exit(0);
 
                         // Closing drawer on item click
                         drawerLayout.closeDrawers();

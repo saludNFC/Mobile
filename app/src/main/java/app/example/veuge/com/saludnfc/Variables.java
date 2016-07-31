@@ -51,7 +51,6 @@ public class Variables extends Application {
         et.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("CALENDAR?", "calendar????");
                 final Calendar c = Calendar.getInstance();
                 final int day = c.get(Calendar.DAY_OF_MONTH);
                 final int month = c.get(Calendar.MONTH);
